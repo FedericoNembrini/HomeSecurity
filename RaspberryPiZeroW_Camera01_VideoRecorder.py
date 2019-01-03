@@ -14,7 +14,7 @@ def getCurrentDateToString(isLog):
 def DeleteFileAfter24H(fileName):
 	try:
 		fileLog.write(' --- Searching for file\n')
-		fileList = glob.glob('/mnt/SecurityCam/Cam01/*')
+		fileList = glob.glob(pathToFileNas + "*")
 		
 		for file in fileList:
 			if(file[ : len(file) - 8] == fileName[ : len(fileName)]):
@@ -26,17 +26,18 @@ def DeleteFileAfter24H(fileName):
 		return
 
 def Mp4Box(fileName):
-	command = "MP4Box -add {} {} ; rm {}".format(pathToFile + fileName, pathToFile + fileName.replace(".h264", ".mp4"), pathToFile + fileName)
+	command = "MP4Box -add {} {} ; rm {}".format(pathToFileLocal + fileName, pathToFileNas + fileName.replace(".h264", ".mp4"), pathToFileLocal + fileName)
 	try:
 		subprocess.Popen(command, shell=True)
 	except:
-		fileLog.write(getCurrentDateToString(True) + " --- Error Mp4Box")
+		fileLog.write(getCurrentDateToString(True) + " --- Error Mp4Box\n")
 
 #Program Start
 fileLog = open('/home/pi/Projects/log/log.txt', 'a')
 fileLog.write(getCurrentDateToString(True) + ' --- Initializing\n')
 
-pathToFile = '/mnt/SecurityCam/Cam01/Recordings/'
+pathToFileLocal = '/home/pi/Projects/'
+pathToFileNas = '/mnt/SecurityCam/Cam01/Recordings/'
 fileName = getCurrentDateToString(False) + '.h264'
 
 try:
@@ -46,7 +47,8 @@ try:
 	time.sleep(1)
 	
 	fileLog.write(getCurrentDateToString(True) + ' --- Start Recording\n')
-	camera.start_recording(pathToFile + fileName)
+	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0)
+	StartStream()
 	
 	#i = 0
 	#for i in range(5):
@@ -55,12 +57,12 @@ try:
 		date = dt.datetime.today() - dt.timedelta(hours = 3)
 		camera.wait_recording(3600)
 		fileName = getCurrentDateToString(False) + '.h264'
-		camera.split_recording(pathToFile + fileName)
+		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
 
 		Mp4Box(prevFileName)
-		DeleteFileAfter24H(pathToFile + date.strftime('%d-%m-%Y %H'))
+		DeleteFileAfter24H(pathToFileNas + date.strftime('%d-%m-%Y %H'))
 
-	camera.stop_recording()
+	camera.stop_recording(splitter_port = 0)
 	camera.close()
 except:
 	fileLog.write(getCurrentDateToString(True) + ' --- Error')
