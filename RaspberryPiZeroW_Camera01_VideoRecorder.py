@@ -28,9 +28,9 @@ class StreamThread(object):
 			except:
 				fileLog.write(getCurrentDateToString(True) + " --- Error in Streaming\n")
 			finally:
-				connection.close()
 				try:
 					camera.stop_recording(splitter_port = 1)
+					connection.close()
 				except:
 					#Do Nothing
 					pass
