@@ -18,16 +18,26 @@ class StreamThread(object):
 	def run(self):
 		while True:
 		    # Do something
-			connection = server_socket.accept()[0].makefile('wb', buffering = 2048)
+			connection = server_socket.accept()[0].makefile('wb')
+			print("Connection Recivied")
 			try:
 				fileLog.write(getCurrentDateToString(True) + " --- Start Streaming")
 				camera.start_recording(connection, format='h264', splitter_port = 1)
-				camera.wait_recording(60, splitter_port = 1)
+				print("Camera Streaming")
+				camera.wait_recording(3600, splitter_port = 1)
 			except:
 				fileLog.write(getCurrentDateToString(True) + " --- Error in Streaming\n")
 			finally:
-				camera.stop_recording(splitter_port = 1)
 				connection.close()
+				try:
+					camera.stop_recording(splitter_port = 1)
+				except:
+					#Do Nothing
+					pass
+				finally:
+					#Do Nothing
+					pass
+
 			time.sleep(self.interval)
 
 def getCurrentDateToString(isLog):
@@ -58,8 +68,8 @@ def Mp4Box(fileName):
 		fileLog.write(getCurrentDateToString(True) + " --- Error Mp4Box\n")
 
 #Program Start
-server_socket = socket.socket()
-server_socket.bind((socket.gethostname(), 8000))
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.bind(("0.0.0.0", 8000))
 server_socket.listen(0)
 
 fileLog = open('/home/pi/Projects/log/log.txt', 'a')
@@ -77,10 +87,8 @@ try:
 	
 	fileLog.write(getCurrentDateToString(True) + ' --- Start Recording\n')
 	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0)
-	stream = StreamThread()
+	StreamThread()
 	
-	#i = 0
-	#for i in range(5):
 	while True:
 		prevFileName = fileName
 		date = dt.datetime.today() - dt.timedelta(hours = 3)
