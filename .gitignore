@@ -5,3 +5,8 @@ Thread_Example.py
 /HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.iOS/obj/iPhone/Debug
 /HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.iOS/obj/iPhoneSimulator/Debug
 /HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.UWP/obj/ARM/Debug
+/HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.UWP/bin/x86/Debug
+/HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.UWP/obj/x86/Debug/.winmd_cache
+/HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.UWP/obj/x86/Debug/embed
+/HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.UWP/obj/x86/Debug/intermediatexaml
+/HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera/bin/Debug/netstandard2.0
