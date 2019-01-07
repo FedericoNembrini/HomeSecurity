@@ -10,3 +10,13 @@ Thread_Example.py
 /HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.UWP/obj/x86/Debug/embed
 /HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera.UWP/obj/x86/Debug/intermediatexaml
 /HomeSecurityCamera/HomeSecurityCamera/HomeSecurityCamera/bin/Debug/netstandard2.0
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp/bin/Debug/netstandard2.0
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp/obj/Debug/netstandard2.0
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.Android/bin/Debug
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.Android/obj/Debug/81
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.iOS/bin/iPhone/Debug
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.iOS/obj/iPhone/Debug
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.iOS/obj/iPhoneSimulator/Debug
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.UWP/bin/x86/Debug
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.UWP/obj/ARM/Debug
+/HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.UWP/obj/x86/Debug
