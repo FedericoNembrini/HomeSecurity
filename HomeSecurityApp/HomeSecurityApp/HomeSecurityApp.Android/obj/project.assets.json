@@ -857,20 +857,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HomePC-Federico\\.nuget\\packages\\": {}
+    "C:\\Users\\federico.nembrini.GEASOLUTION\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.Android\\HomeSecurityApp.Android.csproj",
+      "projectUniqueName": "D:\\My\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.Android\\HomeSecurityApp.Android.csproj",
       "projectName": "HomeSecurityApp.Android",
-      "projectPath": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.Android\\HomeSecurityApp.Android.csproj",
-      "packagesPath": "C:\\Users\\HomePC-Federico\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.Android\\obj\\",
+      "projectPath": "D:\\My\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.Android\\HomeSecurityApp.Android.csproj",
+      "packagesPath": "C:\\Users\\federico.nembrini.GEASOLUTION\\.nuget\\packages\\",
+      "outputPath": "D:\\My\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\HomePC-Federico\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\federico.nembrini.GEASOLUTION\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -883,8 +883,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj": {
-              "projectPath": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj"
+            "D:\\My\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj": {
+              "projectPath": "D:\\My\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj"
             }
           }
         }
