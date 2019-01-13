@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
+             x:Class="HomeSecurityApp.Pages.Tablet_.HomePageTablet">
+    
+    <ContentPage.Content>
+
+        <Grid x:Name="homeGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--<shared:VideoView x:Name="videoView1" Grid.Row="0" Grid.Column="0"> </shared:VideoView>-->
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>
