@@ -2,26 +2,26 @@
   "version": 3,
   "targets": {
     "UAP,Version=v10.0.16299": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -334,9 +334,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -347,26 +347,26 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-arm": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -854,9 +854,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -867,26 +867,26 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-arm-aot": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -1375,9 +1375,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -1388,26 +1388,26 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-arm64-aot": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -1720,9 +1720,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -1733,26 +1733,26 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x64": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -2240,9 +2240,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -2253,26 +2253,26 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x64-aot": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -2761,9 +2761,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -2774,26 +2774,26 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x86": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -3281,9 +3281,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -3294,26 +3294,26 @@
       }
     },
     "UAP,Version=v10.0.16299/win10-x86-aot": {
-      "LibVLCSharp/0.1.4": {
+      "LibVLCSharp/0.1.6": {
         "type": "package",
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.dll": {}
         }
       },
-      "LibVLCSharp.Forms/0.1.3": {
+      "LibVLCSharp.Forms/0.1.4": {
         "type": "package",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
+          "LibVLCSharp": "0.1.5",
           "Xamarin.Forms": "3.2.0.871581"
         },
         "compile": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         },
         "runtime": {
-          "lib/.NETStandard2.0/LibVLCSharp.Forms.dll": {}
+          "lib/netstandard2.0/LibVLCSharp.Forms.dll": {}
         }
       },
       "Microsoft.Net.Native.Compiler/2.1.8": {
@@ -3802,9 +3802,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "LibVLCSharp": "0.1.4",
-          "LibVLCSharp.Forms": "0.1.3",
-          "Xamarin.Forms": "3.4.0.1008975"
+          "LibVLCSharp": "0.1.6",
+          "LibVLCSharp.Forms": "0.1.4",
+          "Xamarin.Forms": "3.4.0.1009999"
         },
         "compile": {
           "bin/placeholder/HomeSecurityApp.dll": {}
@@ -3816,36 +3816,46 @@
     }
   },
   "libraries": {
-    "LibVLCSharp/0.1.4": {
-      "sha512": "DQmiOX1rKKLDThn4hRDVRbEGpQO6R9p+rESeka33UmU2nl5nk7cAV34O2Po6EMUyeUJeuqE/9rtmgrHspLvABQ==",
+    "LibVLCSharp/0.1.6": {
+      "sha512": "aUaOanB/6KsX/DqWBMXA6TWRsZYM2vsxbdPbC5UnQQiysGjUZ61Mpfzg4JnD44EKqmMjlfRg0rjXWNr3vCStgA==",
       "type": "package",
-      "path": "libvlcsharp/0.1.4",
+      "path": "libvlcsharp/0.1.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/.NETStandard1.1/LibVLCSharp.dll",
-        "lib/.NETStandard2.0/LibVLCSharp.dll",
-        "lib/MonoAndroid81/LibVLCSharp.Android.AWindow.dll",
-        "lib/MonoAndroid81/LibVLCSharp.dll",
-        "lib/Xamarin.iOS10/LibVLCSharp.dll",
+        "lib/monoandroid81/LibVLCSharp.Android.AWindow.dll",
+        "lib/monoandroid81/LibVLCSharp.dll",
+        "lib/monoandroid81/LibVLCSharp.xml",
         "lib/net40/LibVLCSharp.dll",
+        "lib/net40/LibVLCSharp.xml",
+        "lib/netstandard1.1/LibVLCSharp.dll",
+        "lib/netstandard1.1/LibVLCSharp.xml",
+        "lib/netstandard2.0/LibVLCSharp.dll",
+        "lib/netstandard2.0/LibVLCSharp.xml",
+        "lib/xamarinios10/LibVLCSharp.dll",
+        "lib/xamarinios10/LibVLCSharp.xml",
         "lib/xamarinmac20/LibVLCSharp.dll",
-        "libvlcsharp.0.1.4.nupkg.sha512",
+        "lib/xamarinmac20/LibVLCSharp.xml",
+        "libvlcsharp.0.1.6.nupkg.sha512",
         "libvlcsharp.nuspec"
       ]
     },
-    "LibVLCSharp.Forms/0.1.3": {
-      "sha512": "Jv0muEwxPZ80ynwmgaPJFcvmPJGeAq5fRaAUiZ4cBakHmIiKocwa8mudVCmpqMQvhzoZb9fjcJ+oYmt7E0FQpg==",
+    "LibVLCSharp.Forms/0.1.4": {
+      "sha512": "7U7BDDJ5vpVUOVXqUJlRfGd3FsR/Ppz3c8ALSvbQFIoWmu25/KNMdBFf+PTtkSgHHS98P5Az9Kmz202j1u5Q9A==",
       "type": "package",
-      "path": "libvlcsharp.forms/0.1.3",
+      "path": "libvlcsharp.forms/0.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/.NETStandard2.0/LibVLCSharp.Forms.dll",
-        "lib/MonoAndroid81/LibVLCSharp.Forms.dll",
-        "lib/Xamarin.Mac20/LibVLCSharp.Forms.dll",
-        "lib/Xamarin.iOS10/LibVLCSharp.Forms.dll",
-        "libvlcsharp.forms.0.1.3.nupkg.sha512",
+        "lib/monoandroid81/LibVLCSharp.Forms.dll",
+        "lib/monoandroid81/LibVLCSharp.Forms.xml",
+        "lib/netstandard2.0/LibVLCSharp.Forms.dll",
+        "lib/netstandard2.0/LibVLCSharp.Forms.xml",
+        "lib/xamarinios10/LibVLCSharp.Forms.dll",
+        "lib/xamarinios10/LibVLCSharp.Forms.xml",
+        "lib/xamarinmac20/LibVLCSharp.Forms.dll",
+        "lib/xamarinmac20/LibVLCSharp.Forms.xml",
+        "libvlcsharp.forms.0.1.4.nupkg.sha512",
         "libvlcsharp.forms.nuspec"
       ]
     },
@@ -7720,11 +7730,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.UWP\\HomeSecurityApp.UWP.csproj",
+      "projectUniqueName": "E:\\Progetti\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.UWP\\HomeSecurityApp.UWP.csproj",
       "projectName": "HomeSecurityApp.UWP",
-      "projectPath": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.UWP\\HomeSecurityApp.UWP.csproj",
+      "projectPath": "E:\\Progetti\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.UWP\\HomeSecurityApp.UWP.csproj",
       "packagesPath": "C:\\Users\\HomePC-Federico\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.UWP\\obj\\",
+      "outputPath": "E:\\Progetti\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.UWP\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -7744,8 +7754,8 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
-            "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj": {
-              "projectPath": "C:\\Users\\HomePC-Federico\\Documents\\Projects\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj"
+            "E:\\Progetti\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj": {
+              "projectPath": "E:\\Progetti\\SecurityCamera\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp\\HomeSecurityApp.csproj"
             }
           }
         }
@@ -7793,5 +7803,24 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "È stato rilevato il downgrade del pacchetto Xamarin.Forms da 3.4.0.1009999 a 3.4.0.1008975. Fare riferimento al pacchetto direttamente dal progetto per selezionare una versione diversa. \r\n HomeSecurityApp.UWP -> HomeSecurityApp -> Xamarin.Forms (>= 3.4.0.1009999) \r\n HomeSecurityApp.UWP -> Xamarin.Forms (>= 3.4.0.1008975)",
+      "libraryId": "Xamarin.Forms",
+      "targetGraphs": [
+        "UAP,Version=v10.0.16299",
+        "UAP,Version=v10.0.16299/win10-arm",
+        "UAP,Version=v10.0.16299/win10-arm-aot",
+        "UAP,Version=v10.0.16299/win10-arm64-aot",
+        "UAP,Version=v10.0.16299/win10-x64",
+        "UAP,Version=v10.0.16299/win10-x64-aot",
+        "UAP,Version=v10.0.16299/win10-x86",
+        "UAP,Version=v10.0.16299/win10-x86-aot"
+      ]
+    }
+  ]
 }

@@ -18,9 +18,8 @@ namespace HomeSecurityApp.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            LibVLCSharpFormsRenderer.Init();
-
             base.OnCreate(savedInstanceState);
+            LibVLCSharpFormsRenderer.Init();
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
