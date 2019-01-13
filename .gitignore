@@ -24,3 +24,8 @@ Thread_Example.py
 /HomeSecurityApp/.vs/HomeSecurityApp/v15
 /HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.Android/obj/.cache
 *.cache
+obj
+bin
+packages
+*.suo
+*.user
