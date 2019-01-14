@@ -14,10 +14,10 @@ namespace HomeSecurityApp.Pages.Tablet_
 {
     public partial class HomePageTablet : ContentPage
     {
-        readonly LibVLC _libVlc;
-        VideoView videoView1; 
+        LibVLC _libVlc;
+        VideoView videoView1;
+        MediaPlayer _mediaPlayer;
         const string VIDEO_URL = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov";
-
 
         public HomePageTablet()
         {
@@ -32,22 +32,26 @@ namespace HomeSecurityApp.Pages.Tablet_
         {
             base.OnAppearing();
 
-            videoView1 = new VideoView();
-            videoView1.MediaPlayer = new MediaPlayer(_libVlc);
+            _mediaPlayer = new MediaPlayer(_libVlc)
+            {
+                Media = new Media(_libVlc,
+                //"http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4",
+                VIDEO_URL,
+                Media.FromType.FromLocation)
+            };
 
-            //videoView1.BackgroundColor = Color.Transparent;
-            //videoView1.VerticalOptions = LayoutOptions.Fill;
-            //videoView1.HorizontalOptions = LayoutOptions.Fill;
+            videoView1 = new VideoView() { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand };
+            homeGrid.Children.Add(videoView1);
+            
+            videoView1.Loaded += VideoView_Loaded;
 
-            //videoView1.Loaded += VideoView1_Loaded;
-
-            homeGrid.Children.Add(videoView1, 0, 0);
-            videoView1.MediaPlayer.Play(new Media(_libVlc, VIDEO_URL, Media.FromType.FromLocation));
+            videoView1.MediaPlayer = _mediaPlayer;
         }
 
-        //private void VideoView1_Loaded(object sender, EventArgs e)
-        //{
-        //    videoView1.MediaPlayer.Play();
-        //}
+        private void VideoView_Loaded(object sender, System.EventArgs e)
+        {
+            _mediaPlayer.Play();
+        }
+
     }
 }
