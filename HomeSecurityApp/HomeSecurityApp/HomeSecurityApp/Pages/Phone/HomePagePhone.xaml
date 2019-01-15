@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HomeSecurityApp.Pages.Phone.HomePagePhone"
+             xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms">
+    
+    <NavigationPage.TitleView>
+        <Label>
+            HomeSecurityApp
+        </Label>
+    </NavigationPage.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddStream_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid x:Name="homeGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <ContentView x:Name="overlayAddStreamUrl" 
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1" 
+                AbsoluteLayout.LayoutFlags="All" 
+                BackgroundColor="#C0808080" 
+                Padding="10, 0"
+                IsVisible="False">
+
+                <StackLayout Padding="10" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Add Stream Url" />
+                    <Entry x:Name="StreamUrlEntry"/>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Cancel" Clicked="CancelInsertStream_Clicked" />
+                        <Button Text="Add" Clicked="InsertStream_Clicked" />
+                    </StackLayout>
+                </StackLayout>
+            </ContentView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

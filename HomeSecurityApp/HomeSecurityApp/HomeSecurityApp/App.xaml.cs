@@ -14,10 +14,10 @@ namespace HomeSecurityApp
             switch(Device.Idiom)
             {
                 case TargetIdiom.Phone:
-                    MainPage = new Pages.Tablet_.HomePageTablet();
+                    MainPage = new NavigationPage(new Pages.Phone.HomePagePhone());
                     break;
                 case TargetIdiom.Tablet:
-                    MainPage = new Pages.Tablet_.HomePageTablet();
+                    MainPage = new NavigationPage(new Pages.Tablet_.HomePageTablet());
                     break;
                 default:
                     MainPage = new MainPage();
