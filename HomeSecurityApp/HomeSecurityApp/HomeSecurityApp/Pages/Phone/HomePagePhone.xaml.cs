@@ -41,10 +41,21 @@ namespace HomeSecurityApp.Pages.Phone
             {
                 VideoView videoViewToAdd = new VideoView() {  HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand };
                 VideoViewList.Add(videoViewToAdd);
-                homeGrid.Children.Add(videoViewToAdd);
+                homeGrid.Children.Add(VideoViewList[i]);
 
-                videoViewToAdd.MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation) };
-                videoViewToAdd.MediaPlayer.Play();
+                VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation) };
+                VideoViewList[i].MediaPlayer.Play();
+            }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            foreach(VideoView videowView in VideoViewList)
+            {
+                videowView.MediaPlayer.Stop();
+                videowView.MediaPlayer.Media.Dispose();
             }
         }
 
@@ -52,24 +63,25 @@ namespace HomeSecurityApp.Pages.Phone
 
         private void LoadStreamList()
         {
-            string key = "StreamUrl_";
-            byte counter = 0;
-            string stringTemp;
+            //string key = "StreamUrl_";
+            //byte counter = 0;
+            //string stringTemp;
 
-            while(Preferences.ContainsKey(key + Convert.ToString(counter)))
-            {
-                stringTemp = Preferences.Get(key + Convert.ToString(counter), string.Empty);
-                if(!string.IsNullOrEmpty(stringTemp))
-                {
-                    StreamUrl.Add(stringTemp);
-                }
-                counter++;
-            }
+            //while(Preferences.ContainsKey(key + Convert.ToString(counter)))
+            //{
+            //    stringTemp = Preferences.Get(key + Convert.ToString(counter), string.Empty);
+            //    if(!string.IsNullOrEmpty(stringTemp))
+            //    {
+            //        StreamUrl.Add(stringTemp);
+            //    }
+            //    counter++;
+            //}
+            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
         }
 
         private void InitializeGrid()
         {
-            for(byte i = 0; i < StreamUrl.Count / 2; i++)
+            for(byte i = 0; i < 1; i++)
             {
                 homeGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Star });
             }
@@ -81,25 +93,25 @@ namespace HomeSecurityApp.Pages.Phone
 
         private void AddStream_Clicked(object sender, EventArgs e)
         {
-            overlayAddStreamUrl.IsVisible = true;
+            //overlayAddStreamUrl.IsVisible = true;
         }
 
-        private void InsertStream_Clicked(object sender, EventArgs e)
-        {
-            string key = "StreamUrl_";
-            if(!string.IsNullOrEmpty(StreamUrlEntry.Text))
-            {
-                Preferences.Set(key + Convert.ToString(StreamUrl.Count), StreamUrlEntry.Text);
-            }
-            StreamUrlEntry.Text = string.Empty;
-            overlayAddStreamUrl.IsVisible = false;
-        }
+        //private void InsertStream_Clicked(object sender, EventArgs e)
+        //{
+        //    string key = "StreamUrl_";
+        //    if(!string.IsNullOrEmpty(StreamUrlEntry.Text))
+        //    {
+        //        Preferences.Set(key + Convert.ToString(StreamUrl.Count), StreamUrlEntry.Text);
+        //    }
+        //    StreamUrlEntry.Text = string.Empty;
+        //    overlayAddStreamUrl.IsVisible = false;
+        //}
 
-        private void CancelInsertStream_Clicked(object sender, EventArgs e)
-        {
-            StreamUrlEntry.Text = string.Empty;
-            overlayAddStreamUrl.IsVisible = false;
-        }
+        //private void CancelInsertStream_Clicked(object sender, EventArgs e)
+        //{
+        //    StreamUrlEntry.Text = string.Empty;
+        //    overlayAddStreamUrl.IsVisible = false;
+        //}
 
         #endregion
     }
