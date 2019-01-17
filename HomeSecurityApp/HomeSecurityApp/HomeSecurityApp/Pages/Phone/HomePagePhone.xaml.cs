@@ -13,21 +13,16 @@ using LibVLCSharp.Forms.Shared;
 
 namespace HomeSecurityApp.Pages.Phone
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePagePhone : ContentPage
     {
-        private List<string> StreamUrl = new List<string>();
-        private List<VideoView> VideoViewList = new List<VideoView>();
+        List<string> StreamUrl = new List<string>();
+        List<VideoView> VideoViewList = new List<VideoView>();
 
-        private LibVLC _LibVlc;
+        LibVLC _LibVlc;
 
         public HomePagePhone()
         {
             InitializeComponent();
-
-            Core.Initialize();
-
-            _LibVlc = new LibVLC();
 
             LoadStreamList();
             InitializeGrid();
@@ -37,27 +32,37 @@ namespace HomeSecurityApp.Pages.Phone
         {
             base.OnAppearing();
 
-            for(byte i = 0; i < StreamUrl.Count; i++)
+            Core.Initialize();
+
+            _LibVlc = new LibVLC();
+
+            for (byte i = 0; i < StreamUrl.Count; i++)
             {
-                VideoView videoViewToAdd = new VideoView() {  HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand };
-                VideoViewList.Add(videoViewToAdd);
-                homeGrid.Children.Add(VideoViewList[i]);
+                VideoViewList.Add(new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand });
+                homeGrid.Children.Add(VideoViewList[i], 0, 0);
 
                 VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation) };
+                //VideoViewList[i].MediaPlayer.SetAudioTrack(-1);
+                //VideoViewList[i].Loaded += VideoView_Loaded;
                 VideoViewList[i].MediaPlayer.Play();
             }
         }
 
         protected override void OnDisappearing()
         {
-            base.OnDisappearing();
+            //base.OnDisappearing();
 
-            foreach(VideoView videowView in VideoViewList)
-            {
-                videowView.MediaPlayer.Stop();
-                videowView.MediaPlayer.Media.Dispose();
-            }
+            //foreach(VideoView videowView in VideoViewList)
+            //{
+            //    videowView.MediaPlayer.Stop();
+            //    videowView.MediaPlayer.Media.Dispose();
+            //}
         }
+
+        //private void VideoView_Loaded(object sender, System.EventArgs e)
+        //{
+        //    (sender as VideoView).MediaPlayer.Play();
+        //}
 
         #region Private Method
 

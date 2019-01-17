@@ -35,8 +35,7 @@ namespace HomeSecurityApp.Pages.Tablet_
             _mediaPlayer = new MediaPlayer(_libVlc)
             {
                 Media = new Media(_libVlc,
-                //"http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4",
-                VIDEO_URL,
+                "http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4",
                 Media.FromType.FromLocation)
             };
 
@@ -50,6 +49,7 @@ namespace HomeSecurityApp.Pages.Tablet_
 
         private void VideoView_Loaded(object sender, System.EventArgs e)
         {
+            //_mediaPlayer.SetAudioTrack(-1);
             _mediaPlayer.Play();
         }
 

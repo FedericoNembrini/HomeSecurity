@@ -15,6 +15,7 @@ namespace HomeSecurityApp
             {
                 case TargetIdiom.Phone:
                     MainPage = new NavigationPage(new Pages.Phone.HomePagePhone());
+                    //MainPage = new NavigationPage(new Pages.Tablet_.HomePageTablet());
                     break;
                 case TargetIdiom.Tablet:
                     MainPage = new NavigationPage(new Pages.Tablet_.HomePageTablet());
