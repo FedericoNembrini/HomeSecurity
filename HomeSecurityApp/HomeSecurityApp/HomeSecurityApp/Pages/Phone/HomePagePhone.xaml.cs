@@ -36,40 +36,41 @@ namespace HomeSecurityApp.Pages.Phone
 
             _LibVlc = new LibVLC();
 
-            for (byte i = 0; i < StreamUrl.Count; i++)
+            for (int i = 0; i < StreamUrl.Count; i++)
             {
-                VideoViewList.Add(new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand });
-                homeGrid.Children.Add(VideoViewList[i], 0, 0);
+                VideoViewList.Add(new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 300, MinimumHeightRequest = 300 });
+                homeGrid.Children.Add(VideoViewList[i], 0, i);
+                homeGrid.LayoutChanged += HomeGrid_LayoutChanged;
+            }
+        }
 
+        private void HomeGrid_LayoutChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < StreamUrl.Count; i++)
+            {
                 VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation) };
-                //VideoViewList[i].MediaPlayer.SetAudioTrack(-1);
-                //VideoViewList[i].Loaded += VideoView_Loaded;
+                VideoViewList[i].MediaPlayer.Volume = 0; ;
                 VideoViewList[i].MediaPlayer.Play();
             }
         }
 
         protected override void OnDisappearing()
         {
-            //base.OnDisappearing();
+            base.OnDisappearing();
 
-            //foreach(VideoView videowView in VideoViewList)
-            //{
-            //    videowView.MediaPlayer.Stop();
-            //    videowView.MediaPlayer.Media.Dispose();
-            //}
+            foreach (VideoView videowView in VideoViewList)
+            {
+                videowView.MediaPlayer.Stop();
+                videowView.MediaPlayer.Media.Dispose();
+            }
         }
-
-        //private void VideoView_Loaded(object sender, System.EventArgs e)
-        //{
-        //    (sender as VideoView).MediaPlayer.Play();
-        //}
 
         #region Private Method
 
         private void LoadStreamList()
         {
             //string key = "StreamUrl_";
-            //byte counter = 0;
+            //int counter = 0;
             //string stringTemp;
 
             //while(Preferences.ContainsKey(key + Convert.ToString(counter)))
@@ -82,41 +83,22 @@ namespace HomeSecurityApp.Pages.Phone
             //    counter++;
             //}
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
         }
 
         private void InitializeGrid()
         {
-            for(byte i = 0; i < 1; i++)
+            homeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
+            for (int i = 0; i < 1; i++)
             {
-                homeGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Star });
+                homeGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
         }
 
         #endregion
 
         #region Event Handler
-
-        private void AddStream_Clicked(object sender, EventArgs e)
-        {
-            //overlayAddStreamUrl.IsVisible = true;
-        }
-
-        //private void InsertStream_Clicked(object sender, EventArgs e)
-        //{
-        //    string key = "StreamUrl_";
-        //    if(!string.IsNullOrEmpty(StreamUrlEntry.Text))
-        //    {
-        //        Preferences.Set(key + Convert.ToString(StreamUrl.Count), StreamUrlEntry.Text);
-        //    }
-        //    StreamUrlEntry.Text = string.Empty;
-        //    overlayAddStreamUrl.IsVisible = false;
-        //}
-
-        //private void CancelInsertStream_Clicked(object sender, EventArgs e)
-        //{
-        //    StreamUrlEntry.Text = string.Empty;
-        //    overlayAddStreamUrl.IsVisible = false;
-        //}
 
         #endregion
     }
