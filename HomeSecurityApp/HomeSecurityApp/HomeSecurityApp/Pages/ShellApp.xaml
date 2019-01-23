@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell  xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:pages="clr-namespace:HomeSecurityApp.Pages"
+        x:Class="HomeSecurityApp.Pages.ShellApp">
+
+    <Shell.FlyoutHeader>
+        <Label FontSize="Medium" Margin="0,10,0,0">HomeSecurityApp</Label>
+    </Shell.FlyoutHeader>
+
+    <ShellItem Title="Home">
+        <ShellSection>
+            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:HomePage}" />
+            <ShellContent Title="Stream List" ContentTemplate="{DataTemplate pages:StreamListManagement}" />
+        </ShellSection>
+    </ShellItem>
+</Shell>

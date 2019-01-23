@@ -11,16 +11,16 @@ using Xamarin.Forms.Xaml;
 using LibVLCSharp.Shared;
 using LibVLCSharp.Forms.Shared;
 
-namespace HomeSecurityApp.Pages.Phone
+namespace HomeSecurityApp.Pages
 {
-    public partial class HomePagePhone : ContentPage
+    public partial class HomePage : ContentPage
     {
         List<string> StreamUrl = new List<string>();
         List<VideoView> VideoViewList = new List<VideoView>();
 
         LibVLC _LibVlc;
 
-        public HomePagePhone()
+        public HomePage()
         {
             InitializeComponent();
 

@@ -11,19 +11,7 @@ namespace HomeSecurityApp
         {
             InitializeComponent();
 
-            switch(Device.Idiom)
-            {
-                case TargetIdiom.Phone:
-                    MainPage = new NavigationPage(new Pages.Phone.HomePagePhone());
-                    //MainPage = new NavigationPage(new Pages.Tablet_.HomePageTablet());
-                    break;
-                case TargetIdiom.Tablet:
-                    MainPage = new NavigationPage(new Pages.Tablet_.HomePageTablet());
-                    break;
-                default:
-                    MainPage = new MainPage();
-                    break;
-            }
+            MainPage = new Pages.ShellApp();
         }
 
         protected override void OnStart()
