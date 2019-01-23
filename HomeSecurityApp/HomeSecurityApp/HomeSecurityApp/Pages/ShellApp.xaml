@@ -5,13 +5,18 @@
         x:Class="HomeSecurityApp.Pages.ShellApp">
 
     <Shell.FlyoutHeader>
-        <Label FontSize="Medium" Margin="0,10,0,0">HomeSecurityApp</Label>
+        <Label FontSize="Large" Margin="0,10,0,0">HomeSecurityApp</Label>
     </Shell.FlyoutHeader>
 
     <ShellItem Title="Home">
         <ShellSection>
-            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:HomePage}" />
-            <ShellContent Title="Stream List" ContentTemplate="{DataTemplate pages:StreamListManagement}" />
+            <ShellContent ContentTemplate="{ DataTemplate pages:HomePage }" />
         </ShellSection>
     </ShellItem>
+    <ShellItem Title="StreamListManagement">
+        <ShellSection>
+            <ShellContent ContentTemplate="{ DataTemplate pages:StreamListManagement }" />
+        </ShellSection>
+    </ShellItem>
+    
 </Shell>
