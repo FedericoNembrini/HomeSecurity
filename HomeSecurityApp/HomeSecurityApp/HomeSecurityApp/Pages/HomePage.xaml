@@ -9,6 +9,4 @@
             <Grid x:Name="homeGrid"></Grid>
         </ScrollView>
     </ContentPage.Content>
-</ContentPage>
-    
-    
+</ContentPage>  

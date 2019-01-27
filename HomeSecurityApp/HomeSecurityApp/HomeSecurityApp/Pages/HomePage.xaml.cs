@@ -20,6 +20,8 @@ namespace HomeSecurityApp.Pages
 
         LibVLC _LibVlc;
 
+        private bool NeedLoad = true;
+
         public HomePage()
         {
             InitializeComponent();
@@ -44,16 +46,6 @@ namespace HomeSecurityApp.Pages
             }
         }
 
-        private void HomeGrid_LayoutChanged(object sender, EventArgs e)
-        {
-            for (int i = 0; i < StreamUrl.Count; i++)
-            {
-                VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation) };
-                VideoViewList[i].MediaPlayer.Volume = 0; ;
-                VideoViewList[i].MediaPlayer.Play();
-            }
-        }
-
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
@@ -62,7 +54,13 @@ namespace HomeSecurityApp.Pages
             {
                 videowView.MediaPlayer.Stop();
                 videowView.MediaPlayer.Media.Dispose();
+                //videowView.MediaPlayer = null;
+                //videowView.MediaPlayer.Dispose();
             }
+            _LibVlc.Dispose();
+            NeedLoad = false;
+            homeGrid.Children.Clear();
+            NeedLoad = true;
         }
 
         #region Private Method
@@ -84,7 +82,6 @@ namespace HomeSecurityApp.Pages
             //}
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
         }
 
         private void InitializeGrid()
@@ -99,6 +96,18 @@ namespace HomeSecurityApp.Pages
         #endregion
 
         #region Event Handler
+
+        private void HomeGrid_LayoutChanged(object sender, EventArgs e)
+        {
+            if(NeedLoad)
+            {
+                for (int i = 0; i < StreamUrl.Count; i++)
+                {
+                    VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation), Volume = 0 };
+                    VideoViewList[i].MediaPlayer.Play();
+                }
+            }
+        }
 
         #endregion
     }
