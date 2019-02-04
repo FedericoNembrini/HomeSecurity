@@ -3,8 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HomeSecurityApp.Pages.StreamListManagement">
     <ContentPage.Content>
-        <ListView x:Name="streamList">
-            
-        </ListView>
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal">
+                <Entry x:Name="entryUrl" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Add" Clicked="AddButton_Clicked" />
+            </StackLayout>
+            <ListView x:Name="streamList" ItemTapped="StreamList_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="Delete_Clicked" CommandParameter="{ Binding . }" Text="Delete" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <StackLayout Padding="8">
+                                <Label Text="{ Binding . }" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

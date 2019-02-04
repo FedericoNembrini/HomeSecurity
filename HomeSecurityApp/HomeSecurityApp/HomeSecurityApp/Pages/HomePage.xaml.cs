@@ -40,8 +40,8 @@ namespace HomeSecurityApp.Pages
 
             for (int i = 0; i < StreamUrl.Count; i++)
             {
-                VideoViewList.Add(new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 300, MinimumHeightRequest = 300 });
-                homeGrid.Children.Add(VideoViewList[i], 0, i);
+                VideoViewList.Add(new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 240, MinimumHeightRequest = 240 });
+                homeGrid.Children.Add(VideoViewList[i], Device.Idiom == TargetIdiom.Tablet && i % 2 != 0 ? 1 : 0, i);
                 homeGrid.LayoutChanged += HomeGrid_LayoutChanged;
             }
         }
@@ -54,12 +54,11 @@ namespace HomeSecurityApp.Pages
             {
                 videowView.MediaPlayer.Stop();
                 videowView.MediaPlayer.Media.Dispose();
-                //videowView.MediaPlayer = null;
-                //videowView.MediaPlayer.Dispose();
             }
             _LibVlc.Dispose();
             NeedLoad = false;
             homeGrid.Children.Clear();
+            VideoViewList = new List<VideoView>();
             NeedLoad = true;
         }
 
@@ -80,14 +79,17 @@ namespace HomeSecurityApp.Pages
             //    }
             //    counter++;
             //}
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
         }
 
         private void InitializeGrid()
         {
             homeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
-            for (int i = 0; i < 1; i++)
+            if(Device.Idiom == TargetIdiom.Tablet)
+                homeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
+
+            for (int i = 0; i < StreamUrl.Count; i++)
             {
                 homeGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
