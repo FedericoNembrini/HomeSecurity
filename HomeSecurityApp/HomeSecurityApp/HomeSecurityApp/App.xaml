@@ -1,8 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HomeSecurityApp.Pages"
              x:Class="HomeSecurityApp.App">
     <Application.Resources>
+        <Color x:Key="PrimaryColor">#00709b</Color>
+        <Color x:Key="SecondaryColor">#00aa8e</Color>
+        <Color x:Key="TextColor">White</Color>
+        <Color x:Key="EntryBackgroundColor">#fafafa</Color>
 
+        <Style TargetType="local:ShellApp">
+            <Setter Property="Shell.ShellBackgroundColor" Value="{StaticResource PrimaryColor}" />
+        </Style>
     </Application.Resources>
 </Application>

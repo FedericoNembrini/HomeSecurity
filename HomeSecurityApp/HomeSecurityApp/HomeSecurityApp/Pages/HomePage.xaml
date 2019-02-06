@@ -4,9 +4,16 @@
              x:Class="HomeSecurityApp.Pages.HomePage"
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms">
 
+    <Shell.TitleView>
+        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0,16,0,0">
+            <Label FontSize="Large" FontAttributes="Bold" Text="Home Page" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
+        </StackLayout>
+    </Shell.TitleView>
+    
     <ContentPage.Content>
-        <ScrollView VerticalScrollBarVisibility="Default" Orientation="Vertical">
-            <Grid x:Name="homeGrid"></Grid>
+        <ScrollView VerticalScrollBarVisibility="Default" Orientation="Vertical" BackgroundColor="Black">
+            <Grid x:Name="homeGrid">
+            </Grid>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>  

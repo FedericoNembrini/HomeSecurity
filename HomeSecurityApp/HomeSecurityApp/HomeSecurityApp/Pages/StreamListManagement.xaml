@@ -2,12 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HomeSecurityApp.Pages.StreamListManagement">
+
+    <Shell.TitleView>
+        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0, 16, 0, 0">
+            <Label FontSize="Large" FontAttributes="Bold" Text="Stream List Management" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
+        </StackLayout>
+    </Shell.TitleView>
+
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Horizontal">
-                <Entry x:Name="entryUrl" HorizontalOptions="FillAndExpand"/>
-                <Button Text="Add" Clicked="AddButton_Clicked" />
+        <StackLayout Orientation="Vertical" Padding="10">
+            <Label FontSize="Medium" FontAttributes="Bold" Text="Add Stream Url:"></Label>
+            <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 20">
+                <Entry x:Name="entryUrl" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource EntryBackgroundColor}" />
+                <Button Text="Add" Clicked="AddButton_Clicked" BackgroundColor="{StaticResource SecondaryColor}" />
             </StackLayout>
+            <Label FontSize="Medium" FontAttributes="Bold" Text="Stream Url List:" />
             <ListView x:Name="streamList" ItemTapped="StreamList_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -16,7 +25,7 @@
                                 <MenuItem Clicked="Delete_Clicked" CommandParameter="{ Binding . }" Text="Delete" IsDestructive="True" />
                             </ViewCell.ContextActions>
                             <StackLayout Padding="8">
-                                <Label Text="{ Binding . }" />
+                                <Label FontSize="Medium" Text="{ Binding . }" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
