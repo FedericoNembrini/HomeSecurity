@@ -14,12 +14,12 @@ using System.Diagnostics;
 
 namespace HomeSecurityApp.Pages
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
+        LibVLC _LibVlc;
         List<string> StreamUrl = new List<string>();
         List<VideoView> VideoViewList = new List<VideoView>();
-
-        LibVLC _LibVlc;
 
         SingleStreamVisualization singleStreamVisualization;
 
