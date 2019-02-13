@@ -12,5 +12,9 @@
         <Style TargetType="local:ShellApp">
             <Setter Property="Shell.ShellBackgroundColor" Value="{StaticResource PrimaryColor}" />
         </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="Black" />
+        </Style>
     </Application.Resources>
 </Application>
