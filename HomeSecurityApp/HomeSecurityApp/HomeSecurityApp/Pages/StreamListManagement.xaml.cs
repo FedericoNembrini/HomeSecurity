@@ -58,6 +58,7 @@ namespace HomeSecurityApp.Pages
             }
             while (Preferences.ContainsKey(Key + Convert.ToString(counter + 1)));
 
+            Preferences.Remove(Key + Convert.ToString(counter));
             StreamUrl.Remove((sender as MenuItem).CommandParameter.ToString());
         }
 
@@ -74,5 +75,18 @@ namespace HomeSecurityApp.Pages
             StreamUrl.Add(entryUrl.Text);
             entryUrl.Text = string.Empty;
         }
+
+        //private void SaveButton_Clicked(object sender, EventArgs e)
+        //{
+        //    for(int i = 0; i < StreamUrl.Count; i++)
+        //    {
+        //        //Preferences.Set(Key + Convert.ToString(i), StreamUrl[i]);
+        //    }
+        //}
+
+        //private void UrlEntry_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+
+        //}
     }
 }
