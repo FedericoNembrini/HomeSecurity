@@ -7,8 +7,8 @@ import asyncio
 import threading
 import socket
 
-class StreamThread(object):
-	def __init__(self, interval=2):
+class StreamManagerThread(object):
+	def __init__(self, interval = 2):
 		self.interval = interval
 
 		thread = threading.Thread(target=self.run, args=())
@@ -16,29 +16,54 @@ class StreamThread(object):
 		thread.start()
 
 	def run(self):
-		while True:
-		    # Do something
-			connection = server_socket.accept()[0].makefile('wb')
-			print("Connection Recivied")
-			try:
-				fileLog.write(getCurrentDateToString(True) + " --- Start Streaming")
-				camera.start_recording(connection, format='h264', splitter_port = 1)
-				print("Camera Streaming")
-				camera.wait_recording(3600, splitter_port = 1)
-			except:
-				fileLog.write(getCurrentDateToString(True) + " --- Error in Streaming\n")
-			finally:
-				try:
-					camera.stop_recording(splitter_port = 1)
-					connection.close()
-				except:
-					#Do Nothing
-					pass
-				finally:
-					#Do Nothing
-					pass
+		try:
+			while True:
+				# Wait for an Incoming Connection, then select a splitter_port free to stream.
+				print("StreamManagerThread")
+				connection = server_socket.accept()[0].makefile('wb')
+				for count in range(0, len(connectionArray)):
+					if connectionArray[count] != 0:
+						connectionNumber = connectionArray[count]
+						connectionArray[count] = 0
+						break
+				StreamThread(connection, connectionNumber)
+		finally:
+			connection.close()
 
-			time.sleep(self.interval)
+# Stream over the connection passed by until client disconnect
+class StreamThread(object):
+	def __init__(self, connection, connectionNumber):
+		self.interval = 2
+		self.connection = connection
+		self.connectionNumber = connectionNumber
+
+		thread = threading.Thread(target=self.run, args=())
+		thread.daemon = True
+		thread.start()
+
+	def run(self):
+		try:
+			print("StreamThread")
+			fileLog.write(getCurrentDateToString(True) + " --- Start Streaming")
+			camera.start_recording(self.connection, format='h264', splitter_port = self.connectionNumber)
+			while True:
+				camera.wait_recording(2, splitter_port = self.connectionNumber)
+				pass
+		except:
+			fileLog.write(getCurrentDateToString(True) + " --- Error in Streaming\n")
+		finally:
+			try:
+				camera.stop_recording(splitter_port = self.connectionNumber)
+				self.connection.close()
+				connectionArray[self.connectionNumber -1] = self.connectionNumber
+			except:
+				#Do Nothing
+				pass
+			finally:
+				#Do Nothing
+				pass
+
+		time.sleep(self.interval)
 
 def getCurrentDateToString(isLog):
 	if(isLog == True):
@@ -68,6 +93,7 @@ def Mp4Box(fileName):
 		fileLog.write(getCurrentDateToString(True) + " --- Error Mp4Box\n")
 
 #Program Start
+connectionArray = [1,2,3]
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind(("0.0.0.0", 8000))
 server_socket.listen(0)
@@ -87,7 +113,7 @@ try:
 	
 	fileLog.write(getCurrentDateToString(True) + ' --- Start Recording\n')
 	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0)
-	StreamThread()
+	StreamManagerThread()
 	
 	while True:
 		prevFileName = fileName
