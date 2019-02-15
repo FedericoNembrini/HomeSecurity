@@ -48,12 +48,28 @@ namespace HomeSecurityApp.Pages
                 TapGestureRecognizer tapGestureToAdd = new TapGestureRecognizer();
                 tapGestureToAdd.Tapped += VideoView_TappedAsync;
                 homeGrid.LayoutChanged += HomeGrid_LayoutChanged;
-                for (int i = 0; i < StreamUrl.Count; i++)
+                switch (Device.Idiom)
                 {
-                    VideoView videoToAdd = new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 360, MinimumHeightRequest = 360 };
-                    videoToAdd.GestureRecognizers.Add(tapGestureToAdd);
-                    VideoViewList.Add(videoToAdd);
-                    homeGrid.Children.Add(VideoViewList[i], Device.Idiom == TargetIdiom.Tablet && i % 2 != 0 ? 1 : 0, i);
+                    case TargetIdiom.Tablet:
+                        for (int i = 0; i < StreamUrl.Count; i++)
+                        {
+                            VideoView videoToAdd = new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 360, MinimumHeightRequest = 360 };
+                            videoToAdd.GestureRecognizers.Add(tapGestureToAdd);
+                            VideoViewList.Add(videoToAdd);
+                            homeGrid.Children.Add(VideoViewList[i], i % 2 != 0 ? 1 : 0, i / 2);
+
+                        }
+                        break;
+                    case TargetIdiom.Phone:
+                        for (int i = 0; i < StreamUrl.Count; i++)
+                        {
+                            VideoView videoToAdd = new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 360, MinimumHeightRequest = 360 };
+                            videoToAdd.GestureRecognizers.Add(tapGestureToAdd);
+                            VideoViewList.Add(videoToAdd);
+                            homeGrid.Children.Add(VideoViewList[i], 0, i);
+
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -104,6 +120,8 @@ namespace HomeSecurityApp.Pages
             //    counter++;
             //}
 
+            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
         }
