@@ -6,6 +6,9 @@ import subprocess
 import asyncio
 import threading
 import socket
+import firebase_admin
+from firebase_admin import db
+from firebase_admin import credentials
 
 class StreamManagerThread(object):
 	def __init__(self, interval = 2):
@@ -19,14 +22,21 @@ class StreamManagerThread(object):
 		try:
 			while True:
 				# Wait for an Incoming Connection, then select a splitter_port free to stream.
-				print("StreamManagerThread")
-				connection = server_socket.accept()[0].makefile('wb')
+				print('StreamManagerThread, Waiting for Connection...')
+				serverSocketConnection = server_socket.accept()
+				print('Connection Requested by ' + serverSocketConnection[1])
+				SendFirebaseLog(0, 'Connection Requested By: ' + serverSocketConnection[1])
+				connection = serverSocketConnection[0].makefile('wb')
+				
 				for count in range(0, len(connectionArray)):
 					if connectionArray[count] != 0:
 						connectionNumber = connectionArray[count]
 						connectionArray[count] = 0
 						break
+				
 				StreamThread(connection, connectionNumber)
+		except Exception as ex:
+			SendFirebaseLog(1, ex)
 		finally:
 			connection.close()
 
@@ -43,14 +53,14 @@ class StreamThread(object):
 
 	def run(self):
 		try:
-			print("StreamThread")
-			fileLog.write(getCurrentDateToString(True) + " --- Start Streaming")
+			print('StreamThread')
+			SendFirebaseLog(0, 'Start Streaming')
 			camera.start_recording(self.connection, format='h264', splitter_port = self.connectionNumber)
 			while True:
 				camera.wait_recording(2, splitter_port = self.connectionNumber)
 				pass
-		except:
-			fileLog.write(getCurrentDateToString(True) + " --- Error in Streaming\n")
+		except Exception as ex:
+			SendFirebaseLog(1, ex)
 		finally:
 			try:
 				camera.stop_recording(splitter_port = self.connectionNumber)
@@ -71,47 +81,59 @@ def getCurrentDateToString(isLog):
 	else:
 		return dt.datetime.now().strftime('%d-%m-%Y.%H-%M')
 
+def SendFirebaseLog(errorType, errorMessage):
+	try:
+		refChild.update({getCurrentDateToString(True) : {"ErrorType" : errorType, "ErrorMessage" : errorMessage}})
+	except Exception as ex:
+		pass
+
 def DeleteFileAfter24H(fileName):
 	try:
-		fileLog.write(' --- Searching for file\n')
+		SendFirebaseLog(0, 'Searching For File')
 		fileList = glob.glob(pathToFileNas + "*")
 		
 		for file in fileList:
 			if(file[ : len(file) - 8] == fileName[ : len(fileName)]):
-				fileLog.write(getCurrentDateToString(True) + ' --- Deleting File\n')
+				SendFirebaseLog(0, 'Deleting File ' + file)
 				os.remove(file)
-	except:
-		fileLog.write(getCurrentDateToString(True) + ' --- Error Delete\n')
-	finally:
-		return
+	except Exception as ex:
+		SendFirebaseLog(1, ex)	
+	return
 
 def Mp4Box(fileName):
 	command = "MP4Box -add {} {} ; rm {}".format(pathToFileLocal + fileName, pathToFileNas + fileName.replace(".h264", ".mp4"), pathToFileLocal + fileName)
 	try:
 		subprocess.Popen(command, shell=True)
-	except:
-		fileLog.write(getCurrentDateToString(True) + " --- Error Mp4Box\n")
+	except Exception as ex:
+		SendFirebaseLog(1, ex)
 
 #Program Start
+#Global Variable Declaration and Initialization
+
+cred = credentials.Certificate('serviceAccountKey.json')
+default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://testfirebase-3e9f5.firebaseio.com/'})
+ref = db.reference()
+refChild = ref.child('Cam01')
+SendFirebaseLog(0, 'Program Start')
+
 connectionArray = [1,2,3]
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.bind(("0.0.0.0", 8000))
+server_socket.bind(('0.0.0.0', 8000))
 server_socket.listen(0)
-
-fileLog = open('/home/pi/Projects/log/log.txt', 'a')
-fileLog.write(getCurrentDateToString(True) + ' --- Initializing\n')
 
 pathToFileLocal = '/home/pi/Projects/'
 pathToFileNas = '/mnt/SecurityCam/Cam01/Recordings/'
 fileName = getCurrentDateToString(False) + '.h264'
 
 try:
-	fileLog.write(getCurrentDateToString(True) + ' --- Camera Initializing\n')
+	SendFirebaseLog(0, 'Camera Initializing')
+
 	camera = picamera.PiCamera(resolution = (1270, 720), framerate = 30)
 	camera.rotation = 180
 	time.sleep(1)
 	
-	fileLog.write(getCurrentDateToString(True) + ' --- Start Recording\n')
+	SendFirebaseLog(0, 'Start Recording')
+
 	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0)
 	StreamManagerThread()
 	
@@ -120,7 +142,6 @@ try:
 		date = dt.datetime.today() - dt.timedelta(hours = 3)
 		camera.wait_recording(3600, splitter_port = 0)
 		fileName = getCurrentDateToString(False) + '.h264'
-		print("test")
 
 		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
 
@@ -129,8 +150,7 @@ try:
 
 	camera.stop_recording(splitter_port = 0)
 	camera.close()
-except:
-	fileLog.write(getCurrentDateToString(True) + ' --- Error\n')
+except Exception as ex:
+	SendFirebaseLog(1, ex)
 finally:
-	fileLog.write(getCurrentDateToString(True) + ' --- Finish\n')
-	fileLog.close()
+	SendFirebaseLog(0, 'Program End')
