@@ -77,14 +77,14 @@ class StreamThread(object):
 
 def getCurrentDateToString(isLog):
 	if(isLog == True):
-		return dt.datetime.now().strftime('%d-%m-%Y.%H-%M-%S')
+		return dt.datetime.now().strftime('%d%m%Y-%H:%M:%S')
 	else:
 		return dt.datetime.now().strftime('%d-%m-%Y.%H-%M')
 
 def SendFirebaseLog(errorType, errorMessage):
 	try:
 		refChild.update({getCurrentDateToString(True) : {"ErrorType" : errorType, "ErrorMessage" : errorMessage}})
-	except Exception as ex:
+	except:
 		pass
 
 def DeleteFileAfter24H(fileName):
@@ -112,6 +112,8 @@ def Mp4Box(fileName):
 
 cred = credentials.Certificate('serviceAccountKey.json')
 default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://testfirebase-3e9f5.firebaseio.com/'})
+#default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://homesucuritypp.firebaseio.com/'})
+
 ref = db.reference()
 refChild = ref.child('Cam01')
 SendFirebaseLog(0, 'Program Start')
