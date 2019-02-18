@@ -6,6 +6,7 @@ import subprocess
 import asyncio
 import threading
 import socket
+import json
 import firebase_admin
 from firebase_admin import db
 from firebase_admin import credentials
@@ -23,10 +24,7 @@ class StreamManagerThread(object):
 			while True:
 				# Wait for an Incoming Connection, then select a splitter_port free to stream.
 				print('StreamManagerThread, Waiting for Connection...')
-				serverSocketConnection = server_socket.accept()
-				print('Connection Requested by ' + serverSocketConnection[1])
-				SendFirebaseLog(0, 'Connection Requested By: ' + serverSocketConnection[1])
-				connection = serverSocketConnection[0].makefile('wb')
+				connection = server_socket.accept()[0].makefile('wb')
 				
 				for count in range(0, len(connectionArray)):
 					if connectionArray[count] != 0:
@@ -38,7 +36,7 @@ class StreamManagerThread(object):
 		except Exception as ex:
 			SendFirebaseLog(1, ex)
 		finally:
-			connection.close()
+			pass
 
 # Stream over the connection passed by until client disconnect
 class StreamThread(object):
@@ -83,7 +81,8 @@ def getCurrentDateToString(isLog):
 
 def SendFirebaseLog(errorType, errorMessage):
 	try:
-		refChild.update({getCurrentDateToString(True) : {"ErrorType" : errorType, "ErrorMessage" : errorMessage}})
+		print(str(errorMessage))
+		refChild.update({getCurrentDateToString(True) : {"ErrorType" : errorType, "ErrorMessage" : str(errorMessage)}})
 	except:
 		pass
 
