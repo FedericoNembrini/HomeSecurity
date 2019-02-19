@@ -20,5 +20,4 @@
             <ShellContent ContentTemplate="{ DataTemplate pages:StreamListManagement }" />
         </ShellSection>
     </ShellItem>
-    
 </Shell>

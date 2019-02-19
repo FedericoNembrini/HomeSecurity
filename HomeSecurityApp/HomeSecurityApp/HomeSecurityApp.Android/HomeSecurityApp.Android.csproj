@@ -99,7 +99,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\HomeSecurityApp\HomeSecurityApp.csproj">
       <Project>{5E02AB10-3504-45FE-9E93-02BA6C6A9E2B}</Project>
@@ -110,19 +109,22 @@
     <AndroidResource Include="Resources\drawable\splash_screen.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\securityCam.png" />
+    <AndroidResource Include="Resources\drawable\securitycam.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\securityCam.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\securitycam.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\securityCam.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\securitycam.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\securityCam.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\securitycam.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\securityCam.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\securitycam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\refreshbutton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
