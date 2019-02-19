@@ -3,7 +3,6 @@ import datetime as dt
 import picamera
 import glob
 import subprocess
-import asyncio
 import threading
 import socket
 import json
@@ -24,15 +23,16 @@ class StreamManagerThread(object):
 			while True:
 				# Wait for an Incoming Connection, then select a splitter_port free to stream.
 				print('StreamManagerThread, Waiting for Connection...')
-				connection = server_socket.accept()[0].makefile('wb')
-				
+				connection, address = server_socket.accept()
+				SendFirebaseLog(0, 'Connection Requested By: ' + str(address[0]))
+
 				for count in range(0, len(connectionArray)):
 					if connectionArray[count] != 0:
 						connectionNumber = connectionArray[count]
 						connectionArray[count] = 0
 						break
 				
-				StreamThread(connection, connectionNumber)
+				StreamThread(connection.makefile('wb'), connectionNumber)
 		except Exception as ex:
 			SendFirebaseLog(1, ex)
 		finally:
