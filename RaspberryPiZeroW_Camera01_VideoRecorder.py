@@ -32,7 +32,7 @@ class StreamManagerThread(object):
 						connectionArray[count] = 0
 						break
 				
-				StreamThread(connection.makefile('wb'), connectionNumber)
+				StreamThread(connection.makefile('wb'), connectionNumber, str(address[0]))
 		except Exception as ex:
 			SendFirebaseLog(1, ex)
 		finally:
@@ -40,10 +40,11 @@ class StreamManagerThread(object):
 
 # Stream over the connection passed by until client disconnect
 class StreamThread(object):
-	def __init__(self, connection, connectionNumber):
+	def __init__(self, connection, connectionNumber, ipAddress):
 		self.interval = 2
 		self.connection = connection
 		self.connectionNumber = connectionNumber
+		self.ipAddress = ipAddress
 
 		thread = threading.Thread(target=self.run, args=())
 		thread.daemon = True
@@ -58,7 +59,7 @@ class StreamThread(object):
 				camera.wait_recording(2, splitter_port = self.connectionNumber)
 				pass
 		except Exception as ex:
-			SendFirebaseLog(1, ex)
+			SendFirebaseLog(1, str(ex) + ' ' + self.ipAddress)
 		finally:
 			try:
 				camera.stop_recording(splitter_port = self.connectionNumber)
