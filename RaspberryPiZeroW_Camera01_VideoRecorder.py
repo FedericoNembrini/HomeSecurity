@@ -84,7 +84,7 @@ def SendFirebaseLog(errorType, errorMessage):
 	except:
 		pass
 
-def DeleteFileAfter24H(fileName):
+def DeleteFileAfterH(fileName):
 	try:
 		SendFirebaseLog(0, 'Searching For File')
 		fileList = glob.glob(pathToFileNas + "*")
@@ -147,7 +147,7 @@ try:
 		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
 
 		Mp4Box(prevFileName)
-		DeleteFileAfter24H(pathToFileNas + date.strftime('%d-%m-%Y.%H'))
+		DeleteFileAfterH(pathToFileNas + date.strftime('%d-%m-%Y.%H'))
 
 	camera.stop_recording(splitter_port = 0)
 	camera.close()
