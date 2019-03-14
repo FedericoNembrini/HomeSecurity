@@ -1,6 +1,7 @@
 import time
 import datetime as dt 
 import picamera
+import os
 import glob
 import subprocess
 import threading
@@ -10,16 +11,16 @@ import firebase_admin
 from firebase_admin import db
 from firebase_admin import credentials
 
+# Wait for Incoming Connection, then Start a Streaming Thread
 class StreamManagerThread(object):
-	def __init__(self, interval = 2):
-		self.interval = interval
-
+	def __init__(self):
 		thread = threading.Thread(target=self.run, args=())
 		thread.daemon = True
 		thread.start()
 
 	def run(self):
 		try:
+			SendFirebaseLog(0, 'StreamManagerThread Started')
 			while True:
 				# Wait for an Incoming Connection, then select a splitter_port free to stream.
 				print('StreamManagerThread, Waiting for Connection...')
@@ -41,7 +42,6 @@ class StreamManagerThread(object):
 # Stream over the connection passed by until client disconnect
 class StreamThread(object):
 	def __init__(self, connection, connectionNumber, ipAddress):
-		self.interval = 2
 		self.connection = connection
 		self.connectionNumber = connectionNumber
 		self.ipAddress = ipAddress
@@ -52,25 +52,22 @@ class StreamThread(object):
 
 	def run(self):
 		try:
-			print('StreamThread')
+			print('Start Streaming...')
 			SendFirebaseLog(0, 'Start Streaming')
 			camera.start_recording(self.connection, format='h264', splitter_port = self.connectionNumber)
 			while True:
 				camera.wait_recording(2, splitter_port = self.connectionNumber)
-				pass
 		except Exception as ex:
 			SendFirebaseLog(1, str(ex) + ' ' + self.ipAddress)
 		finally:
 			try:
 				camera.stop_recording(splitter_port = self.connectionNumber)
-				self.connection.close()
-				connectionArray[self.connectionNumber -1] = self.connectionNumber
 			except:
 				#Do Nothing
 				pass
 			finally:
-				#Do Nothing
-				pass
+				self.connection.close()
+				connectionArray[self.connectionNumber -1] = self.connectionNumber
 
 		time.sleep(self.interval)
 
@@ -93,12 +90,11 @@ def DeleteFileAfter24H(fileName):
 		fileList = glob.glob(pathToFileNas + "*")
 		
 		for file in fileList:
-			if(file[ : len(file) - 8] == fileName[ : len(fileName)]):
+			if(file[ : len(file) - 7] == fileName):
 				SendFirebaseLog(0, 'Deleting File ' + file)
 				os.remove(file)
 	except Exception as ex:
 		SendFirebaseLog(1, ex)	
-	return
 
 def Mp4Box(fileName):
 	command = "MP4Box -add {} {} ; rm {}".format(pathToFileLocal + fileName, pathToFileNas + fileName.replace(".h264", ".mp4"), pathToFileLocal + fileName)
@@ -132,6 +128,7 @@ try:
 
 	camera = picamera.PiCamera(resolution = (1270, 720), framerate = 30)
 	camera.rotation = 180
+	camera.annotate_text_size = 50
 	time.sleep(1)
 	
 	SendFirebaseLog(0, 'Start Recording')
@@ -141,14 +138,16 @@ try:
 	
 	while True:
 		prevFileName = fileName
-		date = dt.datetime.today() - dt.timedelta(hours = 3)
-		camera.wait_recording(3600, splitter_port = 0)
+		date = dt.datetime.today() - dt.timedelta(hours = 12)
+		for count in range(0, 1800):
+			camera.annotate_text = getCurrentDateToString(True)
+			camera.wait_recording(2, splitter_port = 0)
+		
 		fileName = getCurrentDateToString(False) + '.h264'
-
 		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
 
 		Mp4Box(prevFileName)
-		DeleteFileAfter24H(pathToFileNas + date.strftime('%d-%m-%Y %H'))
+		DeleteFileAfter24H(pathToFileNas + date.strftime('%d-%m-%Y.%H'))
 
 	camera.stop_recording(splitter_port = 0)
 	camera.close()
