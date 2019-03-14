@@ -93,7 +93,7 @@ namespace HomeSecurityApp.Pages
                 NeedLoad = false;
                 homeGrid.LayoutChanged -= HomeGrid_LayoutChanged;
                 homeGrid.Children.Clear();
-                VideoViewList = new List<VideoView>();
+                VideoViewList.Clear();
                 NeedLoad = true;
             }
             catch (Exception ex)
@@ -147,7 +147,7 @@ namespace HomeSecurityApp.Pages
             {
                 for (int i = 0; i < StreamUrl.Count; i++)
                 {
-                    VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation), Volume = 0 };
+                    VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], FromType.FromLocation), Volume = 0 };
                     VideoViewList[i].MediaPlayer.Play();
                 }
             }

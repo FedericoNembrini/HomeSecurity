@@ -29,7 +29,7 @@ namespace HomeSecurityApp.Pages
 
             _LibVlc = new LibVLC();
 
-            videoViewToDisplay.MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, VideoUrlToDisplay, Media.FromType.FromLocation), Volume = 0, Fullscreen = true };
+            videoViewToDisplay.MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, VideoUrlToDisplay, FromType.FromLocation), Volume = 0, Fullscreen = true };
             videoViewToDisplay.MediaPlayer.Play();
         }
 
