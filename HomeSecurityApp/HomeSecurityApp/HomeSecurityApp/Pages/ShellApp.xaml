@@ -2,8 +2,9 @@
 <Shell  xmlns="http://xamarin.com/schemas/2014/forms"
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:pages="clr-namespace:HomeSecurityApp.Pages"
-        x:Class="HomeSecurityApp.Pages.ShellApp">
-   
+        x:Class="HomeSecurityApp.Pages.ShellApp"
+        FlyoutBehavior="Flyout">
+
     <Shell.FlyoutHeader>
         <StackLayout BackgroundColor="{StaticResource PrimaryColor}" Orientation="Horizontal">
             <Label FontSize="Large" Margin="16" TextColor="White">HomeSecurityApp</Label>

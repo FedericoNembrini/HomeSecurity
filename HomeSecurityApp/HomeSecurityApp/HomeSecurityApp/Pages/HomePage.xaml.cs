@@ -23,8 +23,6 @@ namespace HomeSecurityApp.Pages
 
         SingleStreamVisualization singleStreamVisualization;
 
-        private bool NeedLoad = true;
-
         public HomePage()
         {
             InitializeComponent();
@@ -40,7 +38,7 @@ namespace HomeSecurityApp.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            
             try
             {
                 _LibVlc = new LibVLC();
@@ -67,7 +65,6 @@ namespace HomeSecurityApp.Pages
                             videoToAdd.GestureRecognizers.Add(tapGestureToAdd);
                             VideoViewList.Add(videoToAdd);
                             homeGrid.Children.Add(VideoViewList[i], 0, i);
-
                         }
                         break;
                 }
@@ -84,17 +81,15 @@ namespace HomeSecurityApp.Pages
 
             try
             {
-                foreach (VideoView videowView in VideoViewList)
-                {
-                    videowView.MediaPlayer.Stop();
-                    videowView.MediaPlayer.Media.Dispose();
-                }
-                _LibVlc.Dispose();
-                NeedLoad = false;
                 homeGrid.LayoutChanged -= HomeGrid_LayoutChanged;
                 homeGrid.Children.Clear();
+                foreach (VideoView videoView in VideoViewList)
+                {
+                    videoView.MediaPlayer.Stop();
+                    videoView.MediaPlayer.Media.Dispose();
+                }
                 VideoViewList.Clear();
-                NeedLoad = true;
+                _LibVlc.Dispose();
             }
             catch (Exception ex)
             {
@@ -143,7 +138,7 @@ namespace HomeSecurityApp.Pages
 
         private void HomeGrid_LayoutChanged(object sender, EventArgs e)
         {
-            if (NeedLoad && VideoViewList.Count == StreamUrl.Count)
+            if (VideoViewList.Count == StreamUrl.Count)
             {
                 for (int i = 0; i < StreamUrl.Count; i++)
                 {
