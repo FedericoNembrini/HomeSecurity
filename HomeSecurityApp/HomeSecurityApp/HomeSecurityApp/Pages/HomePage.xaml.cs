@@ -23,8 +23,6 @@ namespace HomeSecurityApp.Pages
 
         SingleStreamVisualization singleStreamVisualization;
 
-        private bool NeedLoad = true;
-
         public HomePage()
         {
             InitializeComponent();
@@ -40,7 +38,7 @@ namespace HomeSecurityApp.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            
             try
             {
                 _LibVlc = new LibVLC();
@@ -48,12 +46,27 @@ namespace HomeSecurityApp.Pages
                 TapGestureRecognizer tapGestureToAdd = new TapGestureRecognizer();
                 tapGestureToAdd.Tapped += VideoView_TappedAsync;
                 homeGrid.LayoutChanged += HomeGrid_LayoutChanged;
-                for (int i = 0; i < StreamUrl.Count; i++)
+                switch (Device.Idiom)
                 {
-                    VideoView videoToAdd = new VideoView { HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.FillAndExpand, HeightRequest = 360, MinimumHeightRequest = 360 };
-                    videoToAdd.GestureRecognizers.Add(tapGestureToAdd);
-                    VideoViewList.Add(videoToAdd);
-                    homeGrid.Children.Add(VideoViewList[i], Device.Idiom == TargetIdiom.Tablet && i % 2 != 0 ? 1 : 0, i);
+                    case TargetIdiom.Tablet:
+                        for (int i = 0; i < StreamUrl.Count; i++)
+                        {
+                            VideoView videoToAdd = new VideoView { HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 360, MinimumHeightRequest = 360 };
+                            videoToAdd.GestureRecognizers.Add(tapGestureToAdd);
+                            VideoViewList.Add(videoToAdd);
+                            homeGrid.Children.Add(VideoViewList[i], i % 2 != 0 ? 1 : 0, i / 2);
+
+                        }
+                        break;
+                    case TargetIdiom.Phone:
+                        for (int i = 0; i < StreamUrl.Count; i++)
+                        {
+                            VideoView videoToAdd = new VideoView { HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 360, MinimumHeightRequest = 360 };
+                            videoToAdd.GestureRecognizers.Add(tapGestureToAdd);
+                            VideoViewList.Add(videoToAdd);
+                            homeGrid.Children.Add(VideoViewList[i], 0, i);
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -68,17 +81,15 @@ namespace HomeSecurityApp.Pages
 
             try
             {
-                foreach (VideoView videowView in VideoViewList)
-                {
-                    videowView.MediaPlayer.Stop();
-                    videowView.MediaPlayer.Media.Dispose();
-                }
-                _LibVlc.Dispose();
-                NeedLoad = false;
                 homeGrid.LayoutChanged -= HomeGrid_LayoutChanged;
                 homeGrid.Children.Clear();
-                VideoViewList = new List<VideoView>();
-                NeedLoad = true;
+                foreach (VideoView videoView in VideoViewList)
+                {
+                    videoView.MediaPlayer.Stop();
+                    videoView.MediaPlayer.Media.Dispose();
+                }
+                VideoViewList.Clear();
+                _LibVlc.Dispose();
             }
             catch (Exception ex)
             {
@@ -106,12 +117,13 @@ namespace HomeSecurityApp.Pages
 
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
         }
 
         private void InitializeGrid()
         {
             homeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
-            if(Device.Idiom == TargetIdiom.Tablet)
+            if (Device.Idiom == TargetIdiom.Tablet)
                 homeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
 
             for (int i = 0; i < StreamUrl.Count; i++)
@@ -126,11 +138,11 @@ namespace HomeSecurityApp.Pages
 
         private void HomeGrid_LayoutChanged(object sender, EventArgs e)
         {
-            if(NeedLoad && VideoViewList.Count == StreamUrl.Count)
+            if (VideoViewList.Count == StreamUrl.Count)
             {
                 for (int i = 0; i < StreamUrl.Count; i++)
                 {
-                    VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], Media.FromType.FromLocation), Volume = 0 };
+                    VideoViewList[i].MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, StreamUrl[i], FromType.FromLocation), Volume = 0 };
                     VideoViewList[i].MediaPlayer.Play();
                 }
             }
@@ -152,7 +164,7 @@ namespace HomeSecurityApp.Pages
 
         private void Modal_ModalPopped(object sender, ModalPoppedEventArgs e)
         {
-            if(e.Modal == singleStreamVisualization)
+            if (e.Modal == singleStreamVisualization)
             {
                 OnAppearing();
             }
@@ -160,11 +172,19 @@ namespace HomeSecurityApp.Pages
 
         private void Modal_ModalPushing(object sender, ModalPushingEventArgs e)
         {
-            if(e.Modal == singleStreamVisualization)
+            if (e.Modal == singleStreamVisualization)
             {
                 OnDisappearing();
             }
         }
+
+        //private void RefreshButton_Clicked(object sender, EventArgs e)
+        //{
+        //    for (int i = 0; i < StreamUrl.Count; i++)
+        //    {
+        //        VideoViewList[i].MediaPlayer.Play();
+        //    }
+        //}
 
         #endregion
     }

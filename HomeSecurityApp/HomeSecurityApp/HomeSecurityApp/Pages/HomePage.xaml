@@ -5,15 +5,16 @@
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms">
 
     <Shell.TitleView>
-        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0,16,0,0">
+        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" >
             <Label FontSize="Large" FontAttributes="Bold" Text="Home Page" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
+            <!--<ImageButton Source="refreshbutton.png" VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="Transparent" Aspect="AspectFit" />-->
         </StackLayout>
     </Shell.TitleView>
-    
+
     <ContentPage.Content>
         <ScrollView VerticalScrollBarVisibility="Default" Orientation="Vertical" BackgroundColor="Black">
             <Grid x:Name="homeGrid">
             </Grid>
         </ScrollView>
     </ContentPage.Content>
-</ContentPage>  
+</ContentPage>
