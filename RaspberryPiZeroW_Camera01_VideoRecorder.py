@@ -10,6 +10,8 @@ import json
 import firebase_admin
 from firebase_admin import db
 from firebase_admin import credentials
+import io
+from PIL import Image
 
 # Wait for Incoming Connection, then Start a Streaming Thread
 class StreamManagerThread(object):
@@ -69,7 +71,47 @@ class StreamThread(object):
 				self.connection.close()
 				connectionArray[self.connectionNumber -1] = self.connectionNumber
 
-		time.sleep(self.interval)
+class AlertSystem(object):
+	def __init__(self):
+		self.treshold = 20
+		self.sensibility = 20 
+
+		threadAlertSystem = threading.Thread(target=self.run, args=())
+		threadAlertSystem.daemon = True
+		threadAlertSystem.start()
+	
+	def run(self):
+		image1, buffer1 = self.captureImage()
+		while(True):
+			image2, buffer2 = captureImage()
+
+			# Count changed pixels
+			changedPixels = 0
+			for x in range(0, 640):
+				for y in range(0, 480):
+					# Just check green channel as it's the highest quality channel
+					pixdiff = abs(buffer1[x,y][1] - buffer2[x,y][1])
+					if pixdiff > threshold:
+						changedPixels += 1
+		
+			# Save an image if pixels changed
+			if changedPixels > self.sensibility:
+				#Send Mail with Image
+				pass
+
+			# Swap comparison buffers
+			image1 = image2
+			buffer1 = buffer2
+	
+	def captureImage(self):
+		imageData = io.StringIO()
+		camera.capture(imageData, splitter_port = 0)
+    	imageData.seek(0)
+    	im = Image.open(imageData)
+    	buffer = im.load()
+    	imageData.close()
+    	return im, buffer
+	
 
 def getCurrentDateToString(isLog):
 	if(isLog == True):
