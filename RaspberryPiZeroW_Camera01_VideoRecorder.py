@@ -1,6 +1,8 @@
 import time
 import datetime as dt 
 import picamera
+import picamera.array
+import numpy as np
 import os
 import glob
 import subprocess
@@ -10,8 +12,16 @@ import json
 import firebase_admin
 from firebase_admin import db
 from firebase_admin import credentials
-import io
-from PIL import Image
+
+import MailService
+
+# Return the SplitterPort that is not being used
+def CalculateVideoPortFree():
+	for count in range(0, len(connectionArray)):
+		if connectionArray[count] != 0:
+			splitter_port = connectionArray[count]
+			connectionArray[count] = 0
+			return splitter_port
 
 # Wait for Incoming Connection, then Start a Streaming Thread
 class StreamManagerThread(object):
@@ -25,17 +35,10 @@ class StreamManagerThread(object):
 			SendFirebaseLog(0, 'StreamManagerThread Started')
 			while True:
 				# Wait for an Incoming Connection, then select a splitter_port free to stream.
-				print('StreamManagerThread, Waiting for Connection...')
 				connection, address = server_socket.accept()
 				SendFirebaseLog(0, 'Connection Requested By: ' + str(address[0]))
-
-				for count in range(0, len(connectionArray)):
-					if connectionArray[count] != 0:
-						connectionNumber = connectionArray[count]
-						connectionArray[count] = 0
-						break
 				
-				StreamThread(connection.makefile('wb'), connectionNumber, str(address[0]))
+				StreamThread(connection.makefile('wb'), CalculateVideoPortFree(), str(address[0]))
 		except Exception as ex:
 			SendFirebaseLog(1, ex)
 		finally:
@@ -54,7 +57,6 @@ class StreamThread(object):
 
 	def run(self):
 		try:
-			print('Start Streaming...')
 			SendFirebaseLog(0, 'Start Streaming')
 			camera.start_recording(self.connection, format='h264', splitter_port = self.connectionNumber)
 			while True:
@@ -71,47 +73,55 @@ class StreamThread(object):
 				self.connection.close()
 				connectionArray[self.connectionNumber -1] = self.connectionNumber
 
-class AlertSystem(object):
-	def __init__(self):
-		self.treshold = 20
-		self.sensibility = 20 
+class MotionDetector(picamera.array.PiMotionAnalysis):
+    def __init__(self, camera, handler):
+        super(MotionDetector, self).__init__(camera)
+        self.handler = handler
+        self.first = True
 
-		threadAlertSystem = threading.Thread(target=self.run, args=())
-		threadAlertSystem.daemon = True
-		threadAlertSystem.start()
-	
-	def run(self):
-		image1, buffer1 = self.captureImage()
-		while(True):
-			image2, buffer2 = captureImage()
+    # This method is called after each frame is ready for processing.
+    def analyse(self, a):
+        a = np.sqrt(
+            np.square(a['x'].astype(np.float)) +
+            np.square(a['y'].astype(np.float))
+        ).clip(0, 255).astype(np.uint8)
+        # If there are 50 vectors detected with a magnitude of 60.
+        # We consider movement to be detected.
+        if (a > 60).sum() > 50:
+            # Ignore the first detection, the camera sometimes
+            # triggers a false positive due to camera warmup.
+            if self.first:
+                self.first = False
+                return
+            # The handler is explained later in this article
+            self.handler.motion_detected()
 
-			# Count changed pixels
-			changedPixels = 0
-			for x in range(0, 640):
-				for y in range(0, 480):
-					# Just check green channel as it's the highest quality channel
-					pixdiff = abs(buffer1[x,y][1] - buffer2[x,y][1])
-					if pixdiff > threshold:
-						changedPixels += 1
-		
-			# Save an image if pixels changed
-			if changedPixels > self.sensibility:
-				#Send Mail with Image
-				pass
+class MotionHandler:
+	def __init__(self, camera, post_capture_callback=None):
+		self.camera = camera
+		self.callback = post_capture_callback
+		self.detected = False
+		self.working = False
 
-			# Swap comparison buffers
-			image1 = image2
-			buffer1 = buffer2
-	
-	def captureImage(self):
-		imageData = io.StringIO()
-		camera.capture(imageData, splitter_port = 0)
-    	imageData.seek(0)
-    	im = Image.open(imageData)
-    	buffer = im.load()
-    	imageData.close()
-    	return im, buffer
-	
+		self.captureName = 'movement_temp.jpeg'
+		self.mailService = MailService.eMailService()
+
+	def motion_detected(self):
+		if not self.working:
+			self.detected = True
+
+	def tick(self):
+		if self.detected:
+			self.working = True
+			self.detected = False
+
+			splitterPort = CalculateVideoPortFree()
+			self.camera.capture(self.captureName, format='jpeg', splitter_port = splitterPort)
+			connectionArray[splitterPort -1] = splitterPort
+
+			self.mailService.SendMail(self.captureName, 'Alert')
+			os.remove(self.captureName)
+			self.working = False
 
 def getCurrentDateToString(isLog):
 	if(isLog == True):
@@ -121,7 +131,6 @@ def getCurrentDateToString(isLog):
 
 def SendFirebaseLog(errorType, errorMessage):
 	try:
-		print(str(errorMessage))
 		refChild.update({getCurrentDateToString(True) : {"ErrorType" : errorType, "ErrorMessage" : str(errorMessage)}})
 	except:
 		pass
@@ -175,15 +184,18 @@ try:
 	
 	SendFirebaseLog(0, 'Start Recording')
 
-	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0)
+	handler = MotionHandler(camera)
+
+	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0, motion_output = MotionDetector(camera, handler))
 	StreamManagerThread()
 	
 	while True:
 		prevFileName = fileName
 		date = dt.datetime.today() - dt.timedelta(hours = 12)
-		for count in range(0, 1800):
+		for count in range(0, 3600):
 			camera.annotate_text = getCurrentDateToString(True)
-			camera.wait_recording(2, splitter_port = 0)
+			camera.wait_recording(1, splitter_port = 0)
+			handler.tick()
 		
 		fileName = getCurrentDateToString(False) + '.h264'
 		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
