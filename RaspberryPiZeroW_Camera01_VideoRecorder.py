@@ -194,7 +194,6 @@ try:
 		date = dt.datetime.today() - dt.timedelta(hours = 12)
 		while(whileDate1 < whileDate2):
 			camera.annotate_text = getCurrentDateToString(True)
-			#camera.wait_recording(1, splitter_port = 0)
 			handler.tick()
 		
 		fileName = getCurrentDateToString(False) + '.h264'
