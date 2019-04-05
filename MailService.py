@@ -6,6 +6,33 @@ from email.mime.image import MIMEImage
 
 class eMailService(object):
     def __init__(self):
+        self.smtpConnect()
+    
+    def SendMail(self, img1, subject):
+        while(True):
+            try:
+                emailMessage = MIMEMultipart('alternative')
+                emailMessage['From'] = self.fromAddress
+                emailMessage['To'] = self.toAddress
+                emailMessage['Subject'] = subject
+
+                mailBody = MIMEText('<strong>Movimento Rilevato!<strong><br>' + '<img src="cid:image1">', 'html')
+                emailMessage.attach(mailBody)
+
+                image = open(img1, 'rb')
+                mailImage = MIMEImage(image.read())
+                image.close()
+                mailImage.add_header('Content-ID', '<image1>')
+
+                emailMessage.attach(mailImage)
+
+                self.smtpServer.send_message(emailMessage)
+                
+                return
+            except:
+                self.smtpConnect()
+
+    def smtpConnect(self):
         with open('mail_service.json', 'r') as email_data:
             self.emailData = json.loads(email_data.read())
         
@@ -15,22 +42,3 @@ class eMailService(object):
 
         self.fromAddress = str(self.emailData['fromAdress'])
         self.toAddress = str(self.emailData['toAddress'])
-    
-    def SendMail(self, img1, subject):
-        emailMessage = MIMEMultipart('alternative')
-        emailMessage['From'] = self.fromAddress
-        emailMessage['To'] = self.toAddress
-        emailMessage['Subject'] = subject
-
-        mailBody = MIMEText('<strong>Movimento Rilevato!<strong><br>' + '<img src="cid:image1">', 'html')
-        emailMessage.attach(mailBody)
-
-        image = open(img1, 'rb')
-        mailImage = MIMEImage(image.read())
-        image.close()
-        mailImage.add_header('Content-ID', '<image1>')
-
-        print('Attaching')
-        emailMessage.attach(mailImage)
-
-        self.smtpServer.send_message(emailMessage)

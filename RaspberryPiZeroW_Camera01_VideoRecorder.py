@@ -79,21 +79,17 @@ class MotionDetector(picamera.array.PiMotionAnalysis):
         self.handler = handler
         self.first = True
 
-    # This method is called after each frame is ready for processing.
+    # Method called after each frame is ready for processing.
     def analyse(self, a):
         a = np.sqrt(
             np.square(a['x'].astype(np.float)) +
             np.square(a['y'].astype(np.float))
         ).clip(0, 255).astype(np.uint8)
-        # If there are 50 vectors detected with a magnitude of 60.
-        # We consider movement to be detected.
+        # If there are 50 vectors detected with a magnitude of 60 We consider movement to be detected.
         if (a > 60).sum() > 50:
-            # Ignore the first detection, the camera sometimes
-            # triggers a false positive due to camera warmup.
             if self.first:
                 self.first = False
                 return
-            # The handler is explained later in this article
             self.handler.motion_detected()
 
 class MotionHandler:
@@ -174,6 +170,7 @@ pathToFileLocal = '/home/pi/Projects/'
 pathToFileNas = '/mnt/SecurityCam/Cam01/Recordings/'
 fileName = getCurrentDateToString(False) + '.h264'
 
+
 try:
 	SendFirebaseLog(0, 'Camera Initializing')
 
@@ -188,13 +185,16 @@ try:
 
 	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0, motion_output = MotionDetector(camera, handler))
 	StreamManagerThread()
-	
+
 	while True:
+		whileDate1 = dt.datetime.today()
+		whileDate2 = whileDate1 + dt.timedelta(hours = 1)
+
 		prevFileName = fileName
 		date = dt.datetime.today() - dt.timedelta(hours = 12)
-		for count in range(0, 3600):
+		while(whileDate1 < whileDate2):
 			camera.annotate_text = getCurrentDateToString(True)
-			camera.wait_recording(1, splitter_port = 0)
+			#camera.wait_recording(1, splitter_port = 0)
 			handler.tick()
 		
 		fileName = getCurrentDateToString(False) + '.h264'
