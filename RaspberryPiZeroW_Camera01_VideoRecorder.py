@@ -1,19 +1,18 @@
-import time
-import datetime as dt 
-import picamera
-import picamera.array
-import numpy as np
-import os
+import datetime as dt
 import glob
+import json
+import os
+import socket
 import subprocess
 import threading
-import socket
-import json
-import firebase_admin
-from firebase_admin import db
-from firebase_admin import credentials
+import time
 
+import firebase_admin
+from firebase_admin import credentials, db
 import MailService
+import numpy as np
+import picamera
+import picamera.array
 
 # Return the SplitterPort that is not being used
 def CalculateVideoPortFree():
@@ -73,6 +72,7 @@ class StreamThread(object):
 				self.connection.close()
 				connectionArray[self.connectionNumber -1] = self.connectionNumber
 
+# Analyze and Detect Movement
 class MotionDetector(picamera.array.PiMotionAnalysis):
     def __init__(self, camera, handler):
         super(MotionDetector, self).__init__(camera)
@@ -92,6 +92,7 @@ class MotionDetector(picamera.array.PiMotionAnalysis):
                 return
             self.handler.motion_detected()
 
+# Handle Movement Detected by Taking a Capture and sending Email
 class MotionHandler:
 	def __init__(self, camera, post_capture_callback=None):
 		self.camera = camera
@@ -154,8 +155,7 @@ def Mp4Box(fileName):
 #Global Variable Declaration and Initialization
 
 cred = credentials.Certificate('serviceAccountKey.json')
-default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://testfirebase-3e9f5.firebaseio.com/'})
-#default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://homesucuritypp.firebaseio.com/'})
+default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://homesucuritypp.firebaseio.com/'})
 
 ref = db.reference()
 refChild = ref.child('Cam01')
@@ -169,7 +169,6 @@ server_socket.listen(0)
 pathToFileLocal = '/home/pi/Projects/'
 pathToFileNas = '/mnt/SecurityCam/Cam01/Recordings/'
 fileName = getCurrentDateToString(False) + '.h264'
-
 
 try:
 	SendFirebaseLog(0, 'Camera Initializing')
