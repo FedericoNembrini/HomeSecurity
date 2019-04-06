@@ -1,8 +1,9 @@
-import smtplib
 import json
+import smtplib
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
+
 
 class eMailService(object):
     def __init__(self):
