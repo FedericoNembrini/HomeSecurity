@@ -7,7 +7,7 @@ Mobile Application to Watch the Streaming
 
 * [Python](https://docs.python.org/3/) - The Language Used for Recording and Server Side
 * [Xamarin Forms](https://docs.microsoft.com/it-it/xamarin/xamarin-forms/) - Mobile Application
-* [VLC (LibVLCSharp)](https://rometools.github.io/rome/) - Streaming Visualization on MobileApp
+* [VLC (LibVLCSharp)](https://code.videolan.org/videolan/LibVLCSharp) - Streaming Visualization on MobileApp
 
 ## Authors
 
