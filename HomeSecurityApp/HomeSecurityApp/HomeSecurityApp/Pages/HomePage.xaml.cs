@@ -101,23 +101,27 @@ namespace HomeSecurityApp.Pages
 
         private void LoadStreamList()
         {
-            //string key = "StreamUrl_";
-            //int counter = 0;
-            //string stringTemp;
+            #if RELEASE
+            string key = "StreamUrl_";
+            int counter = 0;
+            string stringTemp;
 
-            //while(Preferences.ContainsKey(key + Convert.ToString(counter)))
-            //{
-            //    stringTemp = Preferences.Get(key + Convert.ToString(counter), string.Empty);
-            //    if(!string.IsNullOrEmpty(stringTemp))
-            //    {
-            //        StreamUrl.Add(stringTemp);
-            //    }
-            //    counter++;
-            //}
+            while(Preferences.ContainsKey(key + Convert.ToString(counter)))
+            {
+                stringTemp = Preferences.Get(key + Convert.ToString(counter), string.Empty);
+                if(!string.IsNullOrEmpty(stringTemp))
+                {
+                    StreamUrl.Add(stringTemp);
+                }
+                counter++;
+            }
+            #endif
 
+            #if DEBUG
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            #endif
         }
 
         private void InitializeGrid()

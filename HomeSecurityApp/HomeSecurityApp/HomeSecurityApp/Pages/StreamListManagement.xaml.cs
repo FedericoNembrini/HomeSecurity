@@ -21,26 +21,32 @@ namespace HomeSecurityApp.Pages
 		{
 			InitializeComponent ();
             LoadStreamList();
-		}
+        }
 
         private void LoadStreamList()
         {
-            //int counter = 0;
-            //string stringTemp;
+            #if RELEASE
+            int counter = 0;
+            string stringTemp;
 
-            //while(Preferences.ContainsKey(Key + Convert.ToString(counter)))
-            //{
-            //    stringTemp = Preferences.Get(Key + Convert.ToString(counter), string.Empty);
-            //    if(!string.IsNullOrEmpty(stringTemp))
-            //    {
-            //        StreamUrl.Add(stringTemp);
-            //    }
-            //    counter++;
-            //}
-            //CounterUrl = counter;
+            while(Preferences.ContainsKey(Key + Convert.ToString(counter)))
+            {
+                stringTemp = Preferences.Get(Key + Convert.ToString(counter), string.Empty);
+                if(!string.IsNullOrEmpty(stringTemp))
+                {
+                    StreamUrl.Add(stringTemp);
+                }
+                counter++;
+            }
+            CounterUrl = counter;
+            #endif
+
+            #if DEBUG
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            #endif
+
             streamList.ItemsSource = StreamUrl;
         }
 
@@ -49,7 +55,9 @@ namespace HomeSecurityApp.Pages
             string itemElements = (sender as MenuItem).CommandParameter.ToString();
             int counter = StreamUrl.IndexOf(itemElements);
 
-            //Preferences.Set(Key + Convert.ToString(counter), string.Empty);
+            #if RELEASE
+            Preferences.Set(Key + Convert.ToString(counter), string.Empty);
+            #endif
 
             do
             {
@@ -69,9 +77,11 @@ namespace HomeSecurityApp.Pages
 
         private void AddButton_Clicked(object sender, EventArgs e)
         {
-            //string key = "StreamUrl_";
-            //if(!string.IsNullOrEmpty(entryUrl.Text))
-            //    Preferences.Set(key + CounterUrl, entryUrl.Text);
+            #if RELEASE
+            if (!string.IsNullOrEmpty(entryUrl.Text))
+                Preferences.Set(Key + CounterUrl, entryUrl.Text);
+            #endif
+
             StreamUrl.Add(entryUrl.Text);
             entryUrl.Text = string.Empty;
         }
