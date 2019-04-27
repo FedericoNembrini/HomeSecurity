@@ -1,15 +1,19 @@
-import time
-import datetime as dt 
-import picamera
-import os
-import glob
-import subprocess
-import threading
-import socket
-import json
+import datetime as dt, glob, json, os, socket, subprocess, threading, time
+
 import firebase_admin
-from firebase_admin import db
-from firebase_admin import credentials
+from firebase_admin import credentials, db
+import MailService
+import numpy as np
+import picamera
+import picamera.array
+
+# Return the SplitterPort that is not being used
+def CalculateVideoPortFree():
+	for count in range(0, len(connectionArray)):
+		if connectionArray[count] != 0:
+			splitter_port = connectionArray[count]
+			connectionArray[count] = 0
+			return splitter_port
 
 # Wait for Incoming Connection, then Start a Streaming Thread
 class StreamManagerThread(object):
@@ -23,17 +27,10 @@ class StreamManagerThread(object):
 			SendFirebaseLog(0, 'StreamManagerThread Started')
 			while True:
 				# Wait for an Incoming Connection, then select a splitter_port free to stream.
-				print('StreamManagerThread, Waiting for Connection...')
 				connection, address = server_socket.accept()
 				SendFirebaseLog(0, 'Connection Requested By: ' + str(address[0]))
-
-				for count in range(0, len(connectionArray)):
-					if connectionArray[count] != 0:
-						connectionNumber = connectionArray[count]
-						connectionArray[count] = 0
-						break
 				
-				StreamThread(connection.makefile('wb'), connectionNumber, str(address[0]))
+				StreamThread(connection.makefile('wb'), CalculateVideoPortFree(), str(address[0]))
 		except Exception as ex:
 			SendFirebaseLog(1, ex)
 		finally:
@@ -52,7 +49,6 @@ class StreamThread(object):
 
 	def run(self):
 		try:
-			print('Start Streaming...')
 			SendFirebaseLog(0, 'Start Streaming')
 			camera.start_recording(self.connection, format='h264', splitter_port = self.connectionNumber)
 			while True:
@@ -69,7 +65,53 @@ class StreamThread(object):
 				self.connection.close()
 				connectionArray[self.connectionNumber -1] = self.connectionNumber
 
-		time.sleep(self.interval)
+# Analyze and Detect Movement
+class MotionDetector(picamera.array.PiMotionAnalysis):
+    def __init__(self, camera, handler):
+        super(MotionDetector, self).__init__(camera)
+        self.handler = handler
+        self.first = True
+
+    # Method called after each frame is ready for processing.
+    def analyse(self, a):
+        a = np.sqrt(
+            np.square(a['x'].astype(np.float)) +
+            np.square(a['y'].astype(np.float))
+        ).clip(0, 255).astype(np.uint8)
+        # If there are 50 vectors detected with a magnitude of 60 We consider movement to be detected.
+        if (a > 60).sum() > 50:
+            if self.first:
+                self.first = False
+                return
+            self.handler.motion_detected()
+
+# Handle Movement Detected by Taking a Capture and sending Email
+class MotionHandler:
+	def __init__(self, camera, post_capture_callback=None):
+		self.camera = camera
+		self.callback = post_capture_callback
+		self.detected = False
+		self.working = False
+
+		self.captureName = 'movement_temp.jpeg'
+		self.mailService = MailService.eMailService()
+
+	def motion_detected(self):
+		if not self.working:
+			self.detected = True
+
+	def tick(self):
+		if self.detected:
+			self.working = True
+			self.detected = False
+
+			splitterPort = CalculateVideoPortFree()
+			self.camera.capture(self.captureName, format='jpeg', splitter_port = splitterPort)
+			connectionArray[splitterPort -1] = splitterPort
+
+			self.mailService.SendMail(self.captureName, 'Alert')
+			os.remove(self.captureName)
+			self.working = False
 
 def getCurrentDateToString(isLog):
 	if(isLog == True):
@@ -79,7 +121,6 @@ def getCurrentDateToString(isLog):
 
 def SendFirebaseLog(errorType, errorMessage):
 	try:
-		print(str(errorMessage))
 		refChild.update({getCurrentDateToString(True) : {"ErrorType" : errorType, "ErrorMessage" : str(errorMessage)}})
 	except:
 		pass
@@ -107,8 +148,7 @@ def Mp4Box(fileName):
 #Global Variable Declaration and Initialization
 
 cred = credentials.Certificate('serviceAccountKey.json')
-default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://testfirebase-3e9f5.firebaseio.com/'})
-#default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://homesucuritypp.firebaseio.com/'})
+default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://homesucuritypp.firebaseio.com/'})
 
 ref = db.reference()
 refChild = ref.child('Cam01')
@@ -133,15 +173,21 @@ try:
 	
 	SendFirebaseLog(0, 'Start Recording')
 
-	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0)
+	handler = MotionHandler(camera)
+
+	camera.start_recording(pathToFileLocal + fileName, splitter_port = 0, motion_output = MotionDetector(camera, handler))
 	StreamManagerThread()
-	
+
 	while True:
+		whileDate1 = dt.datetime.today()
+		whileDate2 = whileDate1 + dt.timedelta(hours = 1)
+
 		prevFileName = fileName
 		date = dt.datetime.today() - dt.timedelta(hours = 12)
-		for count in range(0, 1800):
+		while(whileDate1 < whileDate2):
 			camera.annotate_text = getCurrentDateToString(True)
-			camera.wait_recording(2, splitter_port = 0)
+			if dt.datetime.today().hour < 6:
+				handler.tick()
 		
 		fileName = getCurrentDateToString(False) + '.h264'
 		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
