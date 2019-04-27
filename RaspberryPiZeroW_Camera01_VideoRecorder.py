@@ -1,11 +1,4 @@
-import datetime as dt
-import glob
-import json
-import os
-import socket
-import subprocess
-import threading
-import time
+import datetime as dt, glob, json, os, socket, subprocess, threading, time
 
 import firebase_admin
 from firebase_admin import credentials, db
@@ -193,7 +186,8 @@ try:
 		date = dt.datetime.today() - dt.timedelta(hours = 12)
 		while(whileDate1 < whileDate2):
 			camera.annotate_text = getCurrentDateToString(True)
-			handler.tick()
+			if dt.datetime.today().hour < 6:
+				handler.tick()
 		
 		fileName = getCurrentDateToString(False) + '.h264'
 		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
