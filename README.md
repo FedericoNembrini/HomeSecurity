@@ -1,6 +1,6 @@
 # SecurityCamera
 
-RaspberryPi + Camera Recoriding and Streaming Server
+RaspberryPi + Camera Recoriding and Streaming Server  
 Mobile Application to Watch the Streaming
 
 ## Built With
