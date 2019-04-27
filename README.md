@@ -11,4 +11,4 @@ Mobile Application to Watch the Streaming
 
 ## Authors
 
-* **Federico Nembrini** - [PurpleBooth](https://github.com/FedericoNembrini)
+* **Federico Nembrini** - [GitHub](https://github.com/FedericoNembrini)
