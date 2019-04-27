@@ -11,7 +11,7 @@ namespace HomeSecurityApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new Pages.ShellApp();
         }
 
         protected override void OnStart()

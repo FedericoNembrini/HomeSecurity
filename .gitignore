@@ -343,3 +343,8 @@ healthchecksdb
 bin
 obj
 /HomeSecurityApp/HomeSecurityApp/HomeSecurityApp.Android/Resources/Resource.designer.cs
+
+serviceAccountKey.json
+serviceAccountKey_Prod.json
+mail_service.json
+.vscode/launch.json
