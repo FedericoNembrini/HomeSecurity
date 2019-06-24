@@ -4,6 +4,8 @@
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              x:Class="HomeSecurityApp.Pages.SingleStreamVisualization">
     <ContentPage.Content>
-        <shared:VideoView x:Name="videoViewToDisplay" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White" >
+            <shared:VideoView x:Name="videoViewToDisplay" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

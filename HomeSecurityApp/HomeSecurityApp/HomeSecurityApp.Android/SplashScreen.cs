@@ -22,7 +22,7 @@ namespace HomeSecurityApp.Droid
 
         async void SimulateStartup()
         {
-            await Task.Delay(1000);
+            await Task.Delay(800);
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }
     }

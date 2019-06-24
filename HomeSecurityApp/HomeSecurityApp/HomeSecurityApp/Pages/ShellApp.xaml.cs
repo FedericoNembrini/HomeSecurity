@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace HomeSecurityApp.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ShellApp : Xamarin.Forms.Shell
+	public partial class ShellApp : Shell
 	{
 		public ShellApp ()
 		{

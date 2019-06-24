@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HomeSecurityApp.Pages.HomePage"
-             xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms">
+             x:Class="HomeSecurityApp.Pages.HomePage">
 
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" >
             <Label FontSize="Large" FontAttributes="Bold" Text="Home Page" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
-            <!--<ImageButton Source="refreshbutton.png" VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="Transparent" Aspect="AspectFit" />-->
         </StackLayout>
     </Shell.TitleView>
 

@@ -13,25 +13,35 @@ namespace HomeSecurityApp.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StreamListManagement : ContentPage
 	{
-        public ObservableCollection<string> StreamUrl = new ObservableCollection<string>();
-        private string Key = "StreamUrl_";
+        #region Variables
+        public ObservableCollection<string> StreamUrl { get; set; } = new ObservableCollection<string>();
+
         private int CounterUrl = 0;
 
-		public StreamListManagement ()
-		{
-			InitializeComponent ();
+        #endregion
+
+        #region Constructor
+
+        public StreamListManagement()
+        {
+            InitializeComponent();
             LoadStreamList();
         }
+
+        #endregion
+
+        #region Private Method
 
         private void LoadStreamList()
         {
             #if RELEASE
+
             int counter = 0;
             string stringTemp;
 
-            while(Preferences.ContainsKey(Key + Convert.ToString(counter)))
+            while(Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter)))
             {
-                stringTemp = Preferences.Get(Key + Convert.ToString(counter), string.Empty);
+                stringTemp = Preferences.Get(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
                 if(!string.IsNullOrEmpty(stringTemp))
                 {
                     StreamUrl.Add(stringTemp);
@@ -39,64 +49,56 @@ namespace HomeSecurityApp.Pages
                 counter++;
             }
             CounterUrl = counter;
+
             #endif
 
             #if DEBUG
+
             StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            
             #endif
 
             streamList.ItemsSource = StreamUrl;
         }
 
-        private void Delete_Clicked(object sender, EventArgs e)
+        #endregion
+
+        #region Event Handler
+
+        private void DeleteButton_Clicked(object sender, EventArgs e)
         {
             string itemElements = (sender as MenuItem).CommandParameter.ToString();
             int counter = StreamUrl.IndexOf(itemElements);
 
             #if RELEASE
-            Preferences.Set(Key + Convert.ToString(counter), string.Empty);
+
+            Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
+
             #endif
 
             do
             {
-                Preferences.Set(Key + Convert.ToString(counter), Preferences.Get(Key + Convert.ToString(counter + 1), string.Empty));
+                Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
                 counter++;
             }
-            while (Preferences.ContainsKey(Key + Convert.ToString(counter + 1)));
+            while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
 
-            Preferences.Remove(Key + Convert.ToString(counter));
+            Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
             StreamUrl.Remove((sender as MenuItem).CommandParameter.ToString());
-        }
-
-        private void StreamList_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-
         }
 
         private void AddButton_Clicked(object sender, EventArgs e)
         {
             #if RELEASE
+
             if (!string.IsNullOrEmpty(entryUrl.Text))
-                Preferences.Set(Key + CounterUrl, entryUrl.Text);
+                Preferences.Set(Utility.Utility.Key + CounterUrl, entryUrl.Text);
+
             #endif
 
-            StreamUrl.Add(entryUrl.Text);
-            entryUrl.Text = string.Empty;
+            LoadStreamList();
         }
 
-        //private void SaveButton_Clicked(object sender, EventArgs e)
-        //{
-        //    for(int i = 0; i < StreamUrl.Count; i++)
-        //    {
-        //        //Preferences.Set(Key + Convert.ToString(i), StreamUrl[i]);
-        //    }
-        //}
-
-        //private void UrlEntry_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-
-        //}
+        #endregion
     }
 }

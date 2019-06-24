@@ -10,7 +10,7 @@
         <Color x:Key="EntryBackgroundColor">#fafafa</Color>
 
         <Style TargetType="local:ShellApp">
-            <Setter Property="Shell.ShellBackgroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryColor}" />
         </Style>
 
         <Style TargetType="Label">

@@ -4,5 +4,6 @@
     <SelectedDevice>Xiaomi Mi MIX 2</SelectedDevice>
     <DefaultDevice>my_device</DefaultDevice>
     <AndroidDesignerPreferredTheme>Theme.DeviceDefault.NoActionBar.Fullscreen</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
   </PropertyGroup>
 </Project>

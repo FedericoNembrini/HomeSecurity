@@ -14,32 +14,25 @@ namespace HomeSecurityApp.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SingleStreamVisualization : ContentPage
 	{
-        LibVLC _LibVlc;
-        string VideoUrlToDisplay;
-		public SingleStreamVisualization (string videoUrlToDisplay)
+        MediaPlayer MediaPlayerToUse;
+
+		public SingleStreamVisualization (MediaPlayer mediaPlayer)
 		{
-			InitializeComponent ();
+			InitializeComponent();
             
-            this.VideoUrlToDisplay = videoUrlToDisplay;
+            this.MediaPlayerToUse = mediaPlayer;
 		}
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            _LibVlc = new LibVLC();
-
-            videoViewToDisplay.MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, VideoUrlToDisplay, FromType.FromLocation), Volume = 0, Fullscreen = true };
-            videoViewToDisplay.MediaPlayer.Play();
+            videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
+            videoViewToDisplay.MediaPlayer.Fullscreen = true;
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-
-            videoViewToDisplay.MediaPlayer.Stop();
-            videoViewToDisplay.MediaPlayer.Media.Dispose();
-            _LibVlc.Dispose();
         }
     }
 }
