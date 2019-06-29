@@ -52,7 +52,8 @@ class StreamThread(object):
 			SendFirebaseLog(0, 'Start Streaming')
 			camera.start_recording(self.connection, format='h264', splitter_port = self.connectionNumber)
 			while True:
-				camera.wait_recording(2, splitter_port = self.connectionNumber)
+				#camera.wait_recording(2, splitter_port = self.connectionNumber)
+				pass
 		except Exception as ex:
 			SendFirebaseLog(1, str(ex) + ' ' + self.ipAddress)
 		finally:
@@ -166,7 +167,7 @@ fileName = getCurrentDateToString(False) + '.h264'
 try:
 	SendFirebaseLog(0, 'Camera Initializing')
 
-	camera = picamera.PiCamera(resolution = (1270, 720), framerate = 30)
+	camera = picamera.PiCamera(resolution = (1280, 720), framerate = 24)
 	camera.rotation = 180
 	camera.annotate_text_size = 50
 	time.sleep(1)
@@ -186,8 +187,9 @@ try:
 		date = dt.datetime.today() - dt.timedelta(hours = 12)
 		while(whileDate1 < whileDate2):
 			camera.annotate_text = getCurrentDateToString(True)
-			if dt.datetime.today().hour < 6:
-				handler.tick()
+			# if dt.datetime.today().hour < 6:
+			# 	handler.tick()
+			whileDate1 = dt.datetime.today()
 		
 		fileName = getCurrentDateToString(False) + '.h264'
 		camera.split_recording(pathToFileLocal + fileName, splitter_port = 0)
