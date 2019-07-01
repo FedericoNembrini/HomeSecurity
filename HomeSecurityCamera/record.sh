@@ -1,0 +1,1 @@
+ffmpeg -r 24 -i rtsp://localhost:8554/ -c copy -map 0 -f segment -strftime 1 -segment_time 3600 -segment_format mp4 -r 24 /home/pi/HomeSecurityCamera/Recordings/%d-%m-%Y_%H-%M-%S.mp4
