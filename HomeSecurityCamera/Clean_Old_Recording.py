@@ -1,13 +1,14 @@
-import glob, os, time
-import datetime as dt
-import subprocess
+import glob, os, time, json, subprocess, datetime as dt
 
-PathFileToNas = '/mnt/SecurityCam/Cam01/Recordings/'
+# Location of Project Path
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) + os.sep
 
 try:
+    with open(__location__ + 'settings.json', 'r') as settingsFile:
+        settings = json.load(settingsFile)
+    
     while True:
-        fileList = glob.glob(PathFileToNas + "*")
-        
+        fileList = glob.glob(settings['PathToNas'] + "*")
         currentDateTime = dt.datetime.now()
 
         for file in fileList:
@@ -21,12 +22,12 @@ try:
             if fileNameDateTime <= currentDateTime - dt.timedelta(hours = 24):
                 os.remove(file)
         
-        if(os.path.ismount('/mnt/SecurityCam/Cam01/')):
-            fileList = glob.glob('/home/pi/HomeSecurityCamera/Recordings/*')
+        if os.path.ismount(settings['PathToNas']):
+            fileList = glob.glob(settings['PathToLocalRecordings'] + '*')
             fileList = sorted(fileList)
             del fileList[-1]
             for file in fileList:
-                subprocess.Popen('mv /home/pi/HomeSecurityCamera/Recordings/' + file + ' /mnt/SecurityCam/Cam01/Recordings/', shell=True)
+                subprocess.Popen('mv' + settings['PathToLocalRecordings'] + file + ' ' + settings['PathToNasRecordings'], shell=True)
 
         time.sleep(3600)
 except Exception as ex:

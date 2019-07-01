@@ -1,0 +1,7 @@
+{
+    "PathToNas": "/mnt/SecurityCam/Cam01/",
+    "PathToLocalProject": "/home/pi/HomeSecurityCamera/",
+    "PathToLocalRecordings": "/home/pi/HomeSecurityCamera/Recordings/",
+    "PathToNasRecordings": "/mnt/SecurityCam/Cam01/Recordings/",
+    "PathToTemp": "/tmp/"
+}
