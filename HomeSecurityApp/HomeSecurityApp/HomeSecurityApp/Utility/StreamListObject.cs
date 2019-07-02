@@ -9,13 +9,19 @@ namespace HomeSecurityApp.Utility
     {
         #region Variables
 
-        string Name;
+        public string Name { get; set; }
 
-        string ConnectionUrl;
+        public string ConnectionUrl { get; set; }
 
-        bool Status;
+        public bool Status
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        MediaPlayer MediaPlayer { get; set; }
+        public MediaPlayer MediaPlayer { get; set; }
 
         #endregion
 

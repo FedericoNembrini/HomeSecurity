@@ -12,6 +12,7 @@ using LibVLCSharp.Shared;
 using LibVLCSharp.Forms.Shared;
 using System.Diagnostics;
 using HomeSecurityApp.Utility;
+using System.Collections.ObjectModel;
 
 namespace HomeSecurityApp.Pages
 {
@@ -21,7 +22,8 @@ namespace HomeSecurityApp.Pages
         #region Variables
 
         LibVLC _LibVlc;
-        List<StreamListObject> StreamObjectList = new List<StreamListObject>();
+        ObservableCollection<StreamListObject> StreamObjectList = new ObservableCollection<StreamListObject>();
+
         #endregion
 
         #region Constructors
@@ -90,7 +92,7 @@ namespace HomeSecurityApp.Pages
             }
 #endif
 
-            StreamObjectList.Add(new StreamListObject("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov", _LibVlc));
+            StreamObjectList.Add(new StreamListObject("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175", _LibVlc));
             StreamObjectList.Add(new StreamListObject("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov", _LibVlc));
         }
 

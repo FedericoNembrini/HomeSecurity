@@ -6,28 +6,43 @@
 
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" >
-            <Label FontSize="Large" FontAttributes="Bold" Text="Home Page" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
+            <Label FontSize="Large" FontAttributes="Bold" Text="Stream List" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
         </StackLayout>
     </Shell.TitleView>
-
+    
     <ContentPage.Content>
-        <ScrollView VerticalScrollBarVisibility="Default" Orientation="Vertical" BackgroundColor="{StaticResource PrimaryColorDark}">
-            <ListView x:Name="lvStreamList" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="400">
-                            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Horizontal" BackgroundColor="{StaticResource TextColor}" 
-                                         Margin="8,8,8,8" HeightRequest="400" MinimumHeightRequest="400">
-                                <shared:VideoView MediaPlayer="{Binding MediaPlayer}" HeightRequest="128" WidthRequest="128" Margin="8,8,8,8"
-                                                  BackgroundColor="Bisque"></shared:VideoView>
-                                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical">
-                                    <Label Text="Test"></Label>
-                                </StackLayout>
+        <ListView x:Name="lvStreamList" 
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand"
+                  BackgroundColor="{StaticResource PrimaryColorDark}"
+                  RowHeight="180"
+                  SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout x:Name="slItem"
+                                     VerticalOptions="FillAndExpand"
+                                     HorizontalOptions="FillAndExpand"
+                                     Orientation="Horizontal"
+                                     BackgroundColor="{StaticResource TextColor}"
+                                     Margin="8, 8, 8, 8">
+                            <shared:VideoView MediaPlayer="{Binding MediaPlayer}"
+                                              HeightRequest="128"
+                                              WidthRequest="156"
+                                              Margin="8, 8, 8, 8"
+                                              BackgroundColor="WhiteSmoke" />
+                            <StackLayout x:Name="slItemText"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="FillAndExpand"
+                                         Orientation="Vertical">
+                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding Status}" />
+                                <Label Text="{Binding ConnectionUrl}" />
                             </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>
