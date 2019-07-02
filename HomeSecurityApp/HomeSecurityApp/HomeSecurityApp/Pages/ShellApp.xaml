@@ -13,7 +13,7 @@
     
     <ShellItem Title="Home">
         <ShellSection>
-            <ShellContent ContentTemplate="{ DataTemplate pages:HomePage }" />
+            <ShellContent ContentTemplate="{ DataTemplate pages:StreamList }" />
         </ShellSection>
     </ShellItem>
     <ShellItem Title="StreamListManagement">

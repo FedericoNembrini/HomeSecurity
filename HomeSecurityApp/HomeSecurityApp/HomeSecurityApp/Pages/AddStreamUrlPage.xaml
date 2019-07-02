@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HomeSecurityApp.Pages.AddStreamUrlPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label Text="Registra una nuova Videocamera"
+                VerticalOptions="Center" 
+                HorizontalOptions="CenterAndExpand" />
+            <Entry x:Name="eNewStreamUrl" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource EntryBackgroundColor}" />
+            <Button Text="btnAdd" Clicked="Button_Clicked"  BackgroundColor="{StaticResource SecondaryColor}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

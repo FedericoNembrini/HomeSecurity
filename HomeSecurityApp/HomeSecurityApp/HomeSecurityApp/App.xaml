@@ -5,6 +5,7 @@
              x:Class="HomeSecurityApp.App">
     <Application.Resources>
         <Color x:Key="PrimaryColor">#00709b</Color>
+        <Color x:Key="PrimaryColorDark">#00456d</Color>
         <Color x:Key="SecondaryColor">#00aa8e</Color>
         <Color x:Key="TextColor">White</Color>
         <Color x:Key="EntryBackgroundColor">#fafafa</Color>

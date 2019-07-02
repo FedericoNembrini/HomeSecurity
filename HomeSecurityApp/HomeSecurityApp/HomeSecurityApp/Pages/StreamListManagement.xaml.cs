@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HomeSecurityApp.Utility;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -25,7 +26,22 @@ namespace HomeSecurityApp.Pages
         public StreamListManagement()
         {
             InitializeComponent();
+        }
+
+        #endregion
+
+        #region Override Region
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
             LoadStreamList();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
 
         #endregion
@@ -74,8 +90,6 @@ namespace HomeSecurityApp.Pages
 
             Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
 
-            #endif
-
             do
             {
                 Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
@@ -84,21 +98,31 @@ namespace HomeSecurityApp.Pages
             while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
 
             Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
+            
+            #endif
             StreamUrl.Remove((sender as MenuItem).CommandParameter.ToString());
         }
 
-        private void AddButton_Clicked(object sender, EventArgs e)
-        {
-            #if RELEASE
+        //private void AddButton_Clicked(object sender, EventArgs e)
+        //{
+        //    #if RELEASE
 
-            if (!string.IsNullOrEmpty(entryUrl.Text))
-                Preferences.Set(Utility.Utility.Key + CounterUrl, entryUrl.Text);
+        //    if (!string.IsNullOrEmpty(entryUrl.Text))
+        //        Preferences.Set(Utility.Utility.Key + CounterUrl, entryUrl.Text);
 
-            #endif
+        //    #endif
 
-            LoadStreamList();
-        }
+        //    LoadStreamList();
+        //}
 
         #endregion
+
+        private async void BtnAdd_Clicked(object sender, EventArgs e)
+        {
+#if DEBUG
+            DependencyService.Get<IMessage>().ShortAlert("btnAdd Clicked");
+#endif
+            await Navigation.PushModalAsync(new AddStreamUrlPage());
+        }
     }
 }
