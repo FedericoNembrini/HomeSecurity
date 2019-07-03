@@ -19,7 +19,10 @@
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.ContextActions>
-                                    <MenuItem Clicked="DeleteButton_Clicked" CommandParameter="{ Binding . }" Text="Delete" IsDestructive="True" />
+                                    <MenuItem Clicked="DeleteButton_Clicked"
+                                              CommandParameter="{ Binding . }"
+                                              Text="Delete"
+                                              IsDestructive="True" />
                                 </ViewCell.ContextActions>
                                 <StackLayout Padding="8">
                                     <Label FontSize="Medium" Text="{ Binding . }" />
@@ -34,7 +37,7 @@
                          BackgroundColor="{StaticResource SecondaryColor}"
                          AbsoluteLayout.LayoutFlags="PositionProportional"
                          AbsoluteLayout.LayoutBounds=".95,.95,80,80"
-                         Clicked="BtnAdd_Clicked"></ImageButton>
+                         Clicked="BtnAdd_Clicked" />
         </AbsoluteLayout>
         
     </ContentPage.Content>

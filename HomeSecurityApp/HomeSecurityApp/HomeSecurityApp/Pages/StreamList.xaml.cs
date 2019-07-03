@@ -13,6 +13,7 @@ using LibVLCSharp.Forms.Shared;
 using System.Diagnostics;
 using HomeSecurityApp.Utility;
 using System.Collections.ObjectModel;
+using HomeSecurityApp.Utility.Interface;
 
 namespace HomeSecurityApp.Pages
 {
@@ -41,7 +42,6 @@ namespace HomeSecurityApp.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
 
             try
             {
@@ -101,5 +101,22 @@ namespace HomeSecurityApp.Pages
         #region Event Handler
 
         #endregion
+
+        private async void LvStreamList_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            try
+            {
+#if DEBUG
+                DependencyService.Get<IMessage>().ShortAlert("ListItem Tapped");
+#endif
+                await Navigation.PushModalAsync(new SingleStreamVisualization((e.Item as StreamListObject).MediaPlayer));
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                DependencyService.Get<IMessage>().LongAlert(ex.Message);
+#endif
+            }
+        }
     }
 }

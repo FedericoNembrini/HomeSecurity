@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
+﻿using Android.App;
 using Android.Widget;
-using HomeSecurityApp.Droid;
-using HomeSecurityApp.Utility;
+using HomeSecurityApp.Droid.Dependecy;
+using HomeSecurityApp.Utility.Interface;
 
 [assembly: Xamarin.Forms.Dependency(typeof(MessageAndroid))]
-namespace HomeSecurityApp.Droid
+namespace HomeSecurityApp.Droid.Dependecy
 {
     public class MessageAndroid : IMessage
     {

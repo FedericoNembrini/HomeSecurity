@@ -1,4 +1,5 @@
 ﻿using HomeSecurityApp.Utility;
+using HomeSecurityApp.Utility.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

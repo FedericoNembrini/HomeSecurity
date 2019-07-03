@@ -16,7 +16,8 @@
                   HorizontalOptions="FillAndExpand"
                   BackgroundColor="{StaticResource PrimaryColorDark}"
                   RowHeight="180"
-                  SeparatorVisibility="None">
+                  SeparatorVisibility="None"
+                  ItemTapped="LvStreamList_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
