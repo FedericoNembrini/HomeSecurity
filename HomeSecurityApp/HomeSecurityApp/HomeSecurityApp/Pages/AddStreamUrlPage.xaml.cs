@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,13 +14,17 @@ namespace HomeSecurityApp.Pages
     {
         #region Variables
 
+        int StreamCounter;
+
         #endregion
 
         #region Constructor
 
-        public AddStreamUrlPage()
+        public AddStreamUrlPage(int StreamCounter)
         {
             InitializeComponent();
+
+            this.StreamCounter = StreamCounter;
         }
 
         #endregion
@@ -45,9 +49,16 @@ namespace HomeSecurityApp.Pages
 
         #region Event Hanlder
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
+            #if RELEASE
+                if(!string.IsNullOrEmpty(eNewStreamName.Text) && !string.IsNullOrEmpty(eNewStreamUrl.Text))
+                {
+                    Preferences.Set(Utility.Utility.Key + StreamCounter, $"{eNewStreamName.Text}#{eNewStreamUrl.Text}");
+                }
+            #endif
 
+            await Navigation.PopModalAsync(true);
         }
 
         #endregion
