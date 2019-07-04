@@ -37,6 +37,7 @@
                          BackgroundColor="{StaticResource SecondaryColor}"
                          AbsoluteLayout.LayoutFlags="PositionProportional"
                          AbsoluteLayout.LayoutBounds=".95,.95,80,80"
+                         CornerRadius="100"
                          Clicked="BtnAdd_Clicked" />
         </AbsoluteLayout>
         

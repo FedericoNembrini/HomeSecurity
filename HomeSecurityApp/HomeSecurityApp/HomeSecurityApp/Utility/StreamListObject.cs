@@ -1,6 +1,8 @@
 ﻿using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace HomeSecurityApp.Utility
@@ -13,13 +15,7 @@ namespace HomeSecurityApp.Utility
 
         public string ConnectionUrl { get; set; }
 
-        public bool Status
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool Status { get; set; }
 
         public MediaPlayer MediaPlayer { get; set; }
 
@@ -43,9 +39,18 @@ namespace HomeSecurityApp.Utility
                     ConnectionUrl,
                     FromType.FromLocation)
             };
+
+            MediaPlayer.Volume = 0;
+
+            MediaPlayer.Play();
+            Status = MediaPlayer.IsPlaying;
+            MediaPlayer.Stop();
         }
 
         #endregion
 
+        #region Event Handler
+
+        #endregion
     }
 }

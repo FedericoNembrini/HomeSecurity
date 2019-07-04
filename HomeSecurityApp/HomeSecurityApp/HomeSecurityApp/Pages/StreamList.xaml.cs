@@ -23,7 +23,7 @@ namespace HomeSecurityApp.Pages
         #region Variables
 
         LibVLC _LibVlc;
-        ObservableCollection<StreamListObject> StreamObjectList = new ObservableCollection<StreamListObject>();
+        public ObservableCollection<StreamListObject> StreamObjectList { get; set; } = new ObservableCollection<StreamListObject>();
 
         #endregion
 
@@ -77,7 +77,7 @@ namespace HomeSecurityApp.Pages
             _LibVlc = new LibVLC();
 
             StreamObjectList.Clear();
-#if Release
+            #if Release
             int counter = 0;
             string stringTemp;
 
@@ -90,7 +90,7 @@ namespace HomeSecurityApp.Pages
                 }
                 counter++;
             }
-#endif
+            #endif
 
             StreamObjectList.Add(new StreamListObject("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175", _LibVlc));
             StreamObjectList.Add(new StreamListObject("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov", _LibVlc));
@@ -106,17 +106,24 @@ namespace HomeSecurityApp.Pages
         {
             try
             {
-#if DEBUG
-                DependencyService.Get<IMessage>().ShortAlert("ListItem Tapped");
-#endif
+                #if DEBUG
+                    DependencyService.Get<IMessage>().ShortAlert("ListItem Tapped");
+                #endif
                 await Navigation.PushModalAsync(new SingleStreamVisualization((e.Item as StreamListObject).MediaPlayer));
             }
             catch (Exception ex)
             {
-#if DEBUG
-                DependencyService.Get<IMessage>().LongAlert(ex.Message);
-#endif
+                #if DEBUG
+                    DependencyService.Get<IMessage>().LongAlert(ex.Message);
+                #endif
             }
         }
+
+        //private void LvStreamList_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        //{
+        //    StreamListObject item = e.Item as StreamListObject;
+        //    item.MediaPlayer.Play();
+        //    item.Status = item.MediaPlayer.IsPlaying;
+        //}
     }
 }

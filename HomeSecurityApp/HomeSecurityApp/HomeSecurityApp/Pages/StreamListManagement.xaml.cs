@@ -16,9 +16,8 @@ namespace HomeSecurityApp.Pages
 	public partial class StreamListManagement : ContentPage
 	{
         #region Variables
-        public ObservableCollection<string> StreamUrl { get; set; } = new ObservableCollection<string>();
 
-        private int CounterUrl = 0;
+        public ObservableCollection<string> StreamUrl { get; set; } = new ObservableCollection<string>();
 
         #endregion
 
@@ -82,6 +81,15 @@ namespace HomeSecurityApp.Pages
 
         #region Event Handler
 
+        private async void BtnAdd_Clicked(object sender, EventArgs e)
+        {
+            #if DEBUG
+                DependencyService.Get<IMessage>().ShortAlert("btnAdd Clicked");
+            #endif
+
+            await Navigation.PushModalAsync(new AddStreamUrlPage(StreamUrl.Count));
+        }
+
         private void DeleteButton_Clicked(object sender, EventArgs e)
         {
             string itemElements = (sender as MenuItem).CommandParameter.ToString();
@@ -104,26 +112,6 @@ namespace HomeSecurityApp.Pages
             StreamUrl.Remove((sender as MenuItem).CommandParameter.ToString());
         }
 
-        //private void AddButton_Clicked(object sender, EventArgs e)
-        //{
-        //    #if RELEASE
-
-        //    if (!string.IsNullOrEmpty(entryUrl.Text))
-        //        Preferences.Set(Utility.Utility.Key + CounterUrl, entryUrl.Text);
-
-        //    #endif
-
-        //    LoadStreamList();
-        //}
-
         #endregion
-
-        private async void BtnAdd_Clicked(object sender, EventArgs e)
-        {
-#if DEBUG
-            DependencyService.Get<IMessage>().ShortAlert("btnAdd Clicked");
-#endif
-            await Navigation.PushModalAsync(new AddStreamUrlPage());
-        }
     }
 }
