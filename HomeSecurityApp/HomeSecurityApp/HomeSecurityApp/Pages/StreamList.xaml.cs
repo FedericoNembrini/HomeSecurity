@@ -9,9 +9,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using LibVLCSharp.Shared;
-using LibVLCSharp.Forms.Shared;
 using System.Diagnostics;
 using HomeSecurityApp.Utility;
+using static HomeSecurityApp.Utility.Utility;
 using System.Collections.ObjectModel;
 using HomeSecurityApp.Utility.Interface;
 
@@ -23,6 +23,7 @@ namespace HomeSecurityApp.Pages
         #region Variables
 
         LibVLC _LibVlc;
+
         public ObservableCollection<StreamListObject> StreamObjectList { get; set; } = new ObservableCollection<StreamListObject>();
 
         #endregion
@@ -45,12 +46,16 @@ namespace HomeSecurityApp.Pages
 
             try
             {
-                LoadStreamList();
+                LoadStreamObjectList();
+
                 lvStreamList.ItemsSource = StreamObjectList;
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex.Message);
+                #if DEBUG
+                    DependencyService.Get<IMessage>().LongAlert(ex.Message);
+                    Trace.WriteLine(ex.Message);
+                #endif
             }
         }
 
@@ -72,28 +77,18 @@ namespace HomeSecurityApp.Pages
 
         #region Private Method
 
-        private void LoadStreamList()
+        private void LoadStreamObjectList()
         {
             _LibVlc = new LibVLC();
 
             StreamObjectList.Clear();
-            #if Release
-            int counter = 0;
-            string stringTemp;
 
-            while(Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter)))
+            List<string> PreferencesList = GetPreferencesList();
+            
+            foreach(string preference in PreferencesList)
             {
-                stringTemp = Preferences.Get(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
-                if(!string.IsNullOrEmpty(stringTemp))
-                {
-                    StreamObjectList.Add(new StreamListObject(stringTemp, _LibVlc));
-                }
-                counter++;
-            }
-            #endif
-
-            StreamObjectList.Add(new StreamListObject("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175", _LibVlc));
-            StreamObjectList.Add(new StreamListObject("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov", _LibVlc));
+                StreamObjectList.Add(new StreamListObject(preference, true, _LibVlc));
+            }   
         }
 
         #endregion
@@ -109,21 +104,16 @@ namespace HomeSecurityApp.Pages
                 #if DEBUG
                     DependencyService.Get<IMessage>().ShortAlert("ListItem Tapped");
                 #endif
+
                 await Navigation.PushModalAsync(new SingleStreamVisualization((e.Item as StreamListObject).MediaPlayer));
             }
             catch (Exception ex)
             {
                 #if DEBUG
                     DependencyService.Get<IMessage>().LongAlert(ex.Message);
+                Trace.TraceError(ex.Message);
                 #endif
             }
         }
-
-        //private void LvStreamList_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        //{
-        //    StreamListObject item = e.Item as StreamListObject;
-        //    item.MediaPlayer.Play();
-        //    item.Status = item.MediaPlayer.IsPlaying;
-        //}
     }
 }

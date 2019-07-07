@@ -5,8 +5,16 @@
              x:Class="HomeSecurityApp.Pages.StreamList" >
 
     <Shell.TitleView>
-        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" >
-            <Label FontSize="Large" FontAttributes="Bold" Text="Stream List" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
+        <StackLayout x:Name="slTitleView"
+                     Orientation="Horizontal"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand" >
+            <Label x:Name="lblTitleView"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   Text="Stream List"
+                   TextColor="{StaticResource TextColor}"
+                   VerticalOptions="Center" />
         </StackLayout>
     </Shell.TitleView>
     
@@ -29,7 +37,7 @@
                                      VerticalOptions="FillAndExpand"
                                      HorizontalOptions="FillAndExpand"
                                      Orientation="Horizontal"
-                                     BackgroundColor="{StaticResource TextColor}" >
+                                     BackgroundColor="White" >
                                 <shared:VideoView MediaPlayer="{Binding MediaPlayer}"
                                             HeightRequest="128"
                                             WidthRequest="156"

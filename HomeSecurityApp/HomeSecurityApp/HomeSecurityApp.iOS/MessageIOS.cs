@@ -5,7 +5,7 @@ using System.Text;
 
 using Foundation;
 using HomeSecurityApp.iOS;
-using HomeSecurityApp.Utility;
+using HomeSecurityApp.Utility.Interface;
 using UIKit;
 
 [assembly: Xamarin.Forms.Dependency(typeof(MessageIOS))]

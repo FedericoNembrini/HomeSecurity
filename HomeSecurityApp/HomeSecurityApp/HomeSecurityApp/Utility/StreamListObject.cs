@@ -23,7 +23,7 @@ namespace HomeSecurityApp.Utility
 
         #region Constructor
 
-        public StreamListObject(string Key, LibVLC LibVLCInstance)
+        public StreamListObject(string Key, bool LoadMediaPlayer, LibVLC LibVLCInstance = null)
         {
             if (string.IsNullOrEmpty(Key))
                 return;
@@ -33,18 +33,21 @@ namespace HomeSecurityApp.Utility
             Name = keySplit[0];
             ConnectionUrl = keySplit[1];
 
-            MediaPlayer = new MediaPlayer(LibVLCInstance)
-            {
-                Media = new Media(LibVLCInstance,
-                    ConnectionUrl,
-                    FromType.FromLocation)
-            };
+            if (LoadMediaPlayer)
+            {            
+                MediaPlayer = new MediaPlayer(LibVLCInstance)
+                {
+                    Media = new Media(LibVLCInstance,
+                        ConnectionUrl,
+                        FromType.FromLocation)
+                };
 
-            MediaPlayer.Volume = 0;
+                MediaPlayer.Volume = 0;
 
-            MediaPlayer.Play();
-            Status = MediaPlayer.IsPlaying;
-            MediaPlayer.Stop();
+                MediaPlayer.Play();
+                Status = MediaPlayer.IsPlaying;
+                MediaPlayer.Stop();
+            }
         }
 
         #endregion
