@@ -29,7 +29,7 @@
     </FlyoutItem>
     <FlyoutItem
         Title="About"
-        Icon="house_icon">
+        Icon="information_icon">
         <Tab>
             <ShellContent>
                 <pages:About />

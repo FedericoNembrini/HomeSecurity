@@ -80,7 +80,7 @@ namespace HomeSecurityApp.Pages
         {
             string itemElements = (sender as MenuItem).CommandParameter.ToString();
             var streamObject = StreamObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
-            var index = StreamObjectList.IndexOf(streamObject);
+            var counter = StreamObjectList.IndexOf(streamObject);
 #if RELEASE
 
             Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
