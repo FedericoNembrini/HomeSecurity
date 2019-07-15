@@ -5,6 +5,7 @@
   <color name="colorPrimaryDark">#001e42</color>
   <color name="colorAccent">#57dcbe</color>
 
+  <color name="transparent">#00000000</color>
   <!-- Color for Background Gradient -->
   <color name="BackgroundGradientStart">#00456D</color>
   <color name="BackgroundGradientEnd">#00AA8E</color>

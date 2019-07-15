@@ -35,7 +35,8 @@
                       RowHeight="150"
                       SeparatorVisibility="None"
                       ItemTapped="LvStreamList_ItemTapped"
-                      VerticalScrollBarVisibility="Never" >
+                      VerticalScrollBarVisibility="Never"
+                      SelectionMode="None" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

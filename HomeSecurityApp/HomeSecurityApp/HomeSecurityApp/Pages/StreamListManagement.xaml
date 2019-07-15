@@ -39,7 +39,7 @@
                           RowHeight="80"
                           SeparatorVisibility="None"
                           VerticalScrollBarVisibility="Never"
-                          BackgroundColor="Transparent">
+                          BackgroundColor="Transparent" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -52,7 +52,7 @@
                                 <Frame Padding="0"
                                        CornerRadius="4"
                                        Margin="8, 8, 8, 8" >
-                                    <StackLayout 
+                                    <StackLayout x:Name="slItem"
                                         Orientation="Vertical"
                                         VerticalOptions="Center"
                                         Margin="8, 0, 0, 0">
@@ -62,7 +62,6 @@
                                                FontSize="Small" />
                                     </StackLayout>
                                 </Frame>
-
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

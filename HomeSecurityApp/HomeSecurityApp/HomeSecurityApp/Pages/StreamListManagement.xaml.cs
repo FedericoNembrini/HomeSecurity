@@ -78,24 +78,24 @@ namespace HomeSecurityApp.Pages
 
         private void DeleteButton_Clicked(object sender, EventArgs e)
         {
-//            string itemElements = (sender as MenuItem).CommandParameter.ToString();
-//            int counter = StreamObjectList.IndexOf(itemElements);
+            string itemElements = (sender as MenuItem).CommandParameter.ToString();
+            var streamObject = StreamObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
+            var index = StreamObjectList.IndexOf(streamObject);
+#if RELEASE
 
-//#if RELEASE
+            Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
 
-//            Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
+            do
+            {
+                Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
+                counter++;
+            }
+            while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
 
-//            do
-//            {
-//                Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
-//                counter++;
-//            }
-//            while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
-
-//            Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
+            Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
             
-//#endif
-//            StreamObjectList.Remove((sender as MenuItem).CommandParameter.ToString());
+#endif
+            StreamObjectList.Remove(streamObject);
         }
 
         #endregion
