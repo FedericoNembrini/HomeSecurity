@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HomeSecurityApp.Utility;
+using HomeSecurityApp.Utility.Interface;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static HomeSecurityApp.Utility.Utility;
 
 namespace HomeSecurityApp.Pages
 {
@@ -14,9 +17,8 @@ namespace HomeSecurityApp.Pages
 	public partial class StreamListManagement : ContentPage
 	{
         #region Variables
-        public ObservableCollection<string> StreamUrl { get; set; } = new ObservableCollection<string>();
 
-        private int CounterUrl = 0;
+        public ObservableCollection<StreamListObject> StreamObjectList { get; set; } = new ObservableCollection<StreamListObject>();
 
         #endregion
 
@@ -25,56 +27,63 @@ namespace HomeSecurityApp.Pages
         public StreamListManagement()
         {
             InitializeComponent();
-            LoadStreamList();
+        }
+
+        #endregion
+
+        #region Override Region
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            LoadStreamListObject();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
 
         #endregion
 
         #region Private Method
 
-        private void LoadStreamList()
+        private void LoadStreamListObject()
         {
-            #if RELEASE
+            StreamObjectList.Clear();
 
-            int counter = 0;
-            string stringTemp;
+            List<string> PreferencesList = GetPreferencesList();
 
-            while(Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter)))
+            foreach(string preference in PreferencesList)
             {
-                stringTemp = Preferences.Get(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
-                if(!string.IsNullOrEmpty(stringTemp))
-                {
-                    StreamUrl.Add(stringTemp);
-                }
-                counter++;
+                StreamObjectList.Add(new StreamListObject(preference, false));
             }
-            CounterUrl = counter;
 
-            #endif
-
-            #if DEBUG
-
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            
-            #endif
-
-            streamList.ItemsSource = StreamUrl;
+            streamList.ItemsSource = StreamObjectList;
         }
 
         #endregion
 
         #region Event Handler
 
+        private async void BtnAdd_Clicked(object sender, EventArgs e)
+        {
+            #if DEBUG
+                DependencyService.Get<IMessage>().ShortAlert("btnAdd Clicked");
+            #endif
+
+            await Navigation.PushModalAsync(new AddStreamUrlPage(StreamObjectList.Count));
+        }
+
         private void DeleteButton_Clicked(object sender, EventArgs e)
         {
             string itemElements = (sender as MenuItem).CommandParameter.ToString();
-            int counter = StreamUrl.IndexOf(itemElements);
-
-            #if RELEASE
+            var streamObject = StreamObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
+            var counter = StreamObjectList.IndexOf(streamObject);
+#if RELEASE
 
             Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
-
-            #endif
 
             do
             {
@@ -84,19 +93,9 @@ namespace HomeSecurityApp.Pages
             while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
 
             Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
-            StreamUrl.Remove((sender as MenuItem).CommandParameter.ToString());
-        }
-
-        private void AddButton_Clicked(object sender, EventArgs e)
-        {
-            #if RELEASE
-
-            if (!string.IsNullOrEmpty(entryUrl.Text))
-                Preferences.Set(Utility.Utility.Key + CounterUrl, entryUrl.Text);
-
-            #endif
-
-            LoadStreamList();
+            
+#endif
+            StreamObjectList.Remove(streamObject);
         }
 
         #endregion

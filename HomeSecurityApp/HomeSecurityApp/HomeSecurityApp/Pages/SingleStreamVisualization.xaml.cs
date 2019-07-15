@@ -1,7 +1,10 @@
-﻿using LibVLCSharp.Forms.Shared;
+﻿using HomeSecurityApp.Utility;
+using HomeSecurityApp.Utility.Interface;
+using LibVLCSharp.Forms.Shared;
 using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +22,7 @@ namespace HomeSecurityApp.Pages
 		public SingleStreamVisualization (MediaPlayer mediaPlayer)
 		{
 			InitializeComponent();
-            
+
             this.MediaPlayerToUse = mediaPlayer;
 		}
 
@@ -27,12 +30,23 @@ namespace HomeSecurityApp.Pages
         {
             base.OnAppearing();
             videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
+            videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
             videoViewToDisplay.MediaPlayer.Fullscreen = true;
+            videoViewToDisplay.MediaPlayer.Play();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+
+            videoViewToDisplay.MediaPlayer.Stop();
+        }
+
+        private void MediaPlayer_EncounteredError(object sender, EventArgs e)
+        {
+            Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
+
+            //await Navigation.PopModalAsync();
         }
     }
 }
