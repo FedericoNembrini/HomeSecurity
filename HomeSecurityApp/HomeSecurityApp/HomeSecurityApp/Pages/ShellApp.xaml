@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:pages="clr-namespace:HomeSecurityApp.Pages"
         x:Class="HomeSecurityApp.Pages.ShellApp"
+        xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
         FlyoutBehavior="Flyout">
-
+    
     <Shell.FlyoutHeader>
-        <StackLayout BackgroundColor="{StaticResource PrimaryColor}" Orientation="Horizontal">
-            <Label FontSize="Large" Margin="16" TextColor="White">HomeSecurityApp</Label>
-        </StackLayout>
+        <pages:FlyoutHeader />
     </Shell.FlyoutHeader>
     
     <ShellItem Title="Home">

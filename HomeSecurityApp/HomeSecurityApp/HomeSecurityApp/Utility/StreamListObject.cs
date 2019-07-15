@@ -1,9 +1,13 @@
-﻿using LibVLCSharp.Shared;
+﻿using HomeSecurityApp.Utility.Interface;
+using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace HomeSecurityApp.Utility
 {
@@ -11,11 +15,13 @@ namespace HomeSecurityApp.Utility
     {
         #region Variables
 
+        public string Key { get; set; }
+
         public string Name { get; set; }
 
         public string ConnectionUrl { get; set; }
 
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
 
         public MediaPlayer MediaPlayer { get; set; }
 
@@ -30,29 +36,30 @@ namespace HomeSecurityApp.Utility
 
             string[] keySplit = Key.Split('#');
 
-            Name = keySplit[0];
-            ConnectionUrl = keySplit[1];
+            this.Key = Key;
+            this.Name = keySplit[0];
+            this.ConnectionUrl = keySplit[1];
 
             if (LoadMediaPlayer)
             {            
-                MediaPlayer = new MediaPlayer(LibVLCInstance)
+                this.MediaPlayer = new MediaPlayer(LibVLCInstance)
                 {
                     Media = new Media(LibVLCInstance,
                         ConnectionUrl,
                         FromType.FromLocation)
                 };
 
-                MediaPlayer.Volume = 0;
-
-                MediaPlayer.Play();
-                Status = MediaPlayer.IsPlaying;
-                MediaPlayer.Stop();
+                this.MediaPlayer.Volume = 0;
             }
         }
 
         #endregion
 
         #region Event Handler
+
+        #endregion
+
+        #region Private Method
 
         #endregion
     }

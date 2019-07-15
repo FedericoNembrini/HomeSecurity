@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="launcher_background">#FFFFFF</color>
-    <color name="colorPrimary">#00709b</color>
-    <color name="colorPrimaryDark">#00456d</color>
-    <color name="colorAccent">#57dcbe</color>
+  <color name="launcher_background">#FFFFFF</color>
+  <color name="colorPrimary">#00456D</color>
+  <color name="colorPrimaryDark">#001e42</color>
+  <color name="colorAccent">#57dcbe</color>
+
+  <!-- Color for Background Gradient -->
+  <color name="BackgroundGradientStart">#00456D</color>
+  <color name="BackgroundGradientEnd">#00AA8E</color>
 </resources>

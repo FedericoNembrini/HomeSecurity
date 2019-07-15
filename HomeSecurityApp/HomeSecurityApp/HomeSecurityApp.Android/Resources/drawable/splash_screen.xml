@@ -1,12 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  
   <item>
-    <color android:color="@color/colorPrimary"/>
+    <shape
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+      <gradient
+        android:angle="-90"
+        android:startColor="@color/BackgroundGradientStart"
+        android:centerColor="@color/BackgroundGradientStart"
+        android:endColor="@color/BackgroundGradientEnd"
+        android:centerY="58%"
+        android:type="linear" />
+    </shape>
   </item>
-  <item>
-    <bitmap
-        android:src="@drawable/securitycam"
-        android:tileMode="disabled"
-        android:gravity="center"/>
+  <item
+      android:width="64dp"
+      android:height="64dp"
+      android:drawable="@drawable/cctv_icon"
+      android:gravity="center" >
   </item>
 </layer-list>

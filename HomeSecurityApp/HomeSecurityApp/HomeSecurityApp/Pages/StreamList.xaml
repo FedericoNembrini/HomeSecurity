@@ -2,13 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
-             x:Class="HomeSecurityApp.Pages.StreamList" >
+             xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
+             x:Class="HomeSecurityApp.Pages.StreamList">
 
     <Shell.TitleView>
         <StackLayout x:Name="slTitleView"
                      Orientation="Horizontal"
                      VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="CenterAndExpand" >
+                     HorizontalOptions="CenterAndExpand"
+                     BackgroundColor="Transparent">
             <Label x:Name="lblTitleView"
                    FontSize="Large"
                    FontAttributes="Bold"
@@ -17,45 +19,57 @@
                    VerticalOptions="Center" />
         </StackLayout>
     </Shell.TitleView>
-    
+
     <ContentPage.Content>
-        <ListView x:Name="lvStreamList" 
-                  VerticalOptions="FillAndExpand"
-                  HorizontalOptions="FillAndExpand"
-                  BackgroundColor="{StaticResource PrimaryColorDark}"
-                  RowHeight="180"
-                  SeparatorVisibility="None"
-                  ItemTapped="LvStreamList_ItemTapped" >
-                  <!--ItemAppearing="LvStreamList_ItemAppearing"--> 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Frame Padding="0"
-                               CornerRadius="4"
-                               Margin="8, 8, 8, 8" >
-                            <StackLayout x:Name="slItem"
-                                     VerticalOptions="FillAndExpand"
-                                     HorizontalOptions="FillAndExpand"
-                                     Orientation="Horizontal"
-                                     BackgroundColor="White" >
-                                <shared:VideoView MediaPlayer="{Binding MediaPlayer}"
-                                            HeightRequest="128"
-                                            WidthRequest="156"
-                                            Margin="8, 8, 8, 8"
-                                            BackgroundColor="WhiteSmoke"  />
-                                <StackLayout x:Name="slItemText"
+        <utility:GradientColorStackLayout x:Name="gcslBackground"
+                                          StartColor="{StaticResource StartColorBackgroundGradient}"
+                                          EndColor="{StaticResource EndColorColorBackgroundGradient}"
+                                          Orientation="Vertical"
+                                          Direction="Vertical"
+                                          YCenter="0.58"
+                                          VerticalOptions="FillAndExpand"
+                                          HorizontalOptions="FillAndExpand">
+            <ListView x:Name="lvStreamList" 
+                      VerticalOptions="FillAndExpand"
+                      HorizontalOptions="FillAndExpand"
+                      BackgroundColor="Transparent"
+                      RowHeight="150"
+                      SeparatorVisibility="None"
+                      ItemTapped="LvStreamList_ItemTapped"
+                      VerticalScrollBarVisibility="Never" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="0"
+                                   CornerRadius="8"
+                                   Margin="8, 8, 8, 8" >
+                                <StackLayout x:Name="slItem"
+                                             VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand"
+                                             Orientation="Horizontal"
+                                             BackgroundColor="White" >
+                                    <Frame Padding="0"
+                                           CornerRadius="8"
+                                           Margin="8, 8, 8, 8">
+                                        <shared:VideoView MediaPlayer="{Binding MediaPlayer}"
+                                                          HeightRequest="120"
+                                                          WidthRequest="120"
+                                                          BackgroundColor="WhiteSmoke"  />
+                                    </Frame>
+                                    
+                                    <StackLayout x:Name="slItemText"
                                          VerticalOptions="Center"
                                          HorizontalOptions="FillAndExpand"
                                          Orientation="Vertical">
-                                    <Label Text="{Binding Name}" />
-                                    <Label Text="{Binding Status}" />
-                                    <Label Text="{Binding ConnectionUrl}" />
+                                        <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
+                                        <Label Text="{Binding ConnectionUrl}" HorizontalOptions="StartAndExpand" />
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-                        </Frame>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </utility:GradientColorStackLayout>
     </ContentPage.Content>
 </ContentPage>

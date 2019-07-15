@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static HomeSecurityApp.Utility.Utility;
 
 namespace HomeSecurityApp.Pages
 {
@@ -17,7 +18,7 @@ namespace HomeSecurityApp.Pages
 	{
         #region Variables
 
-        public ObservableCollection<string> StreamUrl { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<StreamListObject> StreamObjectList { get; set; } = new ObservableCollection<StreamListObject>();
 
         #endregion
 
@@ -36,7 +37,7 @@ namespace HomeSecurityApp.Pages
         {
             base.OnAppearing();
 
-            LoadStreamList();
+            LoadStreamListObject();
         }
 
         protected override void OnDisappearing()
@@ -48,33 +49,18 @@ namespace HomeSecurityApp.Pages
 
         #region Private Method
 
-        private void LoadStreamList()
+        private void LoadStreamListObject()
         {
-            #if RELEASE
+            StreamObjectList.Clear();
 
-            int counter = 0;
-            string stringTemp;
+            List<string> PreferencesList = GetPreferencesList();
 
-            while(Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter)))
+            foreach(string preference in PreferencesList)
             {
-                stringTemp = Preferences.Get(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
-                if(!string.IsNullOrEmpty(stringTemp))
-                {
-                    StreamUrl.Add(stringTemp);
-                }
-                counter++;
+                StreamObjectList.Add(new StreamListObject(preference, false));
             }
-            CounterUrl = counter;
 
-            #endif
-
-            #if DEBUG
-
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            
-            #endif
-
-            streamList.ItemsSource = StreamUrl;
+            streamList.ItemsSource = StreamObjectList;
         }
 
         #endregion
@@ -87,29 +73,29 @@ namespace HomeSecurityApp.Pages
                 DependencyService.Get<IMessage>().ShortAlert("btnAdd Clicked");
             #endif
 
-            await Navigation.PushModalAsync(new AddStreamUrlPage(StreamUrl.Count));
+            await Navigation.PushModalAsync(new AddStreamUrlPage(StreamObjectList.Count));
         }
 
         private void DeleteButton_Clicked(object sender, EventArgs e)
         {
-            string itemElements = (sender as MenuItem).CommandParameter.ToString();
-            int counter = StreamUrl.IndexOf(itemElements);
+//            string itemElements = (sender as MenuItem).CommandParameter.ToString();
+//            int counter = StreamObjectList.IndexOf(itemElements);
 
-            #if RELEASE
+//#if RELEASE
 
-            Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
+//            Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
 
-            do
-            {
-                Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
-                counter++;
-            }
-            while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
+//            do
+//            {
+//                Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
+//                counter++;
+//            }
+//            while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
 
-            Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
+//            Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
             
-            #endif
-            StreamUrl.Remove((sender as MenuItem).CommandParameter.ToString());
+//#endif
+//            StreamObjectList.Remove((sender as MenuItem).CommandParameter.ToString());
         }
 
         #endregion

@@ -27,6 +27,8 @@ namespace HomeSecurityApp.Utility
             }
 #elif DEBUG
             preferencesValueList.Add("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            preferencesValueList.Add("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
+            preferencesValueList.Add("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
 #endif
             return preferencesValueList;
         }

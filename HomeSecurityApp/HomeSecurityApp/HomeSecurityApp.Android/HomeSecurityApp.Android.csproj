@@ -68,6 +68,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomRender\GradientColorStackLayoutRender.cs" />
+    <Compile Include="CustomRender\GradientShellRender.cs" />
+    <Compile Include="CustomRender\ShellToolbarOverride.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Dependecy\MessageAndroid.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -107,22 +110,16 @@
     <AndroidResource Include="Resources\drawable\splash_screen.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\securitycam.png" />
+    <Folder Include="Resources\drawable-hdpi\" />
+    <Folder Include="Resources\drawable-xhdpi\" />
+    <Folder Include="Resources\drawable-xxhdpi\" />
+    <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\securitycam.png" />
+    <AndroidResource Include="Resources\drawable\cctv_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\securitycam.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\securitycam.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\securitycam.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\refreshbutton.png" />
+    <AndroidResource Include="Resources\drawable\plus_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

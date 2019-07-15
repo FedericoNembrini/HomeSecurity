@@ -1,28 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
              x:Class="HomeSecurityApp.Pages.AddStreamUrlPage">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
-            <Label Text="Name"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="32, 0, 32, 0"/>
-            <Entry x:Name="eNewStreamName" 
-                   HorizontalOptions="FillAndExpand" 
-                   BackgroundColor="{StaticResource EntryBackgroundColor}"
-                   Margin="32,0,32,0"/>
-            <Label Text="Url"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="32, 0, 32, 0"/>
-            <Entry x:Name="eNewStreamUrl" 
-                   HorizontalOptions="FillAndExpand" 
-                   BackgroundColor="{StaticResource EntryBackgroundColor}"
-                   Margin="32,0,32,0"/>
-            <Button Text="Add"
-                    Clicked="Button_Clicked"
-                    BackgroundColor="{StaticResource SecondaryColor}" 
-                    HorizontalOptions="End"
-                    Margin="0, 0, 32, 0"/>
-        </StackLayout>
+        <utility:GradientColorStackLayout
+            StartColor="{StaticResource StartColorBackgroundGradient}"
+            EndColor="{StaticResource EndColorColorBackgroundGradient}"
+            Orientation="Vertical"
+            Direction="Vertical"
+            YCenter="0.58"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" >
+
+            <StackLayout
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="Transparent">
+                <Label Text="Name"
+                       HorizontalOptions="FillAndExpand"
+                       Margin="32, 0, 32, 0"
+                       TextColor="{StaticResource TextColor}" />
+                <Entry x:Name="eNewStreamName" 
+                       HorizontalOptions="FillAndExpand" 
+                       BackgroundColor="Transparent"
+                       Margin="32,0,32,0"
+                       TextColor="{StaticResource TextColor}" />
+                <Label Text="Url"
+                       HorizontalOptions="FillAndExpand"
+                       Margin="32, 0, 32, 0"
+                       TextColor="{StaticResource TextColor}" />
+                <Entry x:Name="eNewStreamUrl" 
+                       HorizontalOptions="FillAndExpand" 
+                       BackgroundColor="Transparent"
+                       Margin="32,0,32,0"
+                       TextColor="{StaticResource TextColor}" />
+                <Button Text="Add"
+                        Clicked="Button_Clicked"
+                        HorizontalOptions="End"
+                        Margin="0, 0, 32, 0"
+                        TextColor="{StaticResource TextColor}"
+                        BackgroundColor="{StaticResource SecondaryColor}" />
+            </StackLayout>
+        </utility:GradientColorStackLayout>
     </ContentPage.Content>
 </ContentPage>
