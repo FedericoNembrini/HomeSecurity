@@ -2,12 +2,25 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HomeSecurityApp.Pages.FlyoutHeader"
-             HeightRequest="180">
+             HeightRequest="140">
     <ContentView.Content>
-      <StackLayout x:Name="slFloyoutHeader"
+        <StackLayout x:Name="slFloyoutHeader"
                    Orientation="Horizontal"
-                   BackgroundColor="Transparent">
-          <Label Text="Hello Xamarin.Forms!" />
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"
+                   BackgroundColor="{StaticResource StartColorBackgroundGradient}">
+            <Image 
+                Source="cctv_icon"
+                WidthRequest="64"
+                HeightRequest="64"
+                VerticalOptions="Center"
+                HorizontalOptions="Start" />
+            <Label
+                Text="HomeSecurityApp"
+                TextColor="{StaticResource TextColor}"
+                FontSize="Large"
+                FontAttributes="Bold"
+                VerticalOptions="Center" />
       </StackLayout>
   </ContentView.Content>
 </ContentView>

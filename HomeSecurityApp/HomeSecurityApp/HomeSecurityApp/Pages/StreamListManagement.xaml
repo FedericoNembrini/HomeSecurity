@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
              x:Class="HomeSecurityApp.Pages.StreamListManagement">
-
     <Shell.TitleView>
         <StackLayout x:Name="slTitleView"
                      Orientation="Horizontal"
@@ -29,9 +28,9 @@
                                           VerticalOptions="FillAndExpand"
                                           HorizontalOptions="FillAndExpand" >
             <AbsoluteLayout x:Name="al"
-                VerticalOptions="FillAndExpand" 
-                HorizontalOptions="FillAndExpand"
-                BackgroundColor="Transparent" >
+                            VerticalOptions="FillAndExpand" 
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="Transparent" >
                 <ListView x:Name="streamList"
                           HorizontalOptions="FillAndExpand"
                           VerticalOptions="FillAndExpand"
@@ -51,14 +50,16 @@
                                             IsDestructive="True" />
                                 </ViewCell.ContextActions>
                                 <Frame Padding="0"
-                                   CornerRadius="4"
-                                   Margin="8, 8, 8, 8" >
+                                       CornerRadius="4"
+                                       Margin="8, 8, 8, 8" >
                                     <StackLayout 
-                                    Orientation="Vertical"
-                                    VerticalOptions="Center"
-                                    Margin="8, 0, 0, 0">
-                                        <Label FontSize="Medium" Text="{ Binding Name }" />
-                                        <Label FontSize="Small" Text="{Binding ConnectionUrl}" />
+                                        Orientation="Vertical"
+                                        VerticalOptions="Center"
+                                        Margin="8, 0, 0, 0">
+                                        <Label Text="{ Binding Name }"
+                                               FontSize="Medium" />
+                                        <Label Text="{Binding ConnectionUrl}"
+                                               FontSize="Small" />
                                     </StackLayout>
                                 </Frame>
 
@@ -66,7 +67,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
                 <Frame Padding="0" Margin="0"
                        AbsoluteLayout.LayoutFlags="PositionProportional"
                        AbsoluteLayout.LayoutBounds=".95, .95, 80, 80"
@@ -90,7 +90,5 @@
                 </Frame>
             </AbsoluteLayout>
         </utility:GradientColorStackLayout>
-        
-        
     </ContentPage.Content>
 </ContentPage>

@@ -8,7 +8,6 @@
         <Color x:Key="PrimaryColorDark">#001e42</Color>
         <Color x:Key="SecondaryColor">#00aa8e</Color>
         <Color x:Key="TextColor">White</Color>
-        <Color x:Key="EntryBackgroundColor">#fafafa</Color>
 
         <Color x:Key="StartColorBackgroundGradient">#00456D</Color>
         <Color x:Key="CenterColorBackgroundGradient">#00456D</Color>

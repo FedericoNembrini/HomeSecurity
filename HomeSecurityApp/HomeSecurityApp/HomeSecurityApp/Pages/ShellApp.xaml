@@ -3,21 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:pages="clr-namespace:HomeSecurityApp.Pages"
         x:Class="HomeSecurityApp.Pages.ShellApp"
-        xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
         FlyoutBehavior="Flyout">
     
     <Shell.FlyoutHeader>
         <pages:FlyoutHeader />
     </Shell.FlyoutHeader>
-    
-    <ShellItem Title="Home">
-        <ShellSection>
-            <ShellContent ContentTemplate="{ DataTemplate pages:StreamList }" />
-        </ShellSection>
-    </ShellItem>
-    <ShellItem Title="StreamListManagement">
-        <ShellSection>
-            <ShellContent ContentTemplate="{ DataTemplate pages:StreamListManagement }" />
-        </ShellSection>
-    </ShellItem>
+
+    <FlyoutItem
+        Title="Home Page"
+        Icon="house_icon">
+        <Tab>
+            <ShellContent>
+                <pages:StreamList />
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="Stream List Management"
+        Icon="list_icon">
+        <Tab>
+            <ShellContent>
+                <pages:StreamListManagement />
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="About"
+        Icon="house_icon">
+        <Tab>
+            <ShellContent>
+                <pages:About />
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
 </Shell>

@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="CustomRender\GradientColorStackLayoutRender.cs" />
     <Compile Include="CustomRender\GradientShellRender.cs" />
+    <Compile Include="CustomRender\ShellFlyoutOverride.cs" />
     <Compile Include="CustomRender\ShellToolbarOverride.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Dependecy\MessageAndroid.cs" />
@@ -120,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\plus_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\house_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\list_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

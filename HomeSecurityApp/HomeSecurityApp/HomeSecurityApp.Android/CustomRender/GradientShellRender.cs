@@ -25,7 +25,10 @@ namespace HomeSecurityApp.Droid.CustomRender
         {
             return new ShellToolbarOverride(this);
         }
-    }
 
-   
+        protected override IShellFlyoutRenderer CreateShellFlyoutRenderer()
+        {
+            return new ShellFlyoutOverride(this, this.AndroidContext);
+        }
+    }
 }

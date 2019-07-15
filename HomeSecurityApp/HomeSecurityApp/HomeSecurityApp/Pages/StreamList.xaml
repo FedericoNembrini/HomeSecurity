@@ -4,7 +4,6 @@
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
              x:Class="HomeSecurityApp.Pages.StreamList">
-
     <Shell.TitleView>
         <StackLayout x:Name="slTitleView"
                      Orientation="Horizontal"
@@ -56,13 +55,14 @@
                                                           WidthRequest="120"
                                                           BackgroundColor="WhiteSmoke"  />
                                     </Frame>
-                                    
                                     <StackLayout x:Name="slItemText"
-                                         VerticalOptions="Center"
-                                         HorizontalOptions="FillAndExpand"
-                                         Orientation="Vertical">
-                                        <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
-                                        <Label Text="{Binding ConnectionUrl}" HorizontalOptions="StartAndExpand" />
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 Orientation="Vertical">
+                                        <Label Text="{Binding Name}"
+                                               HorizontalOptions="StartAndExpand" />
+                                        <Label Text="{Binding ConnectionUrl}"
+                                               HorizontalOptions="StartAndExpand" />
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>
