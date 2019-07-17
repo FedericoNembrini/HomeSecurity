@@ -15,7 +15,6 @@ namespace HomeSecurityApp.Utility
             string preferenceValue;
             List<string> preferencesValueList = new List<string>();
 
-#if Release
             while (Preferences.ContainsKey(Key + Convert.ToString(counter)))
             {
                 preferenceValue = Preferences.Get(Key + Convert.ToString(counter), string.Empty);
@@ -25,11 +24,6 @@ namespace HomeSecurityApp.Utility
                 }
                 counter++;
             }
-#elif DEBUG
-            preferencesValueList.Add("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            preferencesValueList.Add("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            preferencesValueList.Add("Test#rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-#endif
             return preferencesValueList;
         }
     }

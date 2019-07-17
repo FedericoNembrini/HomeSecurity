@@ -51,8 +51,6 @@ namespace HomeSecurityApp.Pages
 
         private void LoadStreamListObject()
         {
-            StreamObjectList.Clear();
-
             List<string> PreferencesList = GetPreferencesList();
 
             foreach(string preference in PreferencesList)
@@ -60,7 +58,8 @@ namespace HomeSecurityApp.Pages
                 StreamObjectList.Add(new StreamListObject(preference, false));
             }
 
-            streamList.ItemsSource = StreamObjectList;
+            if(StreamObjectList.Count > 0)
+                streamList.ItemsSource = StreamObjectList;
         }
 
         #endregion

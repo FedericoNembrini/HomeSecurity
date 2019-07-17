@@ -25,7 +25,16 @@
                        HorizontalOptions="FillAndExpand" 
                        BackgroundColor="Transparent"
                        Margin="32,0,32,0"
-                       TextColor="{StaticResource TextColor}" />
+                       TextColor="{StaticResource TextColor}"
+                       TextChanged="ENewStreamName_TextChanged"/>
+                <StackLayout x:Name="slNameError"
+                             IsVisible="False"
+                             Orientation="Horizontal">
+                    <Label x:Name="lNameError"
+                           HorizontalOptions="FillAndExpand"
+                           Margin="32, 0, 32, 0"
+                           TextColor="Red"/>
+                </StackLayout>
                 <Label Text="Url"
                        HorizontalOptions="FillAndExpand"
                        Margin="32, 0, 32, 0"
@@ -34,7 +43,16 @@
                        HorizontalOptions="FillAndExpand" 
                        BackgroundColor="Transparent"
                        Margin="32,0,32,0"
-                       TextColor="{StaticResource TextColor}" />
+                       TextColor="{StaticResource TextColor}"
+                       TextChanged="ENewStreamUrl_TextChanged"/>
+                <StackLayout x:Name="slUrlError"
+                             IsVisible="False"
+                             Orientation="Horizontal">
+                    <Label x:Name="lUrlError"
+                           HorizontalOptions="FillAndExpand"
+                           Margin="32, 0, 32, 0"
+                           TextColor="Red"/>
+                </StackLayout>
                 <Button Text="Add"
                         Clicked="Button_Clicked"
                         HorizontalOptions="End"
