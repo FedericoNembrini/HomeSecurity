@@ -12,6 +12,12 @@ try:
     
     while True:
         timeFileJson[0]['text_line'] = dt.datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+        
+        temperature = os.popen("vcgencmd measure_temp").readline()
+        temperature = temperature.replace('temp=', '')
+        temperature = temperature.replace('\n', '')
+        timeFileJson[1]['text_line'] = temperature 
+        
         with open(settings['PathToTemp'] + 'text.json', 'w') as timeFile:
             json.dump(timeFileJson, timeFile)
         
