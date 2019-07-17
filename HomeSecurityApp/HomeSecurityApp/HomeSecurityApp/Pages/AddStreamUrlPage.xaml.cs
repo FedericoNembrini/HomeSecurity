@@ -48,16 +48,44 @@ namespace HomeSecurityApp.Pages
         #endregion
 
         #region Event Hanlder
+        private void ENewStreamName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            lNameError.Text = string.Empty;
+            slNameError.IsVisible = false;
+        }
+
+        private void ENewStreamUrl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            lUrlError.Text = string.Empty;
+            slUrlError.IsVisible = false;
+        }
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            #if RELEASE
-                if(!string.IsNullOrEmpty(eNewStreamName.Text) && !string.IsNullOrEmpty(eNewStreamUrl.Text))
-                {
-                    Preferences.Set(Utility.Utility.Key + StreamCounter, $"{eNewStreamName.Text}#{eNewStreamUrl.Text}");
-                }
-            #endif
+#if RELEASE
+            if (string.IsNullOrEmpty(eNewStreamName.Text))
+            {
+                lNameError.Text = "Name Required";
+                slNameError.IsVisible = true;
+                return;
+            }
 
+            if (string.IsNullOrEmpty(eNewStreamUrl.Text))
+            {
+                lUrlError.Text = "Url Required";
+                slUrlError.IsVisible = true;
+                return;
+            }
+
+            if (eNewStreamUrl.Text.Contains('#'))
+            {
+                lUrlError.Text = "Url can't contain #";
+                slUrlError.IsVisible = true;
+                return;
+            }
+
+            Preferences.Set(Utility.Utility.Key + StreamCounter, $"{eNewStreamName.Text}#{eNewStreamUrl.Text}");
+#endif
             await Navigation.PopModalAsync(true);
         }
 
