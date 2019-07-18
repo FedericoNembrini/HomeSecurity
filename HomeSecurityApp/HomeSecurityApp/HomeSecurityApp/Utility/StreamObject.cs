@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace HomeSecurityApp.Utility
 {
-    public class StreamListObject
+    public class StreamObject
     {
         #region Variables
 
@@ -29,7 +29,7 @@ namespace HomeSecurityApp.Utility
 
         #region Constructor
 
-        public StreamListObject(string Key, bool LoadMediaPlayer, LibVLC LibVLCInstance = null)
+        public StreamObject(string Key, bool LoadMediaPlayer, LibVLC LibVLCInstance = null)
         {
             if (string.IsNullOrEmpty(Key))
                 return;

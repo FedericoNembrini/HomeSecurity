@@ -24,7 +24,7 @@ namespace HomeSecurityApp.Pages
 
         LibVLC _LibVlc;
 
-        public ObservableCollection<StreamListObject> StreamObjectList { get; set; } = new ObservableCollection<StreamListObject>();
+        public ObservableCollection<StreamObject> StreamObjectList { get; set; } = new ObservableCollection<StreamObject>();
 
         #endregion
 
@@ -34,6 +34,7 @@ namespace HomeSecurityApp.Pages
         {
             InitializeComponent();
             Core.Initialize();
+            _LibVlc = new LibVLC();
         }
 
         #endregion
@@ -47,30 +48,26 @@ namespace HomeSecurityApp.Pages
             try
             {
                 LoadStreamObjectList();
-
-                lvStreamList.ItemsSource = StreamObjectList;
             }
             catch (Exception ex)
             {
-                #if DEBUG
-                    DependencyService.Get<IMessage>().LongAlert(ex.Message);
-                    Trace.WriteLine(ex.Message);
-                #endif
+                DependencyService.Get<IMessage>().LongAlert($"StreamList - OnAppearing: {ex.Message}");
+                Trace.WriteLine($"StreamList - OnAppearing: {ex.Message}");
             }
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-
-            try
-            {
+            //try
+            //{
                 
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    DependencyService.Get<IMessage>().LongAlert($"StreamList - OnDisappearing: {ex.Message}");
+            //    Trace.WriteLine(ex.Message);
+            //}
         }
 
         #endregion
@@ -79,16 +76,18 @@ namespace HomeSecurityApp.Pages
 
         private void LoadStreamObjectList()
         {
-            _LibVlc = new LibVLC();
 
             StreamObjectList.Clear();
 
             List<string> PreferencesList = GetPreferencesList();
-            
-            foreach(string preference in PreferencesList)
+
+            foreach (string preference in PreferencesList)
             {
-                StreamObjectList.Add(new StreamListObject(preference, true, _LibVlc));
-            }   
+                StreamObjectList.Add(new StreamObject(preference, true, _LibVlc));
+            }
+
+            if (StreamObjectList.Count > 0)
+                lvStreamList.ItemsSource = StreamObjectList;
         }
 
         #endregion
@@ -99,14 +98,12 @@ namespace HomeSecurityApp.Pages
         {
             try
             {
-                await Navigation.PushModalAsync(new SingleStreamVisualization((e.Item as StreamListObject).MediaPlayer));
+                await Navigation.PushModalAsync(new SingleStreamVisualization((e.Item as StreamObject).MediaPlayer));
             }
             catch (Exception ex)
             {
-#if DEBUG
-                DependencyService.Get<IMessage>().LongAlert(ex.Message);
-                Trace.TraceError(ex.Message);
-#endif
+                DependencyService.Get<IMessage>().LongAlert($"StreamList - LvStreamList_ItemTapped: {ex.Message}");
+                Trace.TraceError($"StreamList - LvStreamList_ItemTapped: {ex.Message}");
             }
         }
 

@@ -62,7 +62,6 @@ namespace HomeSecurityApp.Pages
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-#if RELEASE
             if (string.IsNullOrEmpty(eNewStreamName.Text))
             {
                 lNameError.Text = "Name Required";
@@ -85,7 +84,6 @@ namespace HomeSecurityApp.Pages
             }
 
             Preferences.Set(Utility.Utility.Key + StreamCounter, $"{eNewStreamName.Text}#{eNewStreamUrl.Text}");
-#endif
             await Navigation.PopModalAsync(true);
         }
 

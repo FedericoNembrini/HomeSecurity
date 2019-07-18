@@ -18,7 +18,7 @@ namespace HomeSecurityApp.Utility
             while (Preferences.ContainsKey(Key + Convert.ToString(counter)))
             {
                 preferenceValue = Preferences.Get(Key + Convert.ToString(counter), string.Empty);
-                if (!string.IsNullOrEmpty(preferenceValue))
+                if (!string.IsNullOrEmpty(preferenceValue) && preferenceValue.Contains("#"))
                 {
                     preferencesValueList.Add(preferenceValue);
                 }

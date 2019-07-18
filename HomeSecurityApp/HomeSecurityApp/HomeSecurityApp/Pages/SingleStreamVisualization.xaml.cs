@@ -29,10 +29,18 @@ namespace HomeSecurityApp.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
-            videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
-            videoViewToDisplay.MediaPlayer.Fullscreen = true;
-            videoViewToDisplay.MediaPlayer.Play();
+
+            try
+            {
+                videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
+                videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+                videoViewToDisplay.MediaPlayer.Fullscreen = true;
+                videoViewToDisplay.MediaPlayer.Play();
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError($"SingleStreamVisualization - OnAppearing: {ex.Message}");
+            }
         }
 
         protected override void OnDisappearing()
@@ -44,9 +52,13 @@ namespace HomeSecurityApp.Pages
 
         private void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {
-            Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
+            videoViewToDisplay.MediaPlayer.Stop();
+            videoViewToDisplay.IsVisible = false;
 
-            //await Navigation.PopModalAsync();
+            lInfo.Text = $"{nameof(MediaPlayer_EncounteredError)} of {MediaPlayerToUse.Media.Mrl}";
+            lInfo.IsVisible = true;
+
+            Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
         }
     }
 }

@@ -3,6 +3,7 @@ using HomeSecurityApp.Utility.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace HomeSecurityApp.Pages
 	{
         #region Variables
 
-        public ObservableCollection<StreamListObject> StreamObjectList { get; set; } = new ObservableCollection<StreamListObject>();
+        public ObservableCollection<StreamObject> StreamObjectList { get; set; } = new ObservableCollection<StreamObject>();
 
         #endregion
 
@@ -37,7 +38,15 @@ namespace HomeSecurityApp.Pages
         {
             base.OnAppearing();
 
-            LoadStreamListObject();
+            try
+            {
+                LoadStreamListObject();
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - OnAppearing: {ex.Message}");
+                Trace.TraceError($"StreamListManagement - OnAppearing: {ex.Message}");
+            }
         }
 
         protected override void OnDisappearing()
@@ -51,11 +60,13 @@ namespace HomeSecurityApp.Pages
 
         private void LoadStreamListObject()
         {
+            StreamObjectList.Clear();
+
             List<string> PreferencesList = GetPreferencesList();
 
             foreach(string preference in PreferencesList)
             {
-                StreamObjectList.Add(new StreamListObject(preference, false));
+                StreamObjectList.Add(new StreamObject(preference, false));
             }
 
             if(StreamObjectList.Count > 0)
@@ -68,33 +79,37 @@ namespace HomeSecurityApp.Pages
 
         private async void BtnAdd_Clicked(object sender, EventArgs e)
         {
-            #if DEBUG
-                DependencyService.Get<IMessage>().ShortAlert("btnAdd Clicked");
-            #endif
-
             await Navigation.PushModalAsync(new AddStreamUrlPage(StreamObjectList.Count));
         }
 
         private void DeleteButton_Clicked(object sender, EventArgs e)
         {
-            string itemElements = (sender as MenuItem).CommandParameter.ToString();
-            var streamObject = StreamObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
-            var counter = StreamObjectList.IndexOf(streamObject);
-#if RELEASE
-
-            Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
-
-            do
+            try
             {
-                Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
-                counter++;
-            }
-            while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
+                string itemElements = (sender as MenuItem).CommandParameter.ToString();
+                var streamObject = StreamObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
+                if (streamObject != null)
+                {
+                    var counter = StreamObjectList.IndexOf(streamObject);
 
-            Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
-            
-#endif
-            StreamObjectList.Remove(streamObject);
+                    Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
+                    do
+                    {
+                        Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
+                        counter++;
+                    }
+                    while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
+
+                    Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
+
+                    StreamObjectList.Remove(streamObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
+                Trace.TraceError($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
+            }
         }
 
         #endregion
