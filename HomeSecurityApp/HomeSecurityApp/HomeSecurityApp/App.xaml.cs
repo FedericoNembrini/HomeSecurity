@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LibVLCSharp.Shared;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,11 +25,28 @@ namespace HomeSecurityApp
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            // Check if SingleStreamVisualization Is Open
+            if (this.MainPage.Navigation.ModalStack.Count > 0)
+            {
+                if(this.MainPage.Navigation.ModalStack[0].GetType() == typeof(Pages.SingleStreamVisualization))
+                {
+                    this.MainPage.Navigation.PopModalAsync(false);
+                    //Pages.SingleStreamVisualization singleStreamVisualizationReference = this.MainPage.Navigation.ModalStack[0] as Pages.SingleStreamVisualization;
+                    //singleStreamVisualizationReference.MediaPlayerToUse.Stop();
+                }
+            }
         }
 
         protected override void OnResume()
         {
             // Handle when your app resumes
+            // Check if SingleStreamVisualization Is Open
+            //if (this.MainPage.Navigation.ModalStack.Count > 0)
+            //{
+            //    if (this.MainPage.Navigation.ModalStack[0].GetType() == typeof(Pages.SingleStreamVisualization))
+            //    {
+            //    }
+            //}
         }
     }
 }

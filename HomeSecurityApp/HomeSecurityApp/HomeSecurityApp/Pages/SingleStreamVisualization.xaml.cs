@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,23 +18,32 @@ namespace HomeSecurityApp.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SingleStreamVisualization : ContentPage
 	{
-        MediaPlayer MediaPlayerToUse;
+        #region Variables
 
-		public SingleStreamVisualization (MediaPlayer mediaPlayer)
-		{
-			InitializeComponent();
+        public MediaPlayer MediaPlayerToUse;
+
+        #endregion
+
+        #region Constuctor
+
+        public SingleStreamVisualization(MediaPlayer mediaPlayer)
+        {
+            InitializeComponent();
 
             this.MediaPlayerToUse = mediaPlayer;
-		}
+            videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
+            videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+        }
 
+        #endregion
+
+        #region Overrides Method
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
             try
             {
-                videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
-                videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
                 videoViewToDisplay.MediaPlayer.Fullscreen = true;
                 videoViewToDisplay.MediaPlayer.Play();
             }
@@ -50,6 +60,10 @@ namespace HomeSecurityApp.Pages
             videoViewToDisplay.MediaPlayer.Stop();
         }
 
+        #endregion
+
+        #region Event Handler
+
         private void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {
             videoViewToDisplay.MediaPlayer.Stop();
@@ -60,5 +74,11 @@ namespace HomeSecurityApp.Pages
 
             Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
         }
+
+        #endregion
+
+        #region Public Method
+
+        #endregion
     }
 }

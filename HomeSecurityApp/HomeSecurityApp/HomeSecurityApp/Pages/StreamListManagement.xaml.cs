@@ -79,7 +79,9 @@ namespace HomeSecurityApp.Pages
 
         private async void BtnAdd_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new AddStreamUrlPage(StreamObjectList.Count));
+            AddStreamUrlPage addStreamUrlPageModal = new AddStreamUrlPage(StreamObjectList.Count);
+            addStreamUrlPageModal.Disappearing += AddStreamUrlPageModal_Disappearing;
+            await Navigation.PushModalAsync(addStreamUrlPageModal);
         }
 
         private void DeleteButton_Clicked(object sender, EventArgs e)
@@ -92,15 +94,15 @@ namespace HomeSecurityApp.Pages
                 {
                     var counter = StreamObjectList.IndexOf(streamObject);
 
-                    Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), string.Empty);
+                    Preferences.Set(Key + Convert.ToString(counter), string.Empty);
                     do
                     {
-                        Preferences.Set(Utility.Utility.Key + Convert.ToString(counter), Preferences.Get(Utility.Utility.Key + Convert.ToString(counter + 1), string.Empty));
+                        Preferences.Set(Key + Convert.ToString(counter), Preferences.Get(Key + Convert.ToString(counter + 1), string.Empty));
                         counter++;
                     }
-                    while (Preferences.ContainsKey(Utility.Utility.Key + Convert.ToString(counter + 1)));
+                    while (Preferences.ContainsKey(Key + Convert.ToString(counter + 1)));
 
-                    Preferences.Remove(Utility.Utility.Key + Convert.ToString(counter));
+                    Preferences.Remove(Key + Convert.ToString(counter));
 
                     StreamObjectList.Remove(streamObject);
                 }
@@ -109,6 +111,19 @@ namespace HomeSecurityApp.Pages
             {
                 DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
                 Trace.TraceError($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
+            }
+        }
+
+        private void AddStreamUrlPageModal_Disappearing(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadStreamListObject();
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - AddStreamUrlPageModal_Disappearing: {ex.Message}");
+                Trace.TraceError($"StreamListManagement - AddStreamUrlPageModal_Disappearing: {ex.Message}");
             }
         }
 

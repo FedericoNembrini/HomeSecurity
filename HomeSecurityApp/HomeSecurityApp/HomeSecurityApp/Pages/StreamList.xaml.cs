@@ -98,13 +98,27 @@ namespace HomeSecurityApp.Pages
         {
             try
             {
-                await Navigation.PushModalAsync(new SingleStreamVisualization((e.Item as StreamObject).MediaPlayer));
+                SingleStreamVisualization singleStreamVisualizationModal = new SingleStreamVisualization((e.Item as StreamObject).MediaPlayer);
+                singleStreamVisualizationModal.Appearing += SingleStreamVisualizationModal_Appearing;
+                singleStreamVisualizationModal.Disappearing += SingleStreamVisualizationModal_Disappearing;
+
+                await Navigation.PushModalAsync(singleStreamVisualizationModal);
             }
             catch (Exception ex)
             {
                 DependencyService.Get<IMessage>().LongAlert($"StreamList - LvStreamList_ItemTapped: {ex.Message}");
                 Trace.TraceError($"StreamList - LvStreamList_ItemTapped: {ex.Message}");
             }
+        }
+
+        private void SingleStreamVisualizationModal_Appearing(object sender, EventArgs e)
+        {
+            DeviceDisplay.KeepScreenOn = true;
+        }
+
+        private void SingleStreamVisualizationModal_Disappearing(object sender, EventArgs e)
+        {
+            DeviceDisplay.KeepScreenOn = false;
         }
 
         #endregion
