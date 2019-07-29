@@ -30,9 +30,12 @@ namespace HomeSecurityApp.Pages
         {
             InitializeComponent();
 
-            this.MediaPlayerToUse = mediaPlayer;
-            videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
-            videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+            if(mediaPlayer != null)
+            {
+                this.MediaPlayerToUse = mediaPlayer;
+                videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
+                videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+            }
         }
 
         #endregion
@@ -49,7 +52,9 @@ namespace HomeSecurityApp.Pages
             }
             catch (Exception ex)
             {
+#if DEBUG
                 Trace.TraceError($"SingleStreamVisualization - OnAppearing: {ex.Message}");
+#endif
             }
         }
 
@@ -66,13 +71,22 @@ namespace HomeSecurityApp.Pages
 
         private void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {
-            videoViewToDisplay.MediaPlayer.Stop();
-            videoViewToDisplay.IsVisible = false;
+            try
+            {
+                videoViewToDisplay.MediaPlayer.Stop();
+                videoViewToDisplay.IsVisible = false;
 
-            lInfo.Text = $"{nameof(MediaPlayer_EncounteredError)} of {MediaPlayerToUse.Media.Mrl}";
-            lInfo.IsVisible = true;
+                lInfo.Text = $"{nameof(MediaPlayer_EncounteredError)} of {MediaPlayerToUse.Media.Mrl}";
+                lInfo.IsVisible = true;
 
-            Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
+                Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Trace.TraceError($"SingleStreamVisualization - MediaPlayer_EncounteredError: {ex.Message}");
+#endif
+            }
         }
 
         #endregion

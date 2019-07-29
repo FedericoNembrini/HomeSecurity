@@ -45,7 +45,9 @@ namespace HomeSecurityApp.Pages
             catch (Exception ex)
             {
                 DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - OnAppearing: {ex.Message}");
+#if DEBUG
                 Trace.TraceError($"StreamListManagement - OnAppearing: {ex.Message}");
+#endif
             }
         }
 
@@ -79,9 +81,21 @@ namespace HomeSecurityApp.Pages
 
         private async void BtnAdd_Clicked(object sender, EventArgs e)
         {
-            AddStreamUrlPage addStreamUrlPageModal = new AddStreamUrlPage(StreamObjectList.Count);
-            addStreamUrlPageModal.Disappearing += AddStreamUrlPageModal_Disappearing;
-            await Navigation.PushModalAsync(addStreamUrlPageModal);
+            try
+            {
+                AddStreamUrlPage addStreamUrlPageModal = new AddStreamUrlPage(StreamObjectList.Count);
+
+                addStreamUrlPageModal.Disappearing += AddStreamUrlPageModal_Disappearing;
+
+                await Navigation.PushModalAsync(addStreamUrlPageModal);
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - BtnAdd_Clicked: {ex.Message}");
+#if DEBUG
+                Trace.WriteLine($"StreamListManagement - BtnAdd_Clicked: {ex.Message}");
+#endif
+            }
         }
 
         private void DeleteButton_Clicked(object sender, EventArgs e)
@@ -110,7 +124,9 @@ namespace HomeSecurityApp.Pages
             catch (Exception ex)
             {
                 DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
+#if DEBUG
                 Trace.TraceError($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
+#endif
             }
         }
 
@@ -123,7 +139,9 @@ namespace HomeSecurityApp.Pages
             catch (Exception ex)
             {
                 DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - AddStreamUrlPageModal_Disappearing: {ex.Message}");
+#if DEBUG
                 Trace.TraceError($"StreamListManagement - AddStreamUrlPageModal_Disappearing: {ex.Message}");
+#endif
             }
         }
 

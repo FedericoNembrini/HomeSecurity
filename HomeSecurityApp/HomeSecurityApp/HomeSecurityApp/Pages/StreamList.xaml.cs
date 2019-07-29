@@ -52,7 +52,9 @@ namespace HomeSecurityApp.Pages
             catch (Exception ex)
             {
                 DependencyService.Get<IMessage>().LongAlert($"StreamList - OnAppearing: {ex.Message}");
+#if DEBUG
                 Trace.WriteLine($"StreamList - OnAppearing: {ex.Message}");
+#endif
             }
         }
 
@@ -76,7 +78,6 @@ namespace HomeSecurityApp.Pages
 
         private void LoadStreamObjectList()
         {
-
             StreamObjectList.Clear();
 
             List<string> PreferencesList = GetPreferencesList();
@@ -98,6 +99,12 @@ namespace HomeSecurityApp.Pages
         {
             try
             {
+                if (!(e.Item is StreamObject))
+                {
+                    DependencyService.Get<IMessage>().LongAlert($"StreamList - LvStreamList_ItemTapped: ListItem is not a StreamObject");
+                    return;
+                }
+
                 SingleStreamVisualization singleStreamVisualizationModal = new SingleStreamVisualization((e.Item as StreamObject).MediaPlayer);
                 singleStreamVisualizationModal.Appearing += SingleStreamVisualizationModal_Appearing;
                 singleStreamVisualizationModal.Disappearing += SingleStreamVisualizationModal_Disappearing;
@@ -107,18 +114,40 @@ namespace HomeSecurityApp.Pages
             catch (Exception ex)
             {
                 DependencyService.Get<IMessage>().LongAlert($"StreamList - LvStreamList_ItemTapped: {ex.Message}");
+#if DEBUG
                 Trace.TraceError($"StreamList - LvStreamList_ItemTapped: {ex.Message}");
+#endif
             }
         }
 
         private void SingleStreamVisualizationModal_Appearing(object sender, EventArgs e)
         {
-            DeviceDisplay.KeepScreenOn = true;
+            try
+            {
+                DeviceDisplay.KeepScreenOn = true;
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamList - SingleStreamVisualizationModal_Appearing: {ex.Message}");
+#if DEBUG
+                Trace.TraceError($"StreamList - SingleStreamVisualizationModal_Appearing: {ex.Message}");
+#endif
+            }
         }
 
         private void SingleStreamVisualizationModal_Disappearing(object sender, EventArgs e)
         {
-            DeviceDisplay.KeepScreenOn = false;
+            try
+            {
+                DeviceDisplay.KeepScreenOn = false;
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamList - SingleStreamVisualizationModal_Disappearing: {ex.Message}");
+#if DEBUG
+                Trace.TraceError($"StreamList - SingleStreamVisualizationModal_Disappearing: {ex.Message}");
+#endif
+            }
         }
 
         #endregion
