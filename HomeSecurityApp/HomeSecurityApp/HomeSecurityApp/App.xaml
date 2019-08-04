@@ -5,12 +5,16 @@
              x:Class="HomeSecurityApp.App">
     <Application.Resources>
         <Color x:Key="PrimaryColor">#00709b</Color>
+        <Color x:Key="PrimaryColorDark">#001e42</Color>
         <Color x:Key="SecondaryColor">#00aa8e</Color>
         <Color x:Key="TextColor">White</Color>
-        <Color x:Key="EntryBackgroundColor">#fafafa</Color>
+
+        <Color x:Key="StartColorBackgroundGradient">#00456D</Color>
+        <Color x:Key="CenterColorBackgroundGradient">#00456D</Color>
+        <Color x:Key="EndColorColorBackgroundGradient">#00aa8e</Color>
 
         <Style TargetType="local:ShellApp">
-            <Setter Property="Shell.ShellBackgroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="Shell.BackgroundColor" Value="Transparent" />
         </Style>
 
         <Style TargetType="Label">

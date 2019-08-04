@@ -9,12 +9,12 @@ using Xamarin.Forms.Xaml;
 
 namespace HomeSecurityApp.Pages
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ShellApp : Shell
-	{
-		public ShellApp ()
-		{
-			InitializeComponent ();
-		}
-	}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class FlyoutHeader : ContentView
+    {
+        public FlyoutHeader()
+        {
+            InitializeComponent();
+        }
+    }
 }

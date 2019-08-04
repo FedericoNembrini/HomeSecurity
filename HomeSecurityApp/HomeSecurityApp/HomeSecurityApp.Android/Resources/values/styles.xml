@@ -3,6 +3,7 @@
 
   <style name="MainTheme" parent="MainTheme.Base">
   </style>
+  
   <!-- Base theme applied no matter what API -->
   <style name="MainTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
     <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
@@ -20,6 +21,13 @@
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
+
+    <!-- List view selection color -->
+    <item name="android:colorPressedHighlight">@color/transparent</item>
+    <item name="android:colorLongPressedHighlight">@color/colorAccent</item>
+    <item name="android:colorFocusedHighlight">@color/transparent</item>
+    <item name="android:colorActivatedHighlight">@color/transparent</item>
+    <item name="android:activatedBackgroundIndicator">@color/transparent</item>
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>

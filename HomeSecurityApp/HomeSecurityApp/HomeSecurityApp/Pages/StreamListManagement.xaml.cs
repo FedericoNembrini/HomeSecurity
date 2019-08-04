@@ -1,92 +1,150 @@
-﻿using System;
+﻿using HomeSecurityApp.Utility;
+using HomeSecurityApp.Utility.Interface;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static HomeSecurityApp.Utility.Utility;
 
 namespace HomeSecurityApp.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StreamListManagement : ContentPage
 	{
-        public ObservableCollection<string> StreamUrl = new ObservableCollection<string>();
-        private string Key = "StreamUrl_";
-        private int CounterUrl = 0;
+        #region Variables
 
-		public StreamListManagement ()
-		{
-			InitializeComponent ();
-            LoadStreamList();
-		}
+        public ObservableCollection<StreamObject> StreamObjectList { get; set; } = new ObservableCollection<StreamObject>();
 
-        private void LoadStreamList()
+        #endregion
+
+        #region Constructor
+
+        public StreamListManagement()
         {
-            //int counter = 0;
-            //string stringTemp;
-
-            //while(Preferences.ContainsKey(Key + Convert.ToString(counter)))
-            //{
-            //    stringTemp = Preferences.Get(Key + Convert.ToString(counter), string.Empty);
-            //    if(!string.IsNullOrEmpty(stringTemp))
-            //    {
-            //        StreamUrl.Add(stringTemp);
-            //    }
-            //    counter++;
-            //}
-            //CounterUrl = counter;
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            StreamUrl.Add("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov");
-            streamList.ItemsSource = StreamUrl;
+            InitializeComponent();
         }
 
-        private void Delete_Clicked(object sender, EventArgs e)
+        #endregion
+
+        #region Override Region
+
+        protected override void OnAppearing()
         {
-            string itemElements = (sender as MenuItem).CommandParameter.ToString();
-            int counter = StreamUrl.IndexOf(itemElements);
+            base.OnAppearing();
 
-            //Preferences.Set(Key + Convert.ToString(counter), string.Empty);
-
-            do
+            try
             {
-                Preferences.Set(Key + Convert.ToString(counter), Preferences.Get(Key + Convert.ToString(counter + 1), string.Empty));
-                counter++;
+                LoadStreamListObject();
             }
-            while (Preferences.ContainsKey(Key + Convert.ToString(counter + 1)));
-
-            Preferences.Remove(Key + Convert.ToString(counter));
-            StreamUrl.Remove((sender as MenuItem).CommandParameter.ToString());
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - OnAppearing: {ex.Message}");
+#if DEBUG
+                Trace.TraceError($"StreamListManagement - OnAppearing: {ex.Message}");
+#endif
+            }
         }
 
-        private void StreamList_ItemTapped(object sender, ItemTappedEventArgs e)
+        protected override void OnDisappearing()
         {
-
+            base.OnDisappearing();
         }
 
-        private void AddButton_Clicked(object sender, EventArgs e)
+        #endregion
+
+        #region Private Method
+
+        private void LoadStreamListObject()
         {
-            //string key = "StreamUrl_";
-            //if(!string.IsNullOrEmpty(entryUrl.Text))
-            //    Preferences.Set(key + CounterUrl, entryUrl.Text);
-            StreamUrl.Add(entryUrl.Text);
-            entryUrl.Text = string.Empty;
+            StreamObjectList.Clear();
+
+            List<string> PreferencesList = GetPreferencesList();
+
+            foreach(string preference in PreferencesList)
+            {
+                StreamObjectList.Add(new StreamObject(preference, false));
+            }
+
+            if(StreamObjectList.Count > 0)
+                streamList.ItemsSource = StreamObjectList;
         }
 
-        //private void SaveButton_Clicked(object sender, EventArgs e)
-        //{
-        //    for(int i = 0; i < StreamUrl.Count; i++)
-        //    {
-        //        //Preferences.Set(Key + Convert.ToString(i), StreamUrl[i]);
-        //    }
-        //}
+        #endregion
 
-        //private void UrlEntry_TextChanged(object sender, TextChangedEventArgs e)
-        //{
+        #region Event Handler
 
-        //}
+        private async void BtnAdd_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                AddStreamUrlPage addStreamUrlPageModal = new AddStreamUrlPage(StreamObjectList.Count);
+
+                addStreamUrlPageModal.Disappearing += AddStreamUrlPageModal_Disappearing;
+
+                await Navigation.PushModalAsync(addStreamUrlPageModal);
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - BtnAdd_Clicked: {ex.Message}");
+#if DEBUG
+                Trace.WriteLine($"StreamListManagement - BtnAdd_Clicked: {ex.Message}");
+#endif
+            }
+        }
+
+        private void DeleteButton_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string itemElements = (sender as MenuItem).CommandParameter.ToString();
+                var streamObject = StreamObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
+                if (streamObject != null)
+                {
+                    var counter = StreamObjectList.IndexOf(streamObject);
+
+                    Preferences.Set(Key + Convert.ToString(counter), string.Empty);
+                    do
+                    {
+                        Preferences.Set(Key + Convert.ToString(counter), Preferences.Get(Key + Convert.ToString(counter + 1), string.Empty));
+                        counter++;
+                    }
+                    while (Preferences.ContainsKey(Key + Convert.ToString(counter + 1)));
+
+                    Preferences.Remove(Key + Convert.ToString(counter));
+
+                    StreamObjectList.Remove(streamObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
+#if DEBUG
+                Trace.TraceError($"StreamListManagement - DeleteButton_Clicked: {ex.Message}");
+#endif
+            }
+        }
+
+        private void AddStreamUrlPageModal_Disappearing(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadStreamListObject();
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().LongAlert($"StreamListManagement - AddStreamUrlPageModal_Disappearing: {ex.Message}");
+#if DEBUG
+                Trace.TraceError($"StreamListManagement - AddStreamUrlPageModal_Disappearing: {ex.Message}");
+#endif
+            }
+        }
+
+        #endregion
     }
 }

@@ -1,42 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
              x:Class="HomeSecurityApp.Pages.StreamListManagement">
-
     <Shell.TitleView>
-        <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0, 16, 0, 0">
-            <Label FontSize="Large" FontAttributes="Bold" Text="Stream List Management" TextColor="{StaticResource TextColor}" VerticalOptions="Center" />
+        <StackLayout x:Name="slTitleView"
+                     Orientation="Horizontal"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+                     BackgroundColor="Transparent">
+            <Label x:Name="lblTitleView"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   Text="Stream List Management"
+                   TextColor="{StaticResource TextColor}"
+                   VerticalOptions="Center" />
         </StackLayout>
     </Shell.TitleView>
-
+    
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Padding="10">
-            
-            <Label FontSize="Medium" FontAttributes="Bold" Text="Add Stream Url:"></Label>
-            <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 20">
-                <Entry x:Name="entryUrl" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource EntryBackgroundColor}" />
-                <Button Text="Add" Clicked="AddButton_Clicked" BackgroundColor="{StaticResource SecondaryColor}" />
-            </StackLayout>
-            <!--<StackLayout Orientation="Horizontal">-->
-                <Label HorizontalOptions="StartAndExpand" FontSize="Medium" FontAttributes="Bold" Text="Stream Url List:" />
-                <!--<Button Text="Save" Clicked="SaveButton_Clicked" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="{StaticResource SecondaryColor}" />-->
-            <!--</StackLayout>-->
-            
-            <ListView x:Name="streamList" ItemTapped="StreamList_ItemTapped">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem Clicked="Delete_Clicked" CommandParameter="{ Binding . }" Text="Delete" IsDestructive="True" />
-                            </ViewCell.ContextActions>
-                            <StackLayout Padding="8">
-                                <Label FontSize="Medium" Text="{ Binding . }" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
-        </StackLayout>
+        <utility:GradientColorStackLayout x:Name="gcslBackground"
+                                          StartColor="{StaticResource StartColorBackgroundGradient}"
+                                          EndColor="{StaticResource EndColorColorBackgroundGradient}"
+                                          Orientation="Vertical"
+                                          Direction="Vertical"
+                                          YCenter="0.58"
+                                          VerticalOptions="FillAndExpand"
+                                          HorizontalOptions="FillAndExpand" >
+            <AbsoluteLayout x:Name="al"
+                            VerticalOptions="FillAndExpand" 
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="Transparent" >
+                <ListView x:Name="streamList"
+                          HorizontalOptions="FillAndExpand"
+                          VerticalOptions="FillAndExpand"
+                          HeightRequest="{Binding Path=Height, Source={x:Reference al}}"
+                          WidthRequest="{Binding Path=Width, Source={x:Reference al}}"
+                          RowHeight="80"
+                          SeparatorVisibility="None"
+                          VerticalScrollBarVisibility="Never"
+                          BackgroundColor="Transparent" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Clicked="DeleteButton_Clicked"
+                                            CommandParameter="{ Binding Key }"
+                                            Text="Delete"
+                                            IsDestructive="True" />
+                                </ViewCell.ContextActions>
+                                <Frame Padding="0"
+                                       CornerRadius="4"
+                                       Margin="8, 8, 8, 8" >
+                                    <StackLayout x:Name="slItem"
+                                        Orientation="Vertical"
+                                        VerticalOptions="Center"
+                                        Margin="8, 0, 0, 0">
+                                        <Label Text="{ Binding Name }"
+                                               FontSize="Large"
+                                               FontAttributes="Bold" />
+                                        <Label Text="{Binding ConnectionUrl}"
+                                               FontSize="Small"
+                                               FontAttributes="Italic" />
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Frame Padding="0" Margin="0"
+                       AbsoluteLayout.LayoutFlags="PositionProportional"
+                       AbsoluteLayout.LayoutBounds=".95, .95, 80, 80"
+                       CornerRadius="100"
+                       HeightRequest="64"
+                       WidthRequest="64"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       HasShadow="True"
+                       BackgroundColor="{StaticResource SecondaryColor}">
+                    <ImageButton x:Name="btnAdd" 
+                                 Source="plus_icon"
+                                 WidthRequest="64"
+                                 HeightRequest="64"
+                                 CornerRadius="100"
+                                 Padding="16, 16, 16, 16"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 BackgroundColor="{StaticResource SecondaryColor}"
+                                 Clicked="BtnAdd_Clicked" />
+                </Frame>
+            </AbsoluteLayout>
+        </utility:GradientColorStackLayout>
     </ContentPage.Content>
 </ContentPage>

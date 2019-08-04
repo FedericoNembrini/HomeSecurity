@@ -1,11 +1,15 @@
-﻿using LibVLCSharp.Forms.Shared;
+﻿using HomeSecurityApp.Utility;
+using HomeSecurityApp.Utility.Interface;
+using LibVLCSharp.Forms.Shared;
 using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,23 +18,44 @@ namespace HomeSecurityApp.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SingleStreamVisualization : ContentPage
 	{
-        LibVLC _LibVlc;
-        string VideoUrlToDisplay;
-		public SingleStreamVisualization (string videoUrlToDisplay)
-		{
-			InitializeComponent ();
-            
-            this.VideoUrlToDisplay = videoUrlToDisplay;
-		}
+        #region Variables
 
+        public MediaPlayer MediaPlayerToUse;
+
+        #endregion
+
+        #region Constuctor
+
+        public SingleStreamVisualization(MediaPlayer mediaPlayer)
+        {
+            InitializeComponent();
+
+            if(mediaPlayer != null)
+            {
+                this.MediaPlayerToUse = mediaPlayer;
+                videoViewToDisplay.MediaPlayer = MediaPlayerToUse;
+                videoViewToDisplay.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+            }
+        }
+
+        #endregion
+
+        #region Overrides Method
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            _LibVlc = new LibVLC();
-
-            videoViewToDisplay.MediaPlayer = new MediaPlayer(_LibVlc) { Media = new Media(_LibVlc, VideoUrlToDisplay, FromType.FromLocation), Volume = 0, Fullscreen = true };
-            videoViewToDisplay.MediaPlayer.Play();
+            try
+            {
+                videoViewToDisplay.MediaPlayer.Fullscreen = true;
+                videoViewToDisplay.MediaPlayer.Play();
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Trace.TraceError($"SingleStreamVisualization - OnAppearing: {ex.Message}");
+#endif
+            }
         }
 
         protected override void OnDisappearing()
@@ -38,8 +63,36 @@ namespace HomeSecurityApp.Pages
             base.OnDisappearing();
 
             videoViewToDisplay.MediaPlayer.Stop();
-            videoViewToDisplay.MediaPlayer.Media.Dispose();
-            _LibVlc.Dispose();
         }
+
+        #endregion
+
+        #region Event Handler
+
+        private void MediaPlayer_EncounteredError(object sender, EventArgs e)
+        {
+            try
+            {
+                videoViewToDisplay.MediaPlayer.Stop();
+                videoViewToDisplay.IsVisible = false;
+
+                lInfo.Text = $"{nameof(MediaPlayer_EncounteredError)} of {MediaPlayerToUse.Media.Mrl}";
+                lInfo.IsVisible = true;
+
+                Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Trace.TraceError($"SingleStreamVisualization - MediaPlayer_EncounteredError: {ex.Message}");
+#endif
+            }
+        }
+
+        #endregion
+
+        #region Public Method
+
+        #endregion
     }
 }
