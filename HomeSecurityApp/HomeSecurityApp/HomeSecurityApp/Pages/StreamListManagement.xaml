@@ -57,9 +57,11 @@
                                         VerticalOptions="Center"
                                         Margin="8, 0, 0, 0">
                                         <Label Text="{ Binding Name }"
-                                               FontSize="Medium" />
+                                               FontSize="Large"
+                                               FontAttributes="Bold" />
                                         <Label Text="{Binding ConnectionUrl}"
-                                               FontSize="Small" />
+                                               FontSize="Small"
+                                               FontAttributes="Italic" />
                                     </StackLayout>
                                 </Frame>
                             </ViewCell>

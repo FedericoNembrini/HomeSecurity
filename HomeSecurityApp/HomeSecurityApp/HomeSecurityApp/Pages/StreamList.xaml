@@ -42,28 +42,32 @@
                         <ViewCell>
                             <Frame Padding="0"
                                    CornerRadius="8"
-                                   Margin="8, 8, 8, 8" >
+                                   Margin="8, 8, 8, 8"
+                                   BackgroundColor="White">
                                 <StackLayout x:Name="slItem"
-                                             VerticalOptions="FillAndExpand"
-                                             HorizontalOptions="FillAndExpand"
                                              Orientation="Horizontal"
-                                             BackgroundColor="White" >
+                                             VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand">
                                     <Frame Padding="0"
                                            CornerRadius="8"
-                                           Margin="8, 8, 8, 8">
+                                           Margin="8, 8, 8, 8"
+                                           BackgroundColor="WhiteSmoke">
                                         <shared:VideoView MediaPlayer="{Binding MediaPlayer}"
                                                           HeightRequest="120"
-                                                          WidthRequest="120"
-                                                          BackgroundColor="WhiteSmoke"  />
+                                                          WidthRequest="120"/>
                                     </Frame>
                                     <StackLayout x:Name="slItemText"
                                                  VerticalOptions="Center"
                                                  HorizontalOptions="FillAndExpand"
                                                  Orientation="Vertical">
                                         <Label Text="{Binding Name}"
-                                               HorizontalOptions="StartAndExpand" />
+                                               FontSize="Large"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="StartAndExpand"/>
                                         <Label Text="{Binding ConnectionUrl}"
-                                               HorizontalOptions="StartAndExpand" />
+                                               FontSize="Small"
+                                               FontAttributes="Italic"
+                                               HorizontalOptions="StartAndExpand"/>
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>
