@@ -1,7 +1,10 @@
-# SecurityCamera
+# HomeSecurity
 
-RaspberryPi + Camera Recording and Streaming Server  
-Mobile Application to Watch the Streaming
+RaspberryPi + Camera Module for Recording and Streaming.
+Xamarin Forms Mobile Application to Play Streaming Video.
+
+## HomeSecurityApp
+<img src="https://raw.githubusercontent.com/FedericoNembrini/HomeSecurityCamera/assets/docs/images/HomeSecurityApp_StreamList.png?raw=true" width="250px" /> <img src="https://raw.githubusercontent.com/FedericoNembrini/HomeSecurityCamera/assets/docs/images/HomeSecurityApp_StreamVisualization.png?raw=true" width="250px" /> <img src="https://raw.githubusercontent.com/FedericoNembrini/HomeSecurityCamera/assets/docs/images/HomeSecurityApp_Menu.png?raw=true" width="250px" /> <img src="https://raw.githubusercontent.com/FedericoNembrini/HomeSecurityCamera/assets/docs/images/HomeSecurityApp_StreamUrlManagement.png?raw=true" width="250px" /> <img src="https://raw.githubusercontent.com/FedericoNembrini/HomeSecurityCamera/assets/docs/images/HomeSecurityApp_AddStreamUrl.png?raw=true" width="250px" /> <img src="https://raw.githubusercontent.com/FedericoNembrini/HomeSecurityCamera/assets/docs/images/HomeSecurityApp_About.png?raw=true" width="250px" />
 
 ## Built With
 
