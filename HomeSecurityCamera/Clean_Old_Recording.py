@@ -8,28 +8,31 @@ try:
         settings = json.load(settingsFile)
     
     while True:
-        fileList = glob.glob(settings['PathToNas'] + "*")
+        fileList = glob.glob(settings['PathToNasRecordings'] + "*")
         currentDateTime = dt.datetime.now()
 
-        for file in fileList:
-            fileName = ''
+        if len(fileList) > 0:
+            for file in fileList:
+                fileName = ''
             
-            if file.endswith('.mp4'):
-                fileName = file[:-4]
+                if file.endswith('.mp4'):
+                    fileName = file[:-4]
             
-            fileNameDateTime = dt.datetime.strptime(fileName, '%d-%m-%Y_%H-%M-%S')
+                fileNameDateTime = dt.datetime.strptime(fileName, '%d-%m-%Y_%H-%M-%S')
             
-            if fileNameDateTime <= currentDateTime - dt.timedelta(hours = 24):
-                os.remove(file)
+                if fileNameDateTime <= currentDateTime - dt.timedelta(hours = 24):
+                    os.remove(file)
         
         if os.path.ismount(settings['PathToNas']):
             fileList = glob.glob(settings['PathToLocalRecordings'] + '*')
-            fileList = sorted(fileList)
-            del fileList[-1]
-            for file in fileList:
-                subprocess.Popen('mv' + settings['PathToLocalRecordings'] + file + ' ' + settings['PathToNasRecordings'], shell=True)
+            
+            if len(fileList) > 0:
+                fileList = sorted(fileList)
+                del fileList[-1]
+                for file in fileList:
+                    subprocess.Popen('mv' + settings['PathToLocalRecordings'] + file + ' ' + settings['PathToNasRecordings'], shell=True)
 
-        time.sleep(3600)
+        time.sleep(3000)
 except Exception as ex:
     print (ex)
 finally:
