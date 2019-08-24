@@ -3,5 +3,6 @@
     "PathToLocalProject": "/home/pi/HomeSecurityCamera/",
     "PathToLocalRecordings": "/home/pi/HomeSecurityCamera/Recordings/",
     "PathToNasRecordings": "/mnt/SecurityCam/Cam01/Recordings/",
-    "PathToTemp": "/tmp/"
+    "PathToTemp": "/tmp/",
+    "PathToLogs": "/mnt/SecurityCam/Cam01/Logs/"
 }
