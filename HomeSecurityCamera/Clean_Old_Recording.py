@@ -25,24 +25,27 @@ if hasSettingsLoaded:
                 
                     if file.endswith('.mp4'):
                         fileName = file[:-4]
-                
+
+                    if fileName.startswith(settings['PathToNasRecordings']):
+                        fileName = fileName.replace(settings['PathToNasRecordings'], '')
+
                     fileNameDateTime = dt.datetime.strptime(fileName, '%d-%m-%Y_%H-%M-%S')
                 
                     if fileNameDateTime <= currentDateTime - dt.timedelta(hours = 24):
                         os.remove(file)
             
-            if os.path.ismount(settings['PathToNas']):
-                fileList = glob.glob(settings['PathToLocalRecordings'] + '*')
+            # if os.path.ismount(settings['PathToNas']):
+            #     fileList = glob.glob(settings['PathToLocalRecordings'] + '*')
                 
-                if len(fileList) > 0:
-                    fileList = sorted(fileList)
-                    del fileList[-1]
-                    for file in fileList:
-                        subprocess.Popen('mv' + settings['PathToLocalRecordings'] + file + ' ' + settings['PathToNasRecordings'], shell=True)
+            #     if len(fileList) > 0:
+            #         fileList = sorted(fileList)
+            #         del fileList[-1]
+            #         for file in fileList:
+            #             subprocess.Popen('mv' + settings['PathToLocalRecordings'] + file + ' ' + settings['PathToNasRecordings'], shell=True)
 
             time.sleep(3000)
     except Exception as ex:
         with open(settings['PathToLogs'] + 'Update_Overlay_Text.log', 'a') as logFile:
-            logFile.write(ex + '\n')
+            logFile.write(str(ex) + '\n')
     finally:
         pass

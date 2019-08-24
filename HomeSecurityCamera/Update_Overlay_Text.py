@@ -35,6 +35,6 @@ if hasSettingsLoaded:
             time.sleep(0.5)
     except Exception as ex:        
         with open(settings['PathToLogs'] + 'Update_Overlay_Text.log', 'a') as logFile:
-            logFile.write(ex + '\n')
+            logFile.write(str(ex) + '\n')
     finally:
         pass
