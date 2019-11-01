@@ -28,7 +28,7 @@ namespace HomeSecurityApp
             // Check if SingleStreamVisualization Is Open
             if (this.MainPage.Navigation.ModalStack.Count > 0)
             {
-                if(this.MainPage.Navigation.ModalStack[0].GetType() == typeof(Pages.SingleStreamVisualization))
+                if(this.MainPage.Navigation.ModalStack[0].GetType() == typeof(Pages.SingleCameraVisualization))
                 {
                     this.MainPage.Navigation.PopModalAsync(false);
                     //Pages.SingleStreamVisualization singleStreamVisualizationReference = this.MainPage.Navigation.ModalStack[0] as Pages.SingleStreamVisualization;

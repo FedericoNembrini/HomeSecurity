@@ -9,18 +9,34 @@
         <pages:FlyoutHeader />
     </Shell.FlyoutHeader>
 
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding FlyoutIcon}"
+                       Style="{StaticResource FlyoutItemIcon}" />
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       Style="{StaticResource FlyoutItemTitle}" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+        
     <FlyoutItem
         Title="Home Page"
-        Icon="house_icon">
+        Icon="home">
         <Tab>
             <ShellContent>
-                <pages:StreamList />
+                <pages:CamerasList />
             </ShellContent>
         </Tab>
     </FlyoutItem>
     <FlyoutItem
         Title="Stream List Management"
-        Icon="list_icon">
+        Icon="cog">
         <Tab>
             <ShellContent>
                 <pages:StreamListManagement />
@@ -29,7 +45,7 @@
     </FlyoutItem>
     <FlyoutItem
         Title="About"
-        Icon="information_icon">
+        Icon="info-circle">
         <Tab>
             <ShellContent>
                 <pages:About />

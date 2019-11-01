@@ -100,6 +100,24 @@
     <None Include="Info.plist" />
     <Compile Include="Dependency\MessageIOS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <AndroidAsset Include="Resources\Fonts\FontAwesome\Font Awesome 5 Brands-Regular.otf" />
+    <AndroidAsset Include="Resources\Fonts\FontAwesome\Font Awesome 5 Free-Regular.otf" />
+    <AndroidAsset Include="Resources\Fonts\FontAwesome\Font Awesome 5 Free-Solid.otf" />
+    <AndroidAsset Include="Resources\Fonts\Montserrat\Montserrat-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Resources\Fonts\Montserrat\Montserrat-Italic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Resources\Fonts\Montserrat\Montserrat-Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Resources\Fonts\Montserrat\Montserrat-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Resources\Fonts\Montserrat\Montserrat-SemiBold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -153,7 +171,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.673156" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

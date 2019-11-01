@@ -17,10 +17,7 @@
                 HorizontalOptions="Start" />
             <Label
                 Text="HomeSecurityApp"
-                TextColor="{StaticResource TextColor}"
-                FontSize="Large"
-                FontAttributes="Bold"
-                VerticalOptions="Center" />
+                Style="{StaticResource PageTitle}"/>
       </StackLayout>
   </ContentView.Content>
 </ContentView>

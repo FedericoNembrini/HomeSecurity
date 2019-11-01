@@ -6,19 +6,141 @@
     <Application.Resources>
         <Color x:Key="PrimaryColor">#00709b</Color>
         <Color x:Key="PrimaryColorDark">#001e42</Color>
-        <Color x:Key="SecondaryColor">#00aa8e</Color>
+        <Color x:Key="SecondaryColor">#00AA8E</Color>
         <Color x:Key="TextColor">White</Color>
 
         <Color x:Key="StartColorBackgroundGradient">#00456D</Color>
         <Color x:Key="CenterColorBackgroundGradient">#00456D</Color>
-        <Color x:Key="EndColorColorBackgroundGradient">#00aa8e</Color>
+        <Color x:Key="EndColorColorBackgroundGradient">#00AA8E</Color>
 
+        <!-- Fonts -->
+        <OnPlatform x:Key="TextBold" x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Fonts/Monteserrat/Montserrat-Bold"/>
+            <On Platform="Android" Value="Fonts/Montserrat/Montserrat-Bold.ttf#Montserrat"/>
+        </OnPlatform>
+
+        <OnPlatform x:Key="TextSemiBold" x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Fonts/Montserrat/Montserrat-SemiBold"/>
+            <On Platform="Android" Value="Fonts/Montserrat/Montserrat-SemiBold.ttf#Montserrat SemiBold"/>
+        </OnPlatform>
+
+        <OnPlatform x:Key="TextItalic" x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Montserrat-Italic"/>
+            <On Platform="Android" Value="Fonts/Montserrat/Montserrat-Italic.ttf#Montserrat"/>
+        </OnPlatform>
+        
+        <OnPlatform x:Key="TextMedium" x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Font/Montserrat/Montserrat-Medium"/>
+            <On Platform="Android" Value="Fonts/Montserrat/Montserrat-Medium.ttf#Montserrat"/>
+        </OnPlatform>
+        <!-- /Fonts -->
+        
+        <!-- FontAwesome Fonts -->
+        <!-- https://fontawesome.com/cheatsheet/free/regular -->
+        <OnPlatform x:Key="FontAwesomeRegular" x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Fonts/FontAwesome/Font Awesome 5 Free-Regular"/>
+            <On Platform="Android" Value="Fonts/FontAwesome/Font Awesome 5 Free-Regular.otf#Font Awesome 5 Free Regular"/>
+        </OnPlatform>
+
+        <!-- https://fontawesome.com/cheatsheet/free/solid -->
+        <OnPlatform x:Key="FontAwesomeSolid" x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Fonts/FontAwesome/Font Awesome 5 Free-Solid"/>
+            <On Platform="Android" Value="Fonts/FontAwesome/Font Awesome 5 Free-Solid.otf#Font Awesome 5 Free Solid"/>
+        </OnPlatform>
+
+        <!-- https://fontawesome.com/cheatsheet/free/brands -->
+        <OnPlatform x:Key="FontAwesomeBrandRegular" x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Fonts/FontAwesome/Font Awesome 5 Brands-Regular"/>
+            <On Platform="Android" Value="Fonts/FontAwesome/Font Awesome 5 Brands-Regular.otf#Font Awesome 5 Brands Regular"/>
+        </OnPlatform>
+        <!-- /FontAwesome Fonts -->
+
+        <!-- Shell Style -->
         <Style TargetType="local:ShellApp">
             <Setter Property="Shell.BackgroundColor" Value="Transparent" />
+            <Setter Property="FlyoutIcon" Value="bars.png" />
         </Style>
 
-        <Style TargetType="Label">
+        <!--<Style TargetType="Shell">
+            <Setter Property="FlyoutIcon" Value="bars.png" />
+        </Style>-->
+        
+        <Style x:Key="FlyoutItemIcon" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
             <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Margin" Value="4, 8, 0, 8" />
         </Style>
+        
+        <Style x:Key="FlyoutItemTitle" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource TextMedium}" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+        <!-- /Shell Style -->
+
+        <!-- Page Style -->
+        <Style x:Key="PageTitle" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource TextBold}" />
+            <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+            <Setter Property="FontSize" Value="Title" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+
+        <Style x:Key="SubHeader" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource TextSemiBold}" />
+            <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+        </Style>
+
+        <Style x:Key="Text" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource TextMedium}" />
+            <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+        </Style>
+        <!-- /Page Style -->
+        
+        <!-- Collection View Cameras List -->
+        <Style x:Key="CollectionViewCamerasList" TargetType="CollectionView">
+            <Setter Property="Margin" Value="8, 8, 8, 8" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+
+        <Style x:Key="CollectionViewCameraListEmptyView" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource TextBold}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="Large" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="Margin" Value="0, 16, 0, 0" />
+        </Style>
+        <!-- /Collection View Cameras List -->
+
+        <!-- Stream Box Style -->
+        <Style x:Key="StreamTitle" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource TextSemiBold}" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="Subtitle" />
+        </Style>
+
+        <Style x:Key="StreamUrl" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource TextItalic}" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="Small" />
+            <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+        </Style>
+
+        <Style  x:Key="GreaterFont" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="HorizontalOptions" Value="End" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Margin" Value="0, 0, 16, 0" />
+        </Style>
+        <!-- /Stream Box Style -->
     </Application.Resources>
 </Application>
