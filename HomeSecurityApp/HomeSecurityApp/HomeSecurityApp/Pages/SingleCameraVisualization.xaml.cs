@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -41,31 +41,6 @@ namespace HomeSecurityApp.Pages
             videoViewToDisplay.MediaPlayer.Media.StateChanged += Media_StateChanged;
         }
 
-        private void Media_StateChanged(object sender, MediaStateChangedEventArgs e)
-        {
-            try
-            {
-                if(e.State == VLCState.Ended)
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        videoViewToDisplay.IsVisible = false;
-
-                        lInfo.Text = $"{cameraObject.Name} no more data received.";
-                        lInfo.IsVisible = true;
-                    });
-
-                    Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
-                }
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                Trace.TraceError($"SingleCameraVisualization - MediaPlayer_EncounteredError: {ex.Message}");
-#endif
-            }
-        }
-
         #endregion
 
         #region Overrides Method
@@ -75,6 +50,17 @@ namespace HomeSecurityApp.Pages
 
             try
             {
+                if (Connectivity.NetworkAccess == NetworkAccess.None
+                    || Connectivity.NetworkAccess == NetworkAccess.Unknown)
+                {
+                    videoViewToDisplay.IsVisible = false;
+
+                    lInfo.Text = "No Internet Access Found.";
+                    lInfo.IsVisible = true;
+
+                    return;
+                }
+
                 videoViewToDisplay.MediaPlayer.Fullscreen = true;
                 videoViewToDisplay.MediaPlayer.Play();
             }
@@ -88,14 +74,39 @@ namespace HomeSecurityApp.Pages
 
         protected override void OnDisappearing()
         {
-            base.OnDisappearing();
-
             videoViewToDisplay.MediaPlayer.Stop();
+
+            base.OnDisappearing();
         }
 
         #endregion
 
         #region Event Handler
+
+        private void Media_StateChanged(object sender, MediaStateChangedEventArgs e)
+        {
+            try
+            {
+                if (e.State == VLCState.Ended)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        videoViewToDisplay.IsVisible = false;
+
+                        lInfo.Text = $"{cameraObject.Name} no more data received.";
+                        lInfo.IsVisible = true;
+                    });
+
+                    Trace.TraceInformation($"{nameof(Media_StateChanged)} of {videoViewToDisplay.MediaPlayer.Media.Mrl} changed to {e.State}");
+                }
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Trace.TraceError($"SingleCameraVisualization - Media_StateChanged: {ex.Message}");
+#endif
+            }
+        }
 
         private void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {

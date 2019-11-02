@@ -6,22 +6,34 @@
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              mc:Ignorable="d"
              x:Class="HomeSecurityApp.Pages.SingleCameraVisualization">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="BackgroundColor" Value="WhiteSmoke" />
+            </Style>
+
+            <Style x:Key="ErrorMessageLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource TextBold}" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout x:Name="slVideoView"
-                     Orientation="Vertical"
-                     VerticalOptions="FillAndExpand"
-                     HorizontalOptions="FillAndExpand"
-                     BackgroundColor="White" >
-            <Label x:Name="lInfo"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand"
-                   TextColor="Red"
-                   FontSize="Large"
-                   IsVisible="False"/>
+        <StackLayout>
+            <Label x:Name="lInfo" Style="{StaticResource ErrorMessageLabel}"
+                IsVisible="False"/>
             <shared:VideoView x:Name="videoViewToDisplay"
-                              VerticalOptions="FillAndExpand"
-                              HorizontalOptions="FillAndExpand"
-                              IsVisible="True" />
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="True" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
