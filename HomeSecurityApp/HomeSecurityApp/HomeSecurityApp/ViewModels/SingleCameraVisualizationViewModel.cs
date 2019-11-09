@@ -1,6 +1,7 @@
 ﻿using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -37,19 +38,19 @@ namespace HomeSecurityApp.ViewModels
             }
         }
 
-        private MediaPlayer _mediaPlayer;
-
         private bool _isVideoViewVisible = true;
 
-        public bool IsVideoViewVisible 
+        public bool IsVideoViewVisible
         {
             get => _isVideoViewVisible;
-            set 
+            set
             {
                 _isVideoViewVisible = value;
                 OnPropertyChanged();
-            } 
+            }
         }
+
+        private MediaPlayer _mediaPlayer;
 
         public MediaPlayer MediaPlayer
         {
@@ -61,25 +62,14 @@ namespace HomeSecurityApp.ViewModels
                     var libVlc = new LibVLC();
                     var media = new Media(libVlc, _cameraObjectViewModel.ConnectionUrl, FromType.FromLocation);
                     _mediaPlayer = new MediaPlayer(media);
+                    _mediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+                    _mediaPlayer.Media.StateChanged += Media_StateChanged;
                     media.Dispose();
                     libVlc.Dispose();
                 }
 
                 return _mediaPlayer;
             }
-        }
-
-        private ICommand _playCommand;
-
-        public ICommand PlayCommand
-        {
-            private set => _playCommand = value;
-            get => _playCommand ?? (_playCommand = new Command(execute: () =>
-                {
-                    MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
-                    MediaPlayer.Media.StateChanged += Media_StateChanged;
-                    MediaPlayer.Play();
-                }));
         }
 
         #endregion
@@ -97,56 +87,65 @@ namespace HomeSecurityApp.ViewModels
 
         #region Method
 
+        public void StartView()
+        {
+            MediaPlayer.Play();
+        }
+
+        public void StopView()
+        {
+            MediaPlayer.Stop();
+        }
+
         #endregion
 
         #region Events
 
         private void Media_StateChanged(object sender, MediaStateChangedEventArgs e)
         {
-            //            try
-            //            {
-            //                if(e.State == VLCState.Ended)
-            //                {
-            //                    Device.BeginInvokeOnMainThread(() =>
-            //                    {
-            //                        videoViewToDisplay.IsVisible = false;
+            try
+            {
+                if (e.State == VLCState.Ended)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        IsVideoViewVisible = false;
 
-            //                        lInfo.Text = $"{cameraObject.Name} no more data received.";
-            //                        lInfo.IsVisible = true;
-            //                    });
+                        ErrorMessage = $"{_cameraObjectViewModel.Name} no more data received.";
+                        IsErrorMessageVisible = true;
+                    });
 
-            //                    Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //#if DEBUG
-            //                Trace.TraceError($"SingleCameraVisualization - MediaPlayer_EncounteredError: {ex.Message}");
-            //#endif
-            //            }
+                    Trace.TraceError($"{nameof(SingleCameraVisualizationViewModel)} - {nameof(MediaPlayer_EncounteredError)}: {MediaPlayer.Media.Mrl}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError($"{nameof(SingleCameraVisualizationViewModel)} - {nameof(Media_StateChanged)}: {ex.Message}");
+            }
         }
 
         private void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {
-            //            try
-            //            {
-            //                videoViewToDisplay.MediaPlayer.Pause();
-            //                videoViewToDisplay.IsVisible = false;
+            try
+            {
+                MediaPlayer.Pause();
 
-            //                lInfo.Text = $"{nameof(MediaPlayer_EncounteredError)} of {MediaPlayerToUse.Media.Mrl}";
-            //                lInfo.IsVisible = true;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    IsVideoViewVisible = false;
 
-            //                Trace.TraceError($"{nameof(MediaPlayer_EncounteredError)} of {videoViewToDisplay.MediaPlayer.Media.Mrl}");
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //#if DEBUG
-            //                Trace.TraceError($"SingleCameraVisualization - MediaPlayer_EncounteredError: {ex.Message}");
-            //#endif
-            //            }
+                    ErrorMessage = $"{nameof(MediaPlayer_EncounteredError)} of {MediaPlayer.Media.Mrl}";
+                    IsErrorMessageVisible = true;
+                });
+                
+                Trace.TraceError($"{nameof(SingleCameraVisualizationViewModel)} - {nameof(MediaPlayer_EncounteredError)}: {MediaPlayer.Media.Mrl}");
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError($"{nameof(SingleCameraVisualizationViewModel)} - {nameof(MediaPlayer_EncounteredError)}: {ex.Message}");
+            }
         }
 
         #endregion
-
     }
 }

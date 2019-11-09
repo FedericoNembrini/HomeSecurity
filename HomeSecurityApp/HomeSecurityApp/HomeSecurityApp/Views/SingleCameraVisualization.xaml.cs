@@ -55,14 +55,17 @@ namespace HomeSecurityApp.Pages
         {
             base.OnDisappearing();
 
-            //videoViewToDisplay.MediaPlayer.Stop();
+            ViewModel.StopView();
         }
 
         #endregion
 
         #region Event Handler
 
-
+        private void VideoView_MediaPlayerChanged(object sender, MediaPlayerChangedEventArgs e)
+        {
+            ViewModel.StartView();
+        }
 
         #endregion
 

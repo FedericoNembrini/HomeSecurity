@@ -11,6 +11,15 @@
     <d:ContentPage.BindingContext>
         <local:SingleCameraVisualizationViewModel />
     </d:ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource TextSemiBold}" />
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <ContentPage.Content>
         <StackLayout Orientation="Vertical"
@@ -20,8 +29,8 @@
                    IsVisible="{Binding IsErrorMessageVisible}"
                    VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
             <shared:VideoView MediaPlayer="{Binding MediaPlayer}"
-                IsVisible="{Binding IsViewViewVisible}"
-                MediaPlayerChanged="{Binding PlayCommand}"
+                IsVisible="{Binding IsVideoViewVisible}"
+                MediaPlayerChanged="VideoView_MediaPlayerChanged"
                 VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             </shared:VideoView>
         </StackLayout>
