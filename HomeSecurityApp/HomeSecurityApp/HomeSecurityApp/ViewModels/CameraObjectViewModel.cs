@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HomeSecurityApp.Utility;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HomeSecurityApp.Utility
+namespace HomeSecurityApp.ViewModels
 {
-    public class CameraObject
+    public class CameraObjectViewModel : BaseViewModel
     {
         #region Variables
 
@@ -14,13 +15,17 @@ namespace HomeSecurityApp.Utility
 
         public string ConnectionUrl { get; set; }
 
-        public bool Status { get; set; } = true;
+        public bool Selected { get; set; }
+
+        public string Icon { get { return Selected ? FontAwesomeGlyph.Chevron_Down : FontAwesomeGlyph.Chevron_Up; } }
 
         #endregion
 
         #region Constructor
 
-        public CameraObject(string Key)
+        public CameraObjectViewModel() { }
+
+        public CameraObjectViewModel(string Key)
         {
             if (string.IsNullOrEmpty(Key))
                 return;

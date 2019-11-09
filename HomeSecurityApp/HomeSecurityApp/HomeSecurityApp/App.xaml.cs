@@ -20,6 +20,7 @@ namespace HomeSecurityApp
         protected override void OnStart()
         {
             // Handle when your app starts
+            Core.Initialize();
         }
 
         protected override void OnSleep()
@@ -40,13 +41,6 @@ namespace HomeSecurityApp
         protected override void OnResume()
         {
             // Handle when your app resumes
-            // Check if SingleStreamVisualization Is Open
-            //if (this.MainPage.Navigation.ModalStack.Count > 0)
-            //{
-            //    if (this.MainPage.Navigation.ModalStack[0].GetType() == typeof(Pages.SingleStreamVisualization))
-            //    {
-            //    }
-            //}
         }
     }
 }

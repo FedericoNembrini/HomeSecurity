@@ -4,17 +4,9 @@
              xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
              x:Class="HomeSecurityApp.Pages.About">
     <Shell.TitleView>
-        <StackLayout x:Name="slTitleView"
-                     Orientation="Horizontal"
-                     VerticalOptions="CenterAndExpand"
-                     HorizontalOptions="CenterAndExpand"
-                     BackgroundColor="Transparent">
-            <Label x:Name="lblTitleView"
-                   FontSize="Large"
-                   FontAttributes="Bold"
-                   Text="Stream List"
-                   TextColor="{StaticResource TextColor}"
-                   VerticalOptions="Center" />
+        <StackLayout Style="{StaticResource ShellTitleView_StackLayout}">
+            <Label Style="{StaticResource PageTitle}"
+                   Text="About" />
         </StackLayout>
     </Shell.TitleView>
     

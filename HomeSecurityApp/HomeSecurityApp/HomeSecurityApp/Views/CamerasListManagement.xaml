@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HomeSecurityApp.Pages"
+             xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
+             xmlns:controls="clr-namespace:HomeSecurityApp.Controls"
+             x:Class="HomeSecurityApp.Pages.CamerasListManagement">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="AddButton_FrameStyle" TargetType="Frame">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HeightRequest" Value="64" />
+                <Setter Property="WidthRequest" Value="64" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+            </Style>
+            
+            <Style x:Key="AddButton_ImageButtonStyle" TargetType="ImageButton">
+                <Setter Property="HeightRequest" Value="64" />
+                <Setter Property="WidthRequest" Value="64" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="HeightRequest" Value="64" />
+                <Setter Property="WidthRequest" Value="128" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Shell.TitleView>
+        <StackLayout Style="{StaticResource ShellTitleView_StackLayout}">
+            <Label Style="{StaticResource PageTitle}"
+                   Text="Stream List Management" />
+        </StackLayout>
+    </Shell.TitleView>
+    
+    <ContentPage.Content>
+        <utility:GradientColorStackLayout Style="{StaticResource GradientColorStackLayout}"
+                                          Orientation="Vertical">
+            <AbsoluteLayout VerticalOptions="FillAndExpand" 
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="Transparent" >
+                <CollectionView x:Name="cvCamerasList" Style="{StaticResource CollectionViewCamerasList}"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            SelectionMode="None"
+                            ItemsSource="{Binding CameraObjectList, Mode=OneWay}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" 
+                                     Span="{OnIdiom Phone= 1, Tablet= 2, Desktop= 2}"
+                                     VerticalItemSpacing="8"
+                                     HorizontalItemSpacing="8" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:CameraInformationCell Margin="0">
+                                <controls:CameraInformationCell.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </controls:CameraInformationCell.GestureRecognizers>
+                            </controls:CameraInformationCell>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <StackLayout>
+                            <Label Style="{StaticResource CollectionViewCameraListEmptyView}"
+                               Text="Non sono presenti telecamere." />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+                <Frame Style="{StaticResource AddButton_FrameStyle}"
+                       AbsoluteLayout.LayoutFlags="PositionProportional"
+                       AbsoluteLayout.LayoutBounds=".95, .95, 80, 80">
+                    <ImageButton Style="{StaticResource AddButton_ImageButtonStyle}"
+                                 Source="plus_icon"
+                                 Clicked="BtnAdd_Clicked" />
+                </Frame>
+
+                <StackLayout x:Name="slFadeBackground" Orientation="Vertical"
+                             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                             AbsoluteLayout.LayoutFlags="All"
+                             BackgroundColor="#CC000000"
+                             Opacity="0"
+                             IsVisible="False">
+
+                    <Frame CornerRadius="8"
+                           Margin="16, 0"
+                           BackgroundColor="White"
+                           HasShadow="True"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="Modifica"
+                                   FontFamily="{StaticResource TextBold}"
+                                   FontSize="Large"
+                                   VerticalTextAlignment="Center" />
+                            <Frame CornerRadius="8"
+                                   Padding="8"
+                                   BackgroundColor="LightGray" >
+                                <Entry Text="{Binding Name}" Placeholder="Camera Name"
+                                       FontFamily="{StaticResource TextSemiBold}" />
+                            </Frame>
+                            <Frame CornerRadius="8"
+                                   Padding="8"
+                                   BackgroundColor="LightGray">
+                                <Entry Text="{Binding ConnectionUrl}" Placeholder="Camera Url"
+                                       FontFamily="{StaticResource TextSemiBold}"/>
+                            </Frame>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Column="0" Text="Cancella" CornerRadius="16" HorizontalOptions="Center" />
+                                    <Button Grid.Column="1" Text="Modifica" CornerRadius="16" HorizontalOptions="Center" />
+                                </Grid>
+                                
+                                <Button Grid.Row="1" Text="Annulla" CornerRadius="16" Clicked="CancelModify_Clicked" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </AbsoluteLayout>
+        </utility:GradientColorStackLayout>
+    </ContentPage.Content>
+</ContentPage>

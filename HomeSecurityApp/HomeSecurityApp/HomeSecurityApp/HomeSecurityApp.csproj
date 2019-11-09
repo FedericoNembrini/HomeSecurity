@@ -29,25 +29,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Pages\About.xaml">
+    <Compile Update="Views\CamerasListManagement.xaml.cs">
+      <DependentUpon>CamerasListManagement.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\CameraInformationCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\AddStreamUrlPage.xaml">
+    <EmbeddedResource Update="Views\About.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\CamerasList.xaml">
+    <EmbeddedResource Update="Views\AddStreamUrlPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\FlyoutHeader.xaml">
+    <EmbeddedResource Update="Views\CamerasList.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\SingleCameraVisualization.xaml">
+    <EmbeddedResource Update="Views\FlyoutHeader.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\ShellApp.xaml">
+    <EmbeddedResource Update="Views\SingleCameraVisualization.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\StreamListManagement.xaml">
+    <EmbeddedResource Update="Views\ShellApp.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="HomeSecurityApp.Controls.CameraInformationCell"
+             Padding="0" Margin="0">
+    
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="CameraInformationCell_Frame" TargetType="Frame">
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="BackgroundColor" Value="White" />
+
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+
+            <Style x:Key="CameraInformationCell_StackLayout" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Margin" Value="16, 0, 0, 0" />
+                <Setter Property="Padding" Value="0, 8, 0, 8" />
+
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+
+            <Style  x:Key="CameraInformationCell_FontIcon" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0, 16, 0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+  
+    <ContentView.Content>
+        <Frame Style="{StaticResource CameraInformationCell_Frame}">
+            <StackLayout Style="{StaticResource CameraInformationCell_StackLayout}">
+                <StackLayout
+                        Orientation="Vertical"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="FillAndExpand">
+                    <Label Style="{StaticResource StreamTitle}"
+                           Text="{Binding Name}"
+                           HorizontalOptions="StartAndExpand" />
+                    <Label Style="{StaticResource StreamUrl}"
+                           Text="{Binding ConnectionUrl}" />
+                </StackLayout>
+                <Label Style="{StaticResource CameraInformationCell_FontIcon}"
+                       Text="{Binding Icon}" />
+            </StackLayout>
+        </Frame>
+  </ContentView.Content>
+</ContentView>

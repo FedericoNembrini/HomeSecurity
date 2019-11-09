@@ -7,28 +7,58 @@ namespace HomeSecurityApp.Utility
 {
     public class GradientColorStackLayout : StackLayout
     {
-        public Color StartColor { get; set; }
+        public static BindableProperty StartColorProperty =
+            BindableProperty.Create(
+                nameof(StartColor),
+                typeof(Color),
+                typeof(GradientColorStackLayout));
+        public Color StartColor { get => (Color)GetValue(StartColorProperty); set => SetValue(StartColorProperty, value); }
 
-        private Color _CenterColor;
+        public static BindableProperty CenterColorProperty =
+            BindableProperty.Create(
+                nameof(CenterColor),
+                typeof(Color),
+                typeof(GradientColorStackLayout));
 
         public Color CenterColor
         {
-            get
-            {
-                return _CenterColor;
-            }
+            get => (Color)GetValue(CenterColorProperty);
             set
             {
                 HasCenterColor = true;
-                _CenterColor = value;
+                SetValue(CenterColorProperty, value);
             }
         }
 
-        public Color EndColor { get; set; }
+        public static BindableProperty EndColorProperty =
+            BindableProperty.Create(
+                nameof(EndColor),
+                typeof(Color),
+                typeof(GradientColorStackLayout));
 
-        public float YCenter { get; set; } = 0.5F;
+        public Color EndColor { get => (Color)GetValue(EndColorProperty); set => SetValue(EndColorProperty, value); }
 
-        public ItemsLayoutOrientation Direction { get; set; }
+        //TODO: BindableProperty
+        public float YStart { get; set; }
+
+        public static BindableProperty YCenterProperty =
+            BindableProperty.Create(
+                nameof(YCenter),
+                typeof(float),
+                typeof(GradientColorStackLayout));
+
+        public float YCenter { get => (float)GetValue(YCenterProperty); set => SetValue(YCenterProperty, value); }
+
+        //TODO: BindableProperty
+        public float YEnd { get; set; }
+
+        public static BindableProperty DirectionProperty =
+            BindableProperty.Create(
+                nameof(Direction),
+                typeof(ItemsLayoutOrientation),
+                typeof(GradientColorStackLayout));
+        
+        public ItemsLayoutOrientation Direction { get => (ItemsLayoutOrientation)GetValue(DirectionProperty); set => SetValue(DirectionProperty, value); }
 
         public bool HasCenterColor { get; set; }
     }

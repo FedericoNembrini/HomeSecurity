@@ -2,6 +2,7 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:HomeSecurityApp.Pages"
+             xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
              x:Class="HomeSecurityApp.App">
     <Application.Resources>
         <Color x:Key="PrimaryColor">#00709b</Color>
@@ -12,8 +13,8 @@
         <Color x:Key="StartColorBackgroundGradient">#00456D</Color>
         <Color x:Key="CenterColorBackgroundGradient">#00456D</Color>
         <Color x:Key="EndColorColorBackgroundGradient">#00AA8E</Color>
-
-        <!-- Fonts -->
+        
+        <!--#region Fonts -->
         <OnPlatform x:Key="TextBold" x:TypeArguments="x:String">
             <On Platform="iOS" Value="Fonts/Monteserrat/Montserrat-Bold"/>
             <On Platform="Android" Value="Fonts/Montserrat/Montserrat-Bold.ttf#Montserrat"/>
@@ -33,9 +34,9 @@
             <On Platform="iOS" Value="Font/Montserrat/Montserrat-Medium"/>
             <On Platform="Android" Value="Fonts/Montserrat/Montserrat-Medium.ttf#Montserrat"/>
         </OnPlatform>
-        <!-- /Fonts -->
+        <!--#endregion-->
         
-        <!-- FontAwesome Fonts -->
+        <!--#region FontAwesome Fonts -->
         <!-- https://fontawesome.com/cheatsheet/free/regular -->
         <OnPlatform x:Key="FontAwesomeRegular" x:TypeArguments="x:String">
             <On Platform="iOS" Value="Fonts/FontAwesome/Font Awesome 5 Free-Regular"/>
@@ -53,19 +54,24 @@
             <On Platform="iOS" Value="Fonts/FontAwesome/Font Awesome 5 Brands-Regular"/>
             <On Platform="Android" Value="Fonts/FontAwesome/Font Awesome 5 Brands-Regular.otf#Font Awesome 5 Brands Regular"/>
         </OnPlatform>
-        <!-- /FontAwesome Fonts -->
+        <!--#endregion-->
 
-        <!-- Shell Style -->
+        <!--#region Shell -->
         <Style TargetType="local:ShellApp">
-            <Setter Property="Shell.BackgroundColor" Value="Transparent" />
-            <Setter Property="FlyoutIcon" Value="bars.png" />
+            <Setter Property="Shell.TabBarTitleColor" Value="Black" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="White" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="Black" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="Black" />
         </Style>
 
-        <!--<Style TargetType="Shell">
-            <Setter Property="FlyoutIcon" Value="bars.png" />
-        </Style>-->
+        <Style x:Key="ShellTitleView_StackLayout" TargetType="StackLayout">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
         
-        <Style x:Key="FlyoutItemIcon" TargetType="Label">
+        <!--<Style x:Key="FlyoutItemIcon" TargetType="Label">
             <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
             <Setter Property="TextColor" Value="Black" />
             <Setter Property="FontSize" Value="Medium" />
@@ -80,9 +86,21 @@
             <Setter Property="TextColor" Value="Black" />
             <Setter Property="FontSize" Value="Medium" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
-        </Style>
-        <!-- /Shell Style -->
+        </Style>-->
+        
+        <!--#endregion-->
 
+        <!--#region Utility-->
+        <Style x:Key="GradientColorStackLayout" TargetType="utility:GradientColorStackLayout">
+            <Setter Property="StartColor" Value="{StaticResource StartColorBackgroundGradient}" />
+            <Setter Property="EndColor" Value="{StaticResource EndColorColorBackgroundGradient}" />
+            <Setter Property="YCenter" Value="0.58" />
+            <Setter Property="Direction" Value="Vertical" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        </Style>
+        <!--#endregion-->
+        
         <!-- Page Style -->
         <Style x:Key="PageTitle" TargetType="Label">
             <Setter Property="FontFamily" Value="{StaticResource TextBold}" />
@@ -104,10 +122,17 @@
         
         <!-- Collection View Cameras List -->
         <Style x:Key="CollectionViewCamerasList" TargetType="CollectionView">
-            <Setter Property="Margin" Value="8, 8, 8, 8" />
+            <Setter Property="Margin" Value="8" />
             <Setter Property="VerticalOptions" Value="FillAndExpand" />
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />
             <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+
+        <Style x:Key="CameraViewStyleStackLayout" TargetType="StackLayout">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="16, 0, 0, 0" />
         </Style>
 
         <Style x:Key="CollectionViewCameraListEmptyView" TargetType="Label">
@@ -120,6 +145,13 @@
         <!-- /Collection View Cameras List -->
 
         <!-- Stream Box Style -->
+        <Style x:Key="CameraView_Frame" TargetType="Frame">
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
         <Style x:Key="StreamTitle" TargetType="Label">
             <Setter Property="FontFamily" Value="{StaticResource TextSemiBold}" />
             <Setter Property="TextColor" Value="Black" />

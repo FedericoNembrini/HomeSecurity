@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:local="clr-namespace:HomeSecurityApp.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
+             mc:Ignorable="d"
+             x:Class="HomeSecurityApp.Pages.SingleCameraVisualization">
+
+    <d:ContentPage.BindingContext>
+        <local:SingleCameraVisualizationViewModel />
+    </d:ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical"
+                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                     BackgroundColor="White" >
+            <Label Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding IsErrorMessageVisible}"
+                   VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <shared:VideoView MediaPlayer="{Binding MediaPlayer}"
+                IsVisible="{Binding IsViewViewVisible}"
+                MediaPlayerChanged="{Binding PlayCommand}"
+                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            </shared:VideoView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -15,7 +15,7 @@ namespace HomeSecurityApp.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            global::Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
+            //global::Xamarin.Forms.Forms.SetFlags("Shell_Experimental");
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

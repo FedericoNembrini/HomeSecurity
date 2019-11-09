@@ -1,33 +1,41 @@
-﻿using HomeSecurityApp.Utility;
+﻿using HomeSecurityApp.Controls;
 using HomeSecurityApp.Utility.Interface;
+using HomeSecurityApp.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using static HomeSecurityApp.Utility.Utility;
 
 namespace HomeSecurityApp.Pages
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class StreamListManagement : ContentPage
+    [DesignTimeVisible(false)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class CamerasListManagement : ContentPage
 	{
         #region Variables
 
-        public ObservableCollection<StreamObject> StreamObjectList { get; set; } = new ObservableCollection<StreamObject>();
+        CamerasListManagementViewModel camerasListManagementViewModel = new CamerasListManagementViewModel();
+
+        uint animationSpeed = 300;
+        
+        CameraInformationCell selectedElement;
+        
+        int selectedIndex;
 
         #endregion
 
         #region Constructor
 
-        public StreamListManagement()
+        public CamerasListManagement()
         {
             InitializeComponent();
+
+            BindingContext = camerasListManagementViewModel;
         }
 
         #endregion
@@ -53,6 +61,9 @@ namespace HomeSecurityApp.Pages
 
         protected override void OnDisappearing()
         {
+            cvCamerasList.SelectedItems.Clear();
+            cvCamerasList.SelectedItem = null;
+
             base.OnDisappearing();
         }
 
@@ -62,17 +73,30 @@ namespace HomeSecurityApp.Pages
 
         private void LoadStreamListObject()
         {
-            StreamObjectList.Clear();
+            camerasListManagementViewModel.CameraObjectList.Clear();
 
             List<string> PreferencesList = GetPreferencesList();
 
             foreach(string preference in PreferencesList)
             {
-                StreamObjectList.Add(new StreamObject(preference, false));
+                camerasListManagementViewModel.CameraObjectList.Add(new CameraObjectViewModel(preference));
             }
+        }
 
-            if(StreamObjectList.Count > 0)
-                streamList.ItemsSource = StreamObjectList;
+        private void PositionElement(VisualElement parent, VisualElement element)
+        {
+            AbsoluteLayout.SetLayoutFlags(element, AbsoluteLayoutFlags.None);
+            var dropDownContainerRect = new Rectangle(0, parent.Bounds.Top, this.Width, element.Height);
+            AbsoluteLayout.SetLayoutBounds(element, dropDownContainerRect);
+        }
+
+        private async Task DisplayCommand(View view)
+        {
+            view.IsVisible = true;
+            view.RotationX = -90;
+            view.Opacity = 0;
+            _ = view.FadeTo(1, animationSpeed);
+            await view.RotateXTo(0, animationSpeed);
         }
 
         #endregion
@@ -83,7 +107,7 @@ namespace HomeSecurityApp.Pages
         {
             try
             {
-                AddStreamUrlPage addStreamUrlPageModal = new AddStreamUrlPage(StreamObjectList.Count);
+                AddStreamUrlPage addStreamUrlPageModal = new AddStreamUrlPage(camerasListManagementViewModel.CameraObjectList.Count);
 
                 addStreamUrlPageModal.Disappearing += AddStreamUrlPageModal_Disappearing;
 
@@ -103,10 +127,10 @@ namespace HomeSecurityApp.Pages
             try
             {
                 string itemElements = (sender as MenuItem).CommandParameter.ToString();
-                var streamObject = StreamObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
+                var streamObject = camerasListManagementViewModel.CameraObjectList.Where(sol => sol.Key == itemElements).FirstOrDefault();
                 if (streamObject != null)
                 {
-                    var counter = StreamObjectList.IndexOf(streamObject);
+                    var counter = camerasListManagementViewModel.CameraObjectList.IndexOf(streamObject);
 
                     Preferences.Set(Key + Convert.ToString(counter), string.Empty);
                     do
@@ -118,7 +142,7 @@ namespace HomeSecurityApp.Pages
 
                     Preferences.Remove(Key + Convert.ToString(counter));
 
-                    StreamObjectList.Remove(streamObject);
+                    camerasListManagementViewModel.CameraObjectList.Remove(streamObject);
                 }
             }
             catch (Exception ex)
@@ -146,5 +170,38 @@ namespace HomeSecurityApp.Pages
         }
 
         #endregion
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            selectedElement = sender as CameraInformationCell;
+            selectedIndex = camerasListManagementViewModel.CameraObjectList.IndexOf(selectedElement.BindingContext as CameraObjectViewModel);
+
+            (selectedElement.BindingContext as CameraObjectViewModel).Selected = true;
+
+            //FakeCameraInformationCell.BindingContext = selectedElement.BindingContext;
+
+            //PositionElement(selectedElement, gFrontSide);
+
+            // Fade in the overlay
+            slFadeBackground.Opacity = 0;
+            slFadeBackground.IsVisible = true;
+            _ = slFadeBackground.FadeTo(1, animationSpeed);
+
+            //await DisplayCommand(Delete);
+        }
+
+        private void DeleteButton_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void CancelModify_Clicked(object sender, EventArgs e)
+        {
+            _ = await slFadeBackground.FadeTo(0, animationSpeed);
+            slFadeBackground.IsVisible = false;
+
+            cvCamerasList.SelectedItems.Clear();
+            cvCamerasList.SelectedItem = null;
+        }
     }
 }

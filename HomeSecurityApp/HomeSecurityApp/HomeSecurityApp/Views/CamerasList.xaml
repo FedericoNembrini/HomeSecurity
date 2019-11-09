@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:HomeSecurityApp.ViewModel"
+             xmlns:utility="clr-namespace:HomeSecurityApp.Utility"
+             mc:Ignorable="d"
+             x:Class="HomeSecurityApp.Pages.CamerasList">
+
+    <d:ContentPage.BindingContext>
+        <local:CamerasListViewModel />
+    </d:ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="CameraView">
+                <Frame Style="{StaticResource CameraView_Frame}" >
+                    <StackLayout Style="{StaticResource CameraViewStyleStackLayout}">
+                        <StackLayout Orientation="Vertical"
+                            VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                            <Label Style="{StaticResource StreamTitle}"
+                                Text="{Binding Name}"
+                                HorizontalOptions="StartAndExpand" />
+                            <Label Style="{StaticResource StreamUrl}"
+                                Text="{Binding ConnectionUrl}" />
+                        </StackLayout>
+                        <Label Style="{StaticResource GreaterFont}"
+                            Text="&#xF054;" />
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Shell.TitleView>
+        <StackLayout Style="{StaticResource ShellTitleView_StackLayout}">
+            <Label Style="{StaticResource PageTitle}"
+                   Text="Cameras"/>
+        </StackLayout>
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <utility:GradientColorStackLayout Style="{StaticResource GradientColorStackLayout}"
+                                          Orientation="Vertical">
+            <CollectionView x:Name="cvCamerasList" Style="{StaticResource CollectionViewCamerasList}"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding SelectionChangedCommand}"
+                            SelectionChangedCommandParameter="{Reference cvCamerasList}"
+                            ItemTemplate="{StaticResource CameraView}"
+                            ItemsSource="{Binding CameraObjectList, Mode=OneWay}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="{OnIdiom Phone= 1, Tablet= 2, Desktop= 2}"
+                                     VerticalItemSpacing="8"
+                                     HorizontalItemSpacing="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <StackLayout>
+                        <Label Style="{StaticResource CollectionViewCameraListEmptyView}"
+                               Text="Non sono presenti telecamere." />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </utility:GradientColorStackLayout>
+    </ContentPage.Content>
+</ContentPage>
