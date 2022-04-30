@@ -2,6 +2,6 @@
 while :
 do
     #ffmpeg -r 24 -i rtsp://localhost:8554/ -c copy -map 0 -f segment -strftime 1 -segment_time 2700 -segment_format mp4 -r 24 /home/pi/HomeSecurityCamera/Recordings/%d-%m-%Y_%H-%M-%S.mp4 2>> /mnt/SecurityCam/Cam01/Logs/ffmpeg.log
-    ffmpeg -hide_banner -loglevel error -r 24 -i rtsp://localhost:8554/ -c copy -an -map 0 -f segment -strftime 1 -segment_atclocktime 1 -segment_time 3600 -segment_format mp4 -r 24 /mnt/SecurityCam/Cam01/Recordings/%d-%m-%Y_%H-%M-%S.mp4 2>> /mnt/SecurityCam/Cam01/Logs/ffmpeg.log
+    ffmpeg -fflags +genpts -hide_banner -loglevel error -r 24 -i rtsp://localhost:8554/ -c copy -an -map 0 -f segment -strftime 1 -segment_atclocktime 1 -segment_time 3600 -segment_format mp4 -r 24 /mnt/SecurityCam/Cam01/Recordings/%d-%m-%Y_%H-%M-%S.mp4 2>> /mnt/SecurityCam/Cam01/Logs/ffmpeg.log
     sleep 3m
 done

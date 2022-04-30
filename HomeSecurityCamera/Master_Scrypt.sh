@@ -8,7 +8,7 @@ python3 /home/pi/HomeSecurityCamera/Update_Overlay_Text.py &
 
 su pi /home/pi/HomeSecurityCamera/Stream.sh &
 
-sleep 3
+sleep 5
 
 su pi /home/pi/HomeSecurityCamera/Record.sh &
 

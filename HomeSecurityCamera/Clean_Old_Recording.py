@@ -26,7 +26,7 @@ if hasSettingsLoaded:
                     if file.endswith('.mp4'):
                         fileName = file[:-4]
 
-                    if fileName.startswith(settings['PathToNasRecordings']):
+                    if settings['PathToNasRecordings'] in fileName:
                         fileName = fileName.replace(settings['PathToNasRecordings'], '')
 
                     fileNameDateTime = dt.datetime.strptime(fileName, '%d-%m-%Y_%H-%M-%S')
@@ -45,7 +45,7 @@ if hasSettingsLoaded:
 
             time.sleep(3000)
     except Exception as ex:
-        with open(settings['PathToLogs'] + 'Update_Overlay_Text.log', 'a') as logFile:
+        with open(settings['PathToLogs'] + 'Clean_Old_Recordings.log', 'a') as logFile:
             logFile.write(str(ex) + '\n')
     finally:
         pass
